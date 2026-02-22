@@ -1,8 +1,15 @@
 [providers]
-  nixpkgs = ["python311", "ffmpeg", "libSM", "libXext"]
+  nixpkgs = ["python311", "ffmpeg", "nss", "nss_mdns", "libSM", "libXext", "mesa", "alsa-lib", "atk", "at-spi2-atk", "cups", "libglvnd", "libxkbcommon", "pango"]
 
 [build]
-  cmds = ["python -m venv /opt/venv", ". /opt/venv/bin/activate", "pip install -r requirements.txt"]
+  cmds = [
+    "python -m venv /opt/venv", 
+    ". /opt/venv/bin/activate", 
+    "pip install -r requirements.txt",
+    "playwright install chromium",
+    "playwright install-deps chromium"
+  ]
 
-[start]
-  cmd = ". /opt/venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port $PORT"
+[processes]
+  web = ". /opt/venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port $PORT"
+  worker = ". /opt/venv/bin/activate && celery -A worker.celery_app worker --loglevel=info"

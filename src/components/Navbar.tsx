@@ -72,7 +72,9 @@ export default function Navbar({ currentStep }: NavbarProps) {
 
                 {/* User button */}
                 <div className="flex items-center gap-4">
-                    <Link href="/billing" className="hidden sm:flex btn-secondary py-2 text-xs">Upgrade</Link>
+                    <Link href="/dashboard" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
+                        Dashboard
+                    </Link>
                     <UserButton />
                 </div>
             </div>

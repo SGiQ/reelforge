@@ -16,3 +16,5 @@ stripe
 python-multipart
 aiofiles
 requests
+svix
+vercel-blob

@@ -48,6 +48,42 @@ export const THEMES: Theme[] = [
         bgGradient: "linear-gradient(135deg, #d97706 0%, #b45309 100%)",
         accentColor: "#fcd34d",
     },
+    {
+        id: "crimson-red",
+        label: "Crimson Red",
+        description: "Deep ruby with bold white text",
+        overlayColor: "#9f1239",
+        textColor: "#ffffff",
+        bgGradient: "linear-gradient(135deg, #9f1239 0%, #4c0519 100%)",
+        accentColor: "#f43f5e",
+    },
+    {
+        id: "forest-green",
+        label: "Forest Green",
+        description: "Dark emerald with clean white text",
+        overlayColor: "#166534",
+        textColor: "#ffffff",
+        bgGradient: "linear-gradient(135deg, #166534 0%, #14532d 100%)",
+        accentColor: "#34d399",
+    },
+    {
+        id: "amethyst",
+        label: "Amethyst",
+        description: "Deep violet with bright lavender accent",
+        overlayColor: "#4c1d95",
+        textColor: "#ffffff",
+        bgGradient: "linear-gradient(135deg, #4c1d95 0%, #2e1065 100%)",
+        accentColor: "#c084fc",
+    },
+    {
+        id: "monochrome",
+        label: "Monochrome",
+        description: "Pure black with sleek gray scale",
+        overlayColor: "#000000",
+        textColor: "#ffffff",
+        bgGradient: "linear-gradient(135deg, #171717 0%, #000000 100%)",
+        accentColor: "#a3a3a3",
+    },
 ];
 
 interface ThemeCardProps {

@@ -1,0 +1,142 @@
+/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/elevenlabs/core/pydantic_utilities.py:13: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.datetime_parse import parse_date as parse_date
+ 
+ -------------- celery@users-MacBook-Pro.local v5.6.2 (recovery)
+--- ***** ----- 
+-- ******* ---- macOS-14.7.2-x86_64-i386-64bit-Mach-O 2026-02-20 00:08:32
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         reelforge:0x105003a10
+- ** ---------- .> transport:   redis://default:**@mainline.proxy.rlwy.net:33022//
+- ** ---------- .> results:     redis://default:**@mainline.proxy.rlwy.net:33022/
+- *** --- * --- .> concurrency: 12 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> reelforge_dev    exchange=reelforge_dev(direct) key=reelforge_dev
+                
+
+[tasks]
+  . render_reel
+
+[2026-02-20 00:08:34,777: INFO/MainProcess] Connected to redis://default:**@mainline.proxy.rlwy.net:33022//
+[2026-02-20 00:08:35,013: INFO/MainProcess] mingle: searching for neighbors
+[2026-02-20 00:08:36,591: INFO/MainProcess] mingle: all alone
+[2026-02-20 00:08:38,077: INFO/MainProcess] celery@users-MacBook-Pro.local ready.
+[2026-02-20 00:39:53,204: INFO/MainProcess] Task render_reel[614d2cd0-6af8-499b-baad-218c67670015] received
+[2026-02-20 00:39:55,639: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 00:39:56,554: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 00:39:57,434: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 00:39:58,416: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 00:39:59,548: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 00:40:03,228: INFO/ForkPoolWorker-8] Task render_reel[614d2cd0-6af8-499b-baad-218c67670015] succeeded in 10.013506418999896s: {'status': 'done', 'output_url': '/renders/79beab15-de4e-41d0-9a66-117c61692585.mp4'}
+[2026-02-20 00:40:59,975: INFO/MainProcess] Task render_reel[ae1ad0a7-b63f-45d3-843a-6a05b823aaf7] received
+[2026-02-20 00:41:01,127: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 00:41:02,052: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 00:41:02,933: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 00:41:04,203: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 00:41:05,120: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 00:41:08,877: INFO/ForkPoolWorker-8] Task render_reel[ae1ad0a7-b63f-45d3-843a-6a05b823aaf7] succeeded in 8.900684071999422s: {'status': 'done', 'output_url': '/renders/65f72405-aaec-4db0-a472-fc771061a44d.mp4'}
+[2026-02-20 01:15:48,603: INFO/MainProcess] Task render_reel[99f75218-4bf5-43bb-b5d8-1d3160ccfe29] received
+[2026-02-20 01:15:49,857: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 01:15:50,884: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 01:15:51,803: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 01:15:52,619: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 01:15:53,541: INFO/ForkPoolWorker-8] HTTP Request: POST https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM "HTTP/1.1 200 OK"
+[2026-02-20 01:15:57,793: INFO/ForkPoolWorker-8] Task render_reel[99f75218-4bf5-43bb-b5d8-1d3160ccfe29] succeeded in 9.188396012999874s: {'status': 'done', 'output_url': '/renders/a24abf88-c349-4e8c-97a3-5b05823d65f1.mp4'}
+[2026-02-20 01:28:38,086: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/connection.py", line 1339, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/_parsers/socket.py", line 65, in _read_from_socket
+    data = sock.recv(socket_read_size)
+ConnectionResetError: [Errno 54] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 346, in start
+    blueprint.start(self)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+    ~~~~~~~~~~^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/celery/worker/consumer/consumer.py", line 788, in start
+    c.loop(*c.loop_args())
+    ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/celery/worker/loops.py", line 96, in asynloop
+    next(loop)
+    ~~~~^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/kombu/asynchronous/hub.py", line 312, in create_loop
+    poll_timeout = fire_timers(propagate=propagate) if scheduled else 1
+                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/kombu/asynchronous/hub.py", line 149, in fire_timers
+    entry()
+    ~~~~~^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/kombu/asynchronous/timer.py", line 70, in __call__
+    return self.fun(*self.args, **self.kwargs)
+           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/kombu/asynchronous/timer.py", line 137, in _reschedules
+    return fun(*args, **kwargs)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/kombu/transport/redis.py", line 564, in maybe_restore_messages
+    return channel.qos.restore_visible(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        num=channel.unacked_restore_limit,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/kombu/transport/redis.py", line 417, in restore_visible
+    with Mutex(client, self.unacked_mutex_key,
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               self.unacked_mutex_expire):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/Cellar/python@3.14/3.14.2/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/kombu/transport/redis.py", line 173, in Mutex
+    lock_acquired = lock.acquire(blocking=False)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/lock.py", line 227, in acquire
+    if self.do_acquire(token):
+       ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/lock.py", line 243, in do_acquire
+    if self.redis.set(self.name, token, nx=True, px=timeout):
+       ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/utils.py", line 493, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/commands/core.py", line 2664, in set
+    return self.execute_command("SET", *pieces, **options)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/client.py", line 716, in execute_command
+    return self._execute_command(*args, **options)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/client.py", line 736, in _execute_command
+    result = conn.retry.call_with_retry(
+        lambda: self._send_command_parse_response(
+    ...<3 lines>...
+        with_failure_count=True,
+    )
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/retry.py", line 132, in call_with_retry
+    raise error
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/retry.py", line 120, in call_with_retry
+    return do()
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/client.py", line 737, in <lambda>
+    lambda: self._send_command_parse_response(
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        conn, command_name, *args, **options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/client.py", line 682, in _send_command_parse_response
+    return self.parse_response(conn, command_name, **options)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/client.py", line 780, in parse_response
+    response = connection.read_response()
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/redis/connection.py", line 1347, in read_response
+    raise ConnectionError(f"Error while reading from {host_error} : {e.args}")
+redis.exceptions.ConnectionError: Error while reading from mainline.proxy.rlwy.net:33022 : (54, 'Connection reset by peer')

@@ -1,0 +1,301 @@
+
+> reelforge@1.0.0 dev
+> next dev --port 3000
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1732ms
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 775ms (189 modules)
+ ○ Compiling /brand-setup ...
+ ✓ Compiled /brand-setup in 4s (992 modules)
+ GET /brand-setup 200 in 4492ms
+ ✓ Compiled in 511ms (410 modules)
+ POST /brand-setup 200 in 35ms
+ POST /brand-setup 200 in 33ms
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (187kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+ ✓ Compiled /script-picker in 392ms (990 modules)
+ ✓ Compiled /theme-selector in 305ms (1002 modules)
+ ✓ Compiled /preview in 384ms (1018 modules)
+ ✓ Compiled /export in 469ms (1042 modules)
+ GET /export 200 in 148ms
+ POST /export 200 in 15ms
+ POST /export 200 in 9ms
+ ✓ Compiled in 887ms (1056 modules)
+ GET /export?_rsc=s08w6 200 in 118ms
+ ✓ Compiled in 639ms (1056 modules)
+ GET /export?_rsc=s08w6 200 in 101ms
+ GET /export 200 in 146ms
+ POST /export 200 in 11ms
+ POST /export 200 in 7ms
+ ✓ Compiled /dashboard in 471ms (1066 modules)
+ GET /dashboard?_rsc=syt8b 200 in 58ms
+ ✓ Compiled in 725ms (1062 modules)
+ ✓ Compiled /brand-setup in 433ms (624 modules)
+ GET /brand-setup 200 in 681ms
+ POST /brand-setup 200 in 13ms
+ POST /brand-setup 200 in 7ms
+ GET /export 200 in 30ms
+ POST /export 200 in 10ms
+ POST /export 200 in 7ms
+ ○ Compiling / ...
+ ✓ Compiled / in 615ms (1066 modules)
+ ✓ Compiled /sign-in/[[...sign-in]] in 439ms (1070 modules)
+ GET /sign-in/SignIn_clerk_catchall_check_1771562359163 200 in 123ms
+ ✓ Compiled in 983ms (1062 modules)
+ GET /preview?_rsc=soc9h 200 in 151ms
+ ✓ Compiled in 1070ms (1070 modules)
+ GET /export?_rsc=s08w6 200 in 127ms
+ ✓ Compiled in 558ms (1070 modules)
+ GET /export?_rsc=s08w6 200 in 38ms
+ ✓ Compiled in 313ms (1070 modules)
+ GET /export?_rsc=s08w6 200 in 39ms
+ ✓ Compiled in 518ms (1070 modules)
+ GET /export?_rsc=s08w6 200 in 30ms
+ GET /script-picker 200 in 182ms
+ POST /script-picker 200 in 42ms
+ POST /script-picker 200 in 41ms
+ ✓ Compiled in 572ms (1070 modules)
+ GET /preview?_rsc=soc9h 200 in 143ms
+ GET /export?_rsc=s08w6 200 in 149ms
+ ✓ Compiled in 535ms (1070 modules)
+ GET /preview?_rsc=soc9h 200 in 42ms
+ GET /export?_rsc=s08w6 200 in 43ms
+ ✓ Compiled in 408ms (1070 modules)
+ GET /export?_rsc=s08w6 200 in 57ms
+ GET /preview?_rsc=soc9h 200 in 57ms
+ ✓ Compiled in 634ms (1072 modules)
+ GET /export?_rsc=s08w6 200 in 42ms
+ GET /preview?_rsc=soc9h 200 in 50ms
+ ✓ Compiled in 782ms (1072 modules)
+ GET /preview?_rsc=soc9h 200 in 47ms
+ GET /export?_rsc=s08w6 200 in 48ms
+ ✓ Compiled in 612ms (1072 modules)
+ GET /export?_rsc=s08w6 200 in 70ms
+ GET /preview?_rsc=soc9h 200 in 73ms
+ ✓ Compiled in 484ms (1072 modules)
+ GET /export?_rsc=s08w6 200 in 49ms
+ GET /preview?_rsc=soc9h 200 in 51ms
+ ✓ Compiled in 298ms (1072 modules)
+ GET /export?_rsc=s08w6 200 in 47ms
+ GET /preview?_rsc=soc9h 200 in 46ms
+ ✓ Compiled in 345ms (1072 modules)
+ GET /export?_rsc=s08w6 200 in 77ms
+ GET /preview?_rsc=soc9h 200 in 80ms
+ ✓ Compiled in 571ms (1072 modules)
+ GET /preview?_rsc=soc9h 200 in 48ms
+ GET /export?_rsc=s08w6 200 in 50ms
+ GET /preview 200 in 190ms
+ POST /preview 200 in 45ms
+ POST /preview 200 in 23ms
+ ✓ Compiled in 617ms (1072 modules)
+ GET /preview?_rsc=soc9h 200 in 171ms
+ GET /export?_rsc=s08w6 200 in 173ms
+ GET /preview?_rsc=soc9h 200 in 41ms
+ GET /export 200 in 159ms
+ POST /export 200 in 15ms
+ POST /export 200 in 7ms
+ GET /export 200 in 27ms
+ POST /export 200 in 10ms
+ POST /export 200 in 8ms
+ ✓ Compiled in 777ms (1072 modules)
+ GET /preview?_rsc=soc9h 200 in 199ms
+ GET /export?_rsc=s08w6 200 in 204ms
+ GET /preview?_rsc=soc9h 200 in 15ms
+ ✓ Compiled in 437ms (1072 modules)
+ GET /preview?_rsc=soc9h 200 in 44ms
+ GET /export?_rsc=s08w6 200 in 45ms
+ GET /preview?_rsc=soc9h 200 in 13ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 788ms (629 modules)
+ ✓ Compiled in 586ms (1072 modules)
+ GET /preview 200 in 335ms
+ POST /preview 200 in 32ms
+ POST /preview 200 in 130ms
+ GET /preview 200 in 155ms
+ POST /preview 200 in 20ms
+ POST /preview 200 in 9ms
+ GET /preview 200 in 49ms
+ POST /preview 200 in 9ms
+ POST /preview 200 in 11ms
+ GET /preview 200 in 37ms
+ POST /preview 200 in 185ms
+ POST /preview 200 in 165ms
+ ✓ Compiled in 1525ms (1072 modules)
+ GET /export?_rsc=s08w6 200 in 73ms
+ GET /export?_rsc=s08w6 200 in 15ms
+ GET /export 200 in 62ms
+ POST /export 200 in 11ms
+ POST /export 200 in 7ms
+ ✓ Compiled in 543ms (1072 modules)
+ GET /export?_rsc=s08w6 200 in 36ms
+ GET /export?_rsc=s08w6 200 in 14ms
+ ✓ Compiled in 557ms (1072 modules)
+ GET /export?_rsc=s08w6 200 in 41ms
+ GET /export?_rsc=s08w6 200 in 15ms
+ ✓ Compiled in 337ms (1072 modules)
+ GET /export?_rsc=s08w6 200 in 27ms
+ GET /export?_rsc=s08w6 200 in 14ms
+ ✓ Compiled in 720ms (1072 modules)
+ GET /preview?_rsc=soc9h 200 in 109ms
+ ✓ Compiled in 555ms (1072 modules)
+ GET /preview?_rsc=soc9h 200 in 43ms
+ ✓ Compiled in 740ms (1072 modules)
+ GET /preview?_rsc=soc9h 200 in 38ms
+ ✓ Compiled in 494ms (1072 modules)
+ GET /preview?_rsc=soc9h 200 in 59ms
+ ✓ Compiled in 330ms (1072 modules)
+ GET /preview?_rsc=soc9h 200 in 53ms
+ GET /preview 200 in 190ms
+ POST /preview 200 in 13ms
+ POST /preview 200 in 10ms
+ GET /preview 200 in 39ms
+ POST /preview 200 in 13ms
+ POST /preview 200 in 90ms
+ ✓ Compiled in 2.2s (1261 modules)
+ GET /preview?_rsc=soc9h 200 in 1507ms
+ GET /preview?_rsc=soc9h 200 in 12ms
+ GET /preview?_rsc=soc9h 200 in 11ms
+ GET /preview?_rsc=soc9h 200 in 13ms
+ ✓ Compiled in 138ms (449 modules)
+ GET /preview?_rsc=soc9h 200 in 23ms
+ GET /preview?_rsc=soc9h 200 in 258ms
+ GET /preview?_rsc=soc9h 200 in 16ms
+ GET /preview?_rsc=soc9h 200 in 17ms
+ ✓ Compiled in 774ms (1247 modules)
+ GET /preview?_rsc=soc9h 200 in 36ms
+ GET /preview?_rsc=soc9h 200 in 14ms
+ GET /preview 200 in 198ms
+ POST /preview 200 in 11ms
+ POST /preview 200 in 11ms
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+ ○ Compiling /render-slide/[jobId]/[slideIndex] ...
+ ✓ Compiled /render-slide/[jobId]/[slideIndex] in 1005ms (1078 modules)
+ GET /preview?_rsc=soc9h 200 in 93ms
+ GET /export?_rsc=s08w6 200 in 99ms
+ GET /render-slide/bb3a45cf-a20e-4166-b97c-21af6ceca004/0 200 in 2184ms
+ POST /render-slide/bb3a45cf-a20e-4166-b97c-21af6ceca004/0 200 in 13ms
+ POST /render-slide/bb3a45cf-a20e-4166-b97c-21af6ceca004/0 200 in 9ms
+ ✓ Compiled in 532ms (1074 modules)
+ GET /export?_rsc=s08w6 200 in 109ms
+ GET /preview?_rsc=soc9h 200 in 110ms
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+ GET /render-slide/test-job-123/0 200 in 134ms
+ POST /render-slide/test-job-123/0 200 in 18ms
+ ✓ Compiled /api/render-frame-data/[jobId] in 184ms (629 modules)
+ POST /render-slide/test-job-123/0 200 in 475ms
+ GET /api/render-frame-data/test-job-123 200 in 940ms
+ GET /api/render-frame-data/test-job-123 200 in 6ms
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+ GET /render-slide/playwright-realtest-001/0 200 in 82ms
+ GET /api/render-frame-data/playwright-realtest-001 200 in 13ms
+ POST /render-slide/playwright-realtest-001/0 200 in 15ms
+ GET /api/render-frame-data/playwright-realtest-001 200 in 7ms
+ POST /render-slide/playwright-realtest-001/0 200 in 10ms
+ GET /render-slide/playwright-realtest-001/1 200 in 22ms
+ GET /api/render-frame-data/playwright-realtest-001 200 in 13ms
+ POST /render-slide/playwright-realtest-001/1 200 in 18ms
+ GET /api/render-frame-data/playwright-realtest-001 200 in 10ms
+ POST /render-slide/playwright-realtest-001/1 200 in 12ms
+ GET /export 200 in 46ms
+ POST /export 200 in 11ms
+ POST /export 200 in 9ms
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+ GET /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/0 200 in 25ms
+ POST /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/0 200 in 13ms
+ GET /api/render-frame-data/40d02df7-e844-4c4f-985e-358b1a65a10a 200 in 20ms
+ GET /api/render-frame-data/40d02df7-e844-4c4f-985e-358b1a65a10a 200 in 10ms
+ POST /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/0 200 in 17ms
+ GET /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/1 200 in 29ms
+ GET /api/render-frame-data/40d02df7-e844-4c4f-985e-358b1a65a10a 200 in 17ms
+ POST /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/1 200 in 22ms
+ GET /api/render-frame-data/40d02df7-e844-4c4f-985e-358b1a65a10a 200 in 13ms
+ POST /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/1 200 in 15ms
+ GET /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/2 200 in 26ms
+ GET /api/render-frame-data/40d02df7-e844-4c4f-985e-358b1a65a10a 200 in 18ms
+ POST /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/2 200 in 24ms
+ GET /api/render-frame-data/40d02df7-e844-4c4f-985e-358b1a65a10a 200 in 15ms
+ POST /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/2 200 in 16ms
+ GET /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/3 200 in 26ms
+ GET /api/render-frame-data/40d02df7-e844-4c4f-985e-358b1a65a10a 200 in 22ms
+ POST /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/3 200 in 30ms
+ GET /api/render-frame-data/40d02df7-e844-4c4f-985e-358b1a65a10a 200 in 13ms
+ POST /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/3 200 in 21ms
+ GET /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/4 200 in 26ms
+ GET /api/render-frame-data/40d02df7-e844-4c4f-985e-358b1a65a10a 200 in 18ms
+ POST /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/4 200 in 21ms
+ GET /api/render-frame-data/40d02df7-e844-4c4f-985e-358b1a65a10a 200 in 15ms
+ POST /render-slide/40d02df7-e844-4c4f-985e-358b1a65a10a/4 200 in 17ms
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+ GET /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/0 200 in 23ms
+ GET /api/render-frame-data/fcfcc5ab-8420-43c6-9310-0bff4300240f 200 in 16ms
+ POST /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/0 200 in 19ms
+ GET /api/render-frame-data/fcfcc5ab-8420-43c6-9310-0bff4300240f 200 in 9ms
+ POST /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/0 200 in 14ms
+ GET /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/1 200 in 22ms
+ GET /api/render-frame-data/fcfcc5ab-8420-43c6-9310-0bff4300240f 200 in 15ms
+ POST /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/1 200 in 18ms
+ GET /api/render-frame-data/fcfcc5ab-8420-43c6-9310-0bff4300240f 200 in 12ms
+ POST /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/1 200 in 15ms
+ GET /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/2 200 in 27ms
+ GET /api/render-frame-data/fcfcc5ab-8420-43c6-9310-0bff4300240f 200 in 17ms
+ POST /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/2 200 in 21ms
+ GET /api/render-frame-data/fcfcc5ab-8420-43c6-9310-0bff4300240f 200 in 15ms
+ POST /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/2 200 in 15ms
+ GET /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/3 200 in 21ms
+ GET /api/render-frame-data/fcfcc5ab-8420-43c6-9310-0bff4300240f 200 in 15ms
+ POST /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/3 200 in 21ms
+ GET /api/render-frame-data/fcfcc5ab-8420-43c6-9310-0bff4300240f 200 in 10ms
+ POST /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/3 200 in 12ms
+ GET /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/4 200 in 22ms
+ GET /api/render-frame-data/fcfcc5ab-8420-43c6-9310-0bff4300240f 200 in 16ms
+ POST /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/4 200 in 19ms
+ GET /api/render-frame-data/fcfcc5ab-8420-43c6-9310-0bff4300240f 200 in 9ms
+ POST /render-slide/fcfcc5ab-8420-43c6-9310-0bff4300240f/4 200 in 14ms
+ ✓ Compiled / in 393ms (642 modules)
+ GET /?_rsc=1p60s 200 in 35ms
+ ✓ Compiled /sign-in/[[...sign-in]] in 202ms (645 modules)
+ GET /sign-in?_rsc=kfnmt 200 in 18ms
+ GET /sign-in/SignIn_clerk_catchall_check_1771711066572 200 in 86ms
+ ✓ Compiled /brand-setup in 286ms (649 modules)
+ ✓ Compiled in 921ms (1074 modules)
+ GET /script-picker?_rsc=n1hh6 200 in 186ms
+ ✓ Compiled in 452ms (1074 modules)
+ GET /script-picker?_rsc=n1hh6 200 in 38ms
+ ⨯ ./src/components/ReelPreview.tsx
+Error: 
+  [31mx[0m Unexpected token `div`. Expected jsx identifier
+     ,-[[36;1;4m/Users/wiz/Desktop/ReelForge/src/components/ReelPreview.tsx[0m:163:1]
+ [2m163[0m |     }, [animState, currentSlide, autoPlay, forceSlide, isLogoSlide, slideText, voiceId]);
+ [2m164[0m | 
+ [2m165[0m |     return (
+ [2m166[0m |         <div className="relative mx-auto overflow-hidden rounded-3xl select-none" style={{ width: 270, height: 480, background: theme.bgGradient }}>
+     : [31;1m         ^^^[0m
+ [2m167[0m |             {/* Watermark photo */}
+ [2m168[0m |             {watermarkUrl && (
+ [2m169[0m |                 /* eslint-disable-next-line @next/next/no-img-element */
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/ReelPreview.tsx
+./src/app/preview/page.tsx
+ ✓ Compiled in 622ms (1074 modules)
+ GET /script-picker?_rsc=n1hh6 200 in 117ms
+ ✓ Compiled in 436ms (1074 modules)
+ GET /script-picker?_rsc=n1hh6 200 in 29ms
+ ✓ Compiled in 554ms (1074 modules)
+ GET /script-picker?_rsc=n1hh6 200 in 48ms
+ ✓ Compiled in 478ms (1074 modules)
+ GET /script-picker?_rsc=n1hh6 200 in 39ms
+ ✓ Compiled in 438ms (1074 modules)
+ GET /script-picker?_rsc=n1hh6 200 in 34ms
+ ✓ Compiled in 394ms (1074 modules)
+ GET /script-picker?_rsc=n1hh6 200 in 40ms
+ ✓ Compiled in 312ms (1074 modules)
+ GET /script-picker?_rsc=n1hh6 200 in 29ms

@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from config import settings
 from db.database import engine
 from db.models import Base
-from routes import brands, scripts, render
+from routes import brands, scripts, render, tts, webhooks
 
 
 @asynccontextmanager
@@ -15,9 +15,6 @@ async def lifespan(app: FastAPI):
     # Create DB tables on startup (in production use Alembic migrations)
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-
-    # Ensure render output dir exists
-    os.makedirs(settings.RENDER_OUTPUT_DIR, exist_ok=True)
 
     yield
 
@@ -42,10 +39,12 @@ app.add_middleware(
 app.include_router(brands.router)
 app.include_router(scripts.router)
 app.include_router(render.router)
+app.include_router(tts.router)
+app.include_router(webhooks.router)
 
 # Serve rendered MP4s locally (for dev; in prod use Vercel Blob URLs)
-if os.path.exists(settings.RENDER_OUTPUT_DIR):
-    app.mount("/renders", StaticFiles(directory=settings.RENDER_OUTPUT_DIR), name="renders")
+os.makedirs(settings.RENDER_OUTPUT_DIR, exist_ok=True)
+app.mount("/renders", StaticFiles(directory=settings.RENDER_OUTPUT_DIR), name="renders")
 
 
 @app.get("/health")

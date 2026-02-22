@@ -19,17 +19,20 @@ export default function ExportPage() {
     const router = useRouter();
     const { getToken } = useAuth();
     const [brand, setBrand] = useState<{ brandName: string } | null>(null);
-    const [script, setScript] = useState<{ title: string; slides: string[] } | null>(null);
+    const [script, setScript] = useState<{ title: string; slides: string[]; outroVoiceover?: string } | null>(null);
     const [theme, setTheme] = useState("dark");
+    const [audio, setAudio] = useState<{ musicPreview: string | null; aiVoice: string | null }>({ musicPreview: null, aiVoice: null });
     const [job, setJob] = useState<JobState>({ id: null, status: "idle", outputUrl: null, errorMsg: null });
 
     useEffect(() => {
         const b = localStorage.getItem("reelforge_brand");
         const s = localStorage.getItem("reelforge_script");
         const t = localStorage.getItem("reelforge_theme");
+        const a = localStorage.getItem("reelforge_audio");
         if (b) setBrand(JSON.parse(b));
         if (s) setScript(JSON.parse(s));
         if (t) setTheme(t);
+        if (a) setAudio(JSON.parse(a));
     }, []);
 
     const pollStatus = useCallback(async (jobId: string, token: string) => {
@@ -54,6 +57,17 @@ export default function ExportPage() {
                 slides: script.slides,
                 theme,
                 script_title: script.title,
+                watermark_opacity: (brand as any).watermarkOpacity ?? 18,
+                logo_position: (brand as any).logoPosition ?? "bottom_center",
+                logo_size: (brand as any).logoSize ?? 120,
+                qr_code_url: (brand as any).qrCodePreview,
+                qr_text: (brand as any).qrCodeText ?? "",
+                logo_url: (brand as any).logoPreview,
+                watermark_url: (brand as any).watermarkPreview,
+                website_url: (brand as any).websiteUrl,
+                music_url: audio.musicPreview,
+                ai_voice_id: audio.aiVoice,
+                outro_voiceover: script.outroVoiceover,
             };
 
             const res = await fetch(`${apiBase}/render/create`, {
@@ -74,8 +88,19 @@ export default function ExportPage() {
             const jobId = data.id;
             setJob((prev) => ({ ...prev, id: jobId, status: data.status }));
 
-            // Poll every 3 seconds
+            // Poll every 3 seconds, with a 5-minute timeout (100 attempts)
+            let attempts = 0;
+            const MAX_ATTEMPTS = 100; // 100 × 3s = 5 minutes
             const poll = async () => {
+                attempts++;
+                if (attempts > MAX_ATTEMPTS) {
+                    setJob((prev) => ({
+                        ...prev,
+                        status: "failed",
+                        errorMsg: "Render timed out after 5 minutes. Make sure your Celery worker is running: celery -A worker.celery_app worker --loglevel=info",
+                    }));
+                    return;
+                }
                 try {
                     const statusData = await pollStatus(jobId, token || "");
                     setJob((prev) => ({
@@ -137,6 +162,7 @@ export default function ExportPage() {
                             ["Theme", theme.replace("-", " ")],
                             ["Slides", `${script.slides.length + 1} (+ logo slide)`],
                             ["Output", "1080 × 1920 · H.264 · MP4"],
+                            ["Audio", `${audio.musicPreview ? "Music " : ""}${audio.aiVoice ? "AI-Voice" : ""}` || "None"],
                         ].map(([k, v]) => (
                             <div key={k} className="flex justify-between text-sm">
                                 <span style={{ color: "#64748b" }}>{k}</span>
@@ -185,14 +211,24 @@ export default function ExportPage() {
                         🎬 Render MP4
                     </button>
                 ) : job.status === "done" && job.outputUrl ? (
-                    <a
-                        href={job.outputUrl}
-                        download={`${brand?.brandName || "reel"}-reel.mp4`}
-                        className="btn-primary w-full justify-center py-4 text-base mb-4 inline-flex text-center"
-                    >
-                        <Download className="w-5 h-5" />
-                        Download MP4
-                    </a>
+                    <div className="flex flex-col gap-4 w-full">
+                        <div className="w-full flex justify-center bg-black/40 rounded-xl overflow-hidden mb-4 relative" style={{ aspectRatio: "9/16", maxHeight: "60vh" }}>
+                            <video
+                                src={`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}${job.outputUrl}`}
+                                controls
+                                autoPlay
+                                className="w-full h-full object-contain"
+                            />
+                        </div>
+                        <a
+                            href={`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}${job.outputUrl}`}
+                            download={`${brand?.brandName || "reel"}-reel.mp4`}
+                            className="btn-primary w-full justify-center py-4 text-base mb-4 inline-flex text-center"
+                        >
+                            <Download className="w-5 h-5" />
+                            Download MP4
+                        </a>
+                    </div>
                 ) : (
                     <div
                         className="w-full py-4 text-center rounded-xl text-sm font-medium mb-4"

@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     FRONTEND_URL: str = "http://localhost:3000"
     RENDER_OUTPUT_DIR: str = "/tmp/reelforge_renders"
     QR_DEFAULT_URL: str = "https://checkwellcare.com"
+    ELEVENLABS_API_KEY: str = ""
 
 
 settings = Settings()

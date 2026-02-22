@@ -19,7 +19,7 @@ from video.renderer import RenderEngine
 
 # Use synchronous engine for Celery worker
 sync_engine = create_engine(
-    settings.DATABASE_URL.replace("+asyncpg", "+psycopg2"),
+    settings.DATABASE_URL.replace("+asyncpg", "+psycopg"),
     pool_pre_ping=True,
 )
 SyncSession = sessionmaker(bind=sync_engine)
@@ -49,6 +49,11 @@ def render_reel_task(self, job_id: str):
                 logo_url=job.logo_url_snapshot,
                 watermark_url=job.watermark_url_snapshot,
                 website_url=job.website_url_snapshot or settings.QR_DEFAULT_URL,
+                watermark_opacity=job.watermark_opacity,
+                logo_position=job.logo_position,
+                qr_code_url=job.qr_code_url_snapshot,
+                music_url=job.music_url_snapshot,
+                ai_voice_id=job.ai_voice_snapshot,
             )
 
             # For production: upload to Vercel Blob and get URL

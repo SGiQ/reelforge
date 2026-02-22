@@ -1,7 +1,7 @@
 import uuid
 import enum
 from datetime import datetime
-from sqlalchemy import String, Text, Boolean, DateTime, ForeignKey, Enum as SAEnum
+from sqlalchemy import String, Text, Boolean, DateTime, ForeignKey, Enum as SAEnum, Integer
 from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
@@ -61,6 +61,16 @@ class RenderJob(Base):
     logo_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     watermark_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     website_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # New configurations
+    watermark_opacity: Mapped[int] = mapped_column(default=18)
+    logo_position: Mapped[str] = mapped_column(String(50), default="bottom_center")
+    logo_size_snapshot: Mapped[int] = mapped_column(Integer, default=120)
+    qr_code_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
+    qr_text_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
+    music_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
+    ai_voice_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
+    outro_voiceover_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
+
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
 

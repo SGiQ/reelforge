@@ -16,4 +16,17 @@ celery_app.conf.update(
     enable_utc=True,
     task_track_started=True,
     worker_max_tasks_per_child=50,
+    task_default_queue="reelforge_dev",
+    # Prevent silent Redis disconnections
+    broker_heartbeat=10,
+    broker_heartbeat_checkrate=2,
+    broker_connection_retry=True,
+    broker_connection_retry_on_startup=True,
+    broker_connection_max_retries=None,   # retry forever
+    broker_transport_options={
+        "visibility_timeout": 3600,       # 1 hour
+        "socket_timeout": 30,
+        "socket_connect_timeout": 30,
+        "socket_keepalive": True,
+    },
 )

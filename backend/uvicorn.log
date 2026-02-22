@@ -1,0 +1,880 @@
+INFO:     Will watch for changes in these directories: ['/Users/wiz/Desktop/ReelForge/backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [32355] using WatchFiles
+INFO:     Started server process [32398]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53496 - "OPTIONS /render/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53497 - "OPTIONS /render/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53497 - "GET /render/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53496 - "GET /render/history HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32398]
+INFO:     Started server process [32643]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53648 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53648 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:53648 - "OPTIONS /render/c4d23e2b-718d-46a4-ad08-3d5a07574075/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53648 - "GET /render/c4d23e2b-718d-46a4-ad08-3d5a07574075/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53648 - "GET /render/c4d23e2b-718d-46a4-ad08-3d5a07574075/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53666 - "GET /renders/c4d23e2b-718d-46a4-ad08-3d5a07574075.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:53683 - "GET /renders/c4d23e2b-718d-46a4-ad08-3d5a07574075.mp4 HTTP/1.1" 304 Not Modified
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32643]
+INFO:     Started server process [33335]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53829 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53829 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:53829 - "OPTIONS /render/7ee9c3b4-1855-476c-96d9-a6796c163815/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53829 - "GET /render/7ee9c3b4-1855-476c-96d9-a6796c163815/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53829 - "GET /render/7ee9c3b4-1855-476c-96d9-a6796c163815/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53829 - "GET /render/7ee9c3b4-1855-476c-96d9-a6796c163815/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53829 - "GET /render/7ee9c3b4-1855-476c-96d9-a6796c163815/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53852 - "GET /renders/7ee9c3b4-1855-476c-96d9-a6796c163815.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:53870 - "GET /renders/7ee9c3b4-1855-476c-96d9-a6796c163815.mp4 HTTP/1.1" 304 Not Modified
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33335]
+INFO:     Started server process [34632]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53939 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:53939 - "OPTIONS /render/d9c94671-9c60-4439-b895-c7791f4287e2/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53939 - "GET /render/d9c94671-9c60-4439-b895-c7791f4287e2/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53939 - "GET /render/d9c94671-9c60-4439-b895-c7791f4287e2/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53939 - "GET /render/d9c94671-9c60-4439-b895-c7791f4287e2/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53939 - "GET /render/d9c94671-9c60-4439-b895-c7791f4287e2/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53962 - "GET /renders/d9c94671-9c60-4439-b895-c7791f4287e2.mp4 HTTP/1.1" 206 Partial Content
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [34632]
+INFO:     Started server process [35063]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'routes/render.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [35063]
+INFO:     Started server process [35584]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [35584]
+INFO:     Started server process [35598]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [35598]
+INFO:     Started server process [36207]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [36207]
+INFO:     Started server process [36228]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [36228]
+INFO:     Started server process [37131]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54671 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54671 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:54671 - "OPTIONS /render/79beab15-de4e-41d0-9a66-117c61692585/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54671 - "GET /render/79beab15-de4e-41d0-9a66-117c61692585/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54671 - "GET /render/79beab15-de4e-41d0-9a66-117c61692585/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54671 - "GET /render/79beab15-de4e-41d0-9a66-117c61692585/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54692 - "GET /renders/79beab15-de4e-41d0-9a66-117c61692585.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:54700 - "GET /renders/79beab15-de4e-41d0-9a66-117c61692585.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54704 - "GET /renders/d9c94671-9c60-4439-b895-c7791f4287e2.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54730 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:54730 - "OPTIONS /render/65f72405-aaec-4db0-a472-fc771061a44d/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54730 - "GET /render/65f72405-aaec-4db0-a472-fc771061a44d/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54730 - "GET /render/65f72405-aaec-4db0-a472-fc771061a44d/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54730 - "GET /render/65f72405-aaec-4db0-a472-fc771061a44d/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54749 - "GET /renders/65f72405-aaec-4db0-a472-fc771061a44d.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:54754 - "GET /renders/65f72405-aaec-4db0-a472-fc771061a44d.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54754 - "GET /renders/65f72405-aaec-4db0-a472-fc771061a44d.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54756 - "GET /renders/65f72405-aaec-4db0-a472-fc771061a44d.mp4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54787 - "GET /renders/65f72405-aaec-4db0-a472-fc771061a44d.mp4 HTTP/1.1" 304 Not Modified
+WARNING:  WatchFiles detected changes in 'routes/render.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37131]
+INFO:     Started server process [37732]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37732]
+INFO:     Started server process [37750]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37750]
+INFO:     Started server process [37765]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37765]
+INFO:     Started server process [37778]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55092 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55092 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:55092 - "OPTIONS /render/a24abf88-c349-4e8c-97a3-5b05823d65f1/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55092 - "GET /render/a24abf88-c349-4e8c-97a3-5b05823d65f1/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55092 - "GET /render/a24abf88-c349-4e8c-97a3-5b05823d65f1/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55092 - "GET /render/a24abf88-c349-4e8c-97a3-5b05823d65f1/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55112 - "GET /renders/a24abf88-c349-4e8c-97a3-5b05823d65f1.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:55114 - "GET /renders/a24abf88-c349-4e8c-97a3-5b05823d65f1.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:55114 - "GET /renders/a24abf88-c349-4e8c-97a3-5b05823d65f1.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55114 - "GET /renders/a24abf88-c349-4e8c-97a3-5b05823d65f1.mp4 HTTP/1.1" 206 Partial Content
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37778]
+INFO:     Started server process [39584]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57164 - "OPTIONS /render/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57166 - "OPTIONS /render/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57164 - "GET /render/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57166 - "GET /render/history HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:57187 - "OPTIONS /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "OPTIONS /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57187 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'worker/celery_app.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [39584]
+INFO:     Started server process [43673]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57398 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/4f4e9524-ed67-4014-8ea6-601f789a1ab0/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57393 - "GET /render/50c595ba-afef-46e6-8a5f-e88c06d7c412/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57612 - "GET /renders/50c595ba-afef-46e6-8a5f-e88c06d7c412.mp4 HTTP/1.1" 206 Partial Content
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [43673]
+INFO:     Started server process [44102]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [44102]
+INFO:     Started server process [44141]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [44141]
+INFO:     Started server process [45295]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61947 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:61947 - "OPTIONS /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'routes/render.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for connections to close. (CTRL+C to force quit)
+INFO:     127.0.0.1:61947 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     Waiting for background tasks to complete. (CTRL+C to force quit)
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [45295]
+INFO:     Started server process [53532]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62094 - "GET /render/70df3610-1618-411f-abc0-50bed9c58983/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62166 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62166 - "OPTIONS /render/2f94f8bc-0031-4c67-afd8-f5a09f11129a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62166 - "GET /render/2f94f8bc-0031-4c67-afd8-f5a09f11129a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62166 - "GET /render/2f94f8bc-0031-4c67-afd8-f5a09f11129a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62166 - "GET /render/2f94f8bc-0031-4c67-afd8-f5a09f11129a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62166 - "GET /render/2f94f8bc-0031-4c67-afd8-f5a09f11129a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62186 - "GET /renders/2f94f8bc-0031-4c67-afd8-f5a09f11129a.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62247 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62247 - "OPTIONS /render/3b75f332-d26c-4c5b-8c5a-e146c314f157/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62247 - "GET /render/3b75f332-d26c-4c5b-8c5a-e146c314f157/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62247 - "GET /render/3b75f332-d26c-4c5b-8c5a-e146c314f157/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62247 - "GET /render/3b75f332-d26c-4c5b-8c5a-e146c314f157/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62247 - "GET /render/3b75f332-d26c-4c5b-8c5a-e146c314f157/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62247 - "GET /render/3b75f332-d26c-4c5b-8c5a-e146c314f157/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62268 - "GET /renders/3b75f332-d26c-4c5b-8c5a-e146c314f157.mp4 HTTP/1.1" 206 Partial Content
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [53532]
+INFO:     Started server process [59256]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:62362 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62362 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62362 - "OPTIONS /render/96035ab2-5ce6-4a7c-a5f1-3b9d4656ce65/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62362 - "GET /render/96035ab2-5ce6-4a7c-a5f1-3b9d4656ce65/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62362 - "GET /render/96035ab2-5ce6-4a7c-a5f1-3b9d4656ce65/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62362 - "GET /render/96035ab2-5ce6-4a7c-a5f1-3b9d4656ce65/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62362 - "GET /render/96035ab2-5ce6-4a7c-a5f1-3b9d4656ce65/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62385 - "GET /renders/96035ab2-5ce6-4a7c-a5f1-3b9d4656ce65.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62387 - "GET /renders/96035ab2-5ce6-4a7c-a5f1-3b9d4656ce65.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62387 - "GET /renders/96035ab2-5ce6-4a7c-a5f1-3b9d4656ce65.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:62410 - "POST /render/create HTTP/1.1" 202 Accepted
+TTS failed for slide 0: headers: {'date': 'Sat, 21 Feb 2026 20:49:51 GMT', 'server': 'uvicorn', 'content-length': '203', 'content-type': 'application/json', 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': 'POST, PATCH, OPTIONS, DELETE, GET, PUT', 'access-control-max-age': '600', 'strict-transport-security': 'max-age=1800;', 'x-trace-id': '7d505a0ccb78ca709bdb5f39a7f3e658', 'x-region': 'us-central1', 'via': '1.1 google', 'alt-svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'}, status_code: 404, body: {'detail': {'type': 'not_found', 'code': 'voice_not_found', 'message': "A voice with voice_id 'pNInz6obpgDQGcFmaJcg' was not found.", 'status': 'voice_not_found', 'request_id': '7d505a0ccb78ca709bdb5f39a7f3e658'}}
+TTS failed for slide 1: headers: {'date': 'Sat, 21 Feb 2026 20:49:52 GMT', 'server': 'uvicorn', 'content-length': '203', 'content-type': 'application/json', 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': 'POST, PATCH, OPTIONS, DELETE, GET, PUT', 'access-control-max-age': '600', 'strict-transport-security': 'max-age=1800;', 'x-trace-id': '39dd0ecd430839b055b8922d2260c77d', 'x-region': 'us-central1', 'via': '1.1 google', 'alt-svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'}, status_code: 404, body: {'detail': {'type': 'not_found', 'code': 'voice_not_found', 'message': "A voice with voice_id 'pNInz6obpgDQGcFmaJcg' was not found.", 'status': 'voice_not_found', 'request_id': '39dd0ecd430839b055b8922d2260c77d'}}
+INFO:     127.0.0.1:62410 - "OPTIONS /render/b248943a-e8eb-4314-ab52-d74b62df7f1b/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62410 - "GET /render/b248943a-e8eb-4314-ab52-d74b62df7f1b/status HTTP/1.1" 200 OK
+TTS failed for slide 2: headers: {'date': 'Sat, 21 Feb 2026 20:49:52 GMT', 'server': 'uvicorn', 'content-length': '203', 'content-type': 'application/json', 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': 'POST, PATCH, OPTIONS, DELETE, GET, PUT', 'access-control-max-age': '600', 'strict-transport-security': 'max-age=1800;', 'x-trace-id': 'dd2ec17c8acf2bafb36681e3049bab72', 'x-region': 'us-central1', 'via': '1.1 google', 'alt-svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'}, status_code: 404, body: {'detail': {'type': 'not_found', 'code': 'voice_not_found', 'message': "A voice with voice_id 'pNInz6obpgDQGcFmaJcg' was not found.", 'status': 'voice_not_found', 'request_id': 'dd2ec17c8acf2bafb36681e3049bab72'}}
+TTS failed for slide 3: headers: {'date': 'Sat, 21 Feb 2026 20:49:53 GMT', 'server': 'uvicorn', 'content-length': '203', 'content-type': 'application/json', 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': 'POST, PATCH, OPTIONS, DELETE, GET, PUT', 'access-control-max-age': '600', 'strict-transport-security': 'max-age=1800;', 'x-trace-id': 'c0c7caf1e031b1306577bccd835f91ec', 'x-region': 'us-central1', 'via': '1.1 google', 'alt-svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'}, status_code: 404, body: {'detail': {'type': 'not_found', 'code': 'voice_not_found', 'message': "A voice with voice_id 'pNInz6obpgDQGcFmaJcg' was not found.", 'status': 'voice_not_found', 'request_id': 'c0c7caf1e031b1306577bccd835f91ec'}}
+TTS failed for slide 4: headers: {'date': 'Sat, 21 Feb 2026 20:49:54 GMT', 'server': 'uvicorn', 'content-length': '203', 'content-type': 'application/json', 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': 'POST, PATCH, OPTIONS, DELETE, GET, PUT', 'access-control-max-age': '600', 'strict-transport-security': 'max-age=1800;', 'x-trace-id': 'abf2455915507aa2c09c247aac938c65', 'x-region': 'us-central1', 'via': '1.1 google', 'alt-svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'}, status_code: 404, body: {'detail': {'type': 'not_found', 'code': 'voice_not_found', 'message': "A voice with voice_id 'pNInz6obpgDQGcFmaJcg' was not found.", 'status': 'voice_not_found', 'request_id': 'abf2455915507aa2c09c247aac938c65'}}
+INFO:     127.0.0.1:62410 - "GET /render/b248943a-e8eb-4314-ab52-d74b62df7f1b/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62410 - "GET /render/b248943a-e8eb-4314-ab52-d74b62df7f1b/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62427 - "GET /renders/b248943a-e8eb-4314-ab52-d74b62df7f1b.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62502 - "GET /renders/b248943a-e8eb-4314-ab52-d74b62df7f1b.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:62512 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62512 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62512 - "OPTIONS /render/ff72cdfd-4b55-41d8-a3f1-063e4821f761/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62512 - "GET /render/ff72cdfd-4b55-41d8-a3f1-063e4821f761/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62512 - "GET /render/ff72cdfd-4b55-41d8-a3f1-063e4821f761/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62512 - "GET /render/ff72cdfd-4b55-41d8-a3f1-063e4821f761/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62512 - "GET /render/ff72cdfd-4b55-41d8-a3f1-063e4821f761/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62512 - "GET /render/ff72cdfd-4b55-41d8-a3f1-063e4821f761/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62541 - "GET /renders/ff72cdfd-4b55-41d8-a3f1-063e4821f761.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62543 - "GET /renders/ff72cdfd-4b55-41d8-a3f1-063e4821f761.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62543 - "GET /renders/ff72cdfd-4b55-41d8-a3f1-063e4821f761.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:62543 - "GET /renders/ff72cdfd-4b55-41d8-a3f1-063e4821f761.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62546 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62546 - "OPTIONS /render/2510dffb-6b89-426a-b014-856fb1ac6323/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62546 - "GET /render/2510dffb-6b89-426a-b014-856fb1ac6323/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62546 - "GET /render/2510dffb-6b89-426a-b014-856fb1ac6323/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62546 - "GET /render/2510dffb-6b89-426a-b014-856fb1ac6323/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62546 - "GET /render/2510dffb-6b89-426a-b014-856fb1ac6323/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62566 - "GET /renders/2510dffb-6b89-426a-b014-856fb1ac6323.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62568 - "GET /renders/2510dffb-6b89-426a-b014-856fb1ac6323.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62570 - "GET /renders/2510dffb-6b89-426a-b014-856fb1ac6323.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:62570 - "GET /renders/2510dffb-6b89-426a-b014-856fb1ac6323.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62573 - "GET /renders/2510dffb-6b89-426a-b014-856fb1ac6323.mp4 HTTP/1.1" 304 Not Modified
+WARNING:  WatchFiles detected changes in 'routes/render.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59256]
+INFO:     Started server process [61304]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'routes/tts.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [61304]
+WARNING:  WatchFiles detected changes in 'routes/tts.py'. Reloading...
+INFO:     Started server process [61465]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [61465]
+INFO:     Started server process [61476]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [61476]
+INFO:     Started server process [61488]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:62675 - "OPTIONS /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62675 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62679 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62679 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62679 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62679 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62691 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62691 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62691 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62691 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62691 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62702 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62702 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62702 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62702 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62702 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62712 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62712 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62712 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62712 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62712 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62721 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62721 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62721 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62721 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62721 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62730 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62730 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62730 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62730 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62730 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62775 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62775 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62779 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62779 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62779 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62779 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62779 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62792 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62792 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62792 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62798 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62798 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62798 - "OPTIONS /render/a40971c6-f056-48cf-9098-750265f2b36c/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62798 - "GET /render/a40971c6-f056-48cf-9098-750265f2b36c/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62798 - "GET /render/a40971c6-f056-48cf-9098-750265f2b36c/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62798 - "GET /render/a40971c6-f056-48cf-9098-750265f2b36c/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62798 - "GET /render/a40971c6-f056-48cf-9098-750265f2b36c/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62798 - "GET /render/a40971c6-f056-48cf-9098-750265f2b36c/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62819 - "GET /renders/a40971c6-f056-48cf-9098-750265f2b36c.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62821 - "GET /renders/a40971c6-f056-48cf-9098-750265f2b36c.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62823 - "GET /renders/a40971c6-f056-48cf-9098-750265f2b36c.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:62823 - "GET /renders/a40971c6-f056-48cf-9098-750265f2b36c.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:62830 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62830 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62854 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62854 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62854 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62854 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62854 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62865 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:62865 - "OPTIONS /render/250d93bd-ba3b-44fc-abb5-e993185e36bf/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62865 - "GET /render/250d93bd-ba3b-44fc-abb5-e993185e36bf/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62865 - "GET /render/250d93bd-ba3b-44fc-abb5-e993185e36bf/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62865 - "GET /render/250d93bd-ba3b-44fc-abb5-e993185e36bf/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62865 - "GET /render/250d93bd-ba3b-44fc-abb5-e993185e36bf/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62865 - "GET /render/250d93bd-ba3b-44fc-abb5-e993185e36bf/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62865 - "GET /render/250d93bd-ba3b-44fc-abb5-e993185e36bf/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62865 - "GET /render/250d93bd-ba3b-44fc-abb5-e993185e36bf/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62889 - "GET /renders/250d93bd-ba3b-44fc-abb5-e993185e36bf.mp4 HTTP/1.1" 206 Partial Content
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [61488]
+INFO:     Started server process [65654]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:63003 - "OPTIONS /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63003 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63003 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63016 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63016 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63016 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63016 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63016 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63042 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63042 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:63042 - "OPTIONS /render/87d81492-44dc-41de-b7de-d2e79032b039/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63042 - "GET /render/87d81492-44dc-41de-b7de-d2e79032b039/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63042 - "GET /render/87d81492-44dc-41de-b7de-d2e79032b039/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63042 - "GET /render/87d81492-44dc-41de-b7de-d2e79032b039/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63042 - "GET /render/87d81492-44dc-41de-b7de-d2e79032b039/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63063 - "GET /renders/87d81492-44dc-41de-b7de-d2e79032b039.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63065 - "GET /renders/87d81492-44dc-41de-b7de-d2e79032b039.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63065 - "GET /renders/87d81492-44dc-41de-b7de-d2e79032b039.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:63065 - "GET /renders/87d81492-44dc-41de-b7de-d2e79032b039.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63069 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63069 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63069 - "POST /tts/preview HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in '.venv/lib/python3.14/site-packages/playwright/_impl/_str_utils.py', '.venv/lib/python3.14/site-packages/playwright/_impl/__pyinstaller/hook-playwright.sync_api.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_artifact.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_js_handle.py', '.venv/lib/python3.14/site-packages/pyee/twisted.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_clock.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_event_context_manager.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_driver.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_video.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_set_input_files_helpers.py', '.venv/lib/python3.14/site-packages/playwright/__init__.py', '.venv/lib/python3.14/site-packages/playwright/async_api/_generated.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_element_handle.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_transport.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_playwright.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_json_pipe.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_browser.py', '.venv/lib/python3.14/site-packages/playwright/_impl/__pyinstaller/__init__.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_assertions.py', '.venv/lib/python3.14/site-packages/pyee/uplift.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_map.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_browser_type.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_helper.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_file_chooser.py', '.venv/lib/python3.14/site-packages/pyee/cls.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_page.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_glob.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_async_base.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_local_utils.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_console_message.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_har_router.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_dialog.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_download.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_stream.py', '.venv/lib/python3.14/site-packages/pyee/__init__.py', '.venv/lib/python3.14/site-packages/playwright/_impl/__init__.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_path_utils.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_input.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_sync_base.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_fetch.py', '.venv/lib/python3.14/site-packages/pyee/executor.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_object_factory.py', '.venv/lib/python3.14/site-packages/pyee/base.py', '.venv/lib/python3.14/site-packages/playwright/__main__.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_locator.py', '.venv/lib/python3.14/site-packages/playwright/async_api/_context_manager.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_impl_to_api_mapping.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_browser_context.py', '.venv/lib/python3.14/site-packages/playwright/async_api/__init__.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_cdp_session.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_frame.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_network.py', '.venv/lib/python3.14/site-packages/pyee/trio.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_greenlets.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_waiter.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_api_structures.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_web_error.py', '.venv/lib/python3.14/site-packages/pyee/asyncio.py', '.venv/lib/python3.14/site-packages/playwright/_repo_version.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_writable_stream.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_connection.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_errors.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_selectors.py', '.venv/lib/python3.14/site-packages/playwright/_impl/__pyinstaller/hook-playwright.async_api.py', '.venv/lib/python3.14/site-packages/playwright/_impl/_tracing.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [65654]
+WARNING:  WatchFiles detected changes in '.venv/lib/python3.14/site-packages/playwright/sync_api/__init__.py', '.venv/lib/python3.14/site-packages/playwright/sync_api/_generated.py', '.venv/lib/python3.14/site-packages/playwright/sync_api/_context_manager.py'. Reloading...
+INFO:     Started server process [66439]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [66439]
+INFO:     Started server process [66451]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [66451]
+INFO:     Started server process [66546]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:63211 - "OPTIONS /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63211 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63214 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63217 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63217 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63217 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63217 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63217 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63228 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:63228 - "OPTIONS /render/bb3a45cf-a20e-4166-b97c-21af6ceca004/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63228 - "GET /render/bb3a45cf-a20e-4166-b97c-21af6ceca004/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63228 - "GET /render/bb3a45cf-a20e-4166-b97c-21af6ceca004/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63261 - "GET /render-frame-data/bb3a45cf-a20e-4166-b97c-21af6ceca004 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63261 - "GET /render-frame-data/bb3a45cf-a20e-4166-b97c-21af6ceca004 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63228 - "GET /render/bb3a45cf-a20e-4166-b97c-21af6ceca004/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63228 - "GET /render/bb3a45cf-a20e-4166-b97c-21af6ceca004/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63228 - "GET /render/bb3a45cf-a20e-4166-b97c-21af6ceca004/status HTTP/1.1" 200 OK
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/uvicorn/protocols/http/httptools_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/fastapi/applications.py", line 1134, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/middleware/cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/fastapi/routing.py", line 106, in app
+    await response(scope, receive, send)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/responses.py", line 167, in __call__
+    await self.background()
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/background.py", line 36, in __call__
+    await task()
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/background.py", line 23, in __call__
+    await run_in_threadpool(self.func, *self.args, **self.kwargs)
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/starlette/concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/anyio/to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 2502, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/Users/wiz/Desktop/ReelForge/backend/routes/render.py", line 88, in _run_render_sync
+    output_path = engine.render(
+        job_id=job_id,
+    ...<10 lines>...
+        ai_voice_id=job.ai_voice_snapshot,
+    )
+  File "/Users/wiz/Desktop/ReelForge/backend/video/renderer.py", line 585, in render
+    page.wait_for_selector("[data-ready='true']", timeout=10000)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 8217, in wait_for_selector
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.wait_for_selector(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            selector=selector, timeout=timeout, state=state, strict=strict
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/playwright/_impl/_page.py", line 419, in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 369, in wait_for_selector
+    await self._channel.send(
+        "waitForSelector", self._timeout, locals_to_params(locals())
+    )
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/wiz/Desktop/ReelForge/backend/.venv/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("[data-ready='true']") to be visible
+
+INFO:     127.0.0.1:63274 - "GET /render/bb3a45cf-a20e-4166-b97c-21af6ceca004/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63395 - "OPTIONS /render/create HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63395 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:63395 - "OPTIONS /render/40d02df7-e844-4c4f-985e-358b1a65a10a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63395 - "GET /render/40d02df7-e844-4c4f-985e-358b1a65a10a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63395 - "GET /render/40d02df7-e844-4c4f-985e-358b1a65a10a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63395 - "GET /render/40d02df7-e844-4c4f-985e-358b1a65a10a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63395 - "GET /render/40d02df7-e844-4c4f-985e-358b1a65a10a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63395 - "GET /render/40d02df7-e844-4c4f-985e-358b1a65a10a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63395 - "GET /render/40d02df7-e844-4c4f-985e-358b1a65a10a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63395 - "GET /render/40d02df7-e844-4c4f-985e-358b1a65a10a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63395 - "GET /render/40d02df7-e844-4c4f-985e-358b1a65a10a/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63439 - "GET /renders/40d02df7-e844-4c4f-985e-358b1a65a10a.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63441 - "GET /renders/40d02df7-e844-4c4f-985e-358b1a65a10a.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63441 - "GET /renders/40d02df7-e844-4c4f-985e-358b1a65a10a.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:63441 - "GET /renders/40d02df7-e844-4c4f-985e-358b1a65a10a.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63454 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "POST /tts/preview HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "POST /render/create HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:63454 - "OPTIONS /render/fcfcc5ab-8420-43c6-9310-0bff4300240f/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /render/fcfcc5ab-8420-43c6-9310-0bff4300240f/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /render/fcfcc5ab-8420-43c6-9310-0bff4300240f/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /render/fcfcc5ab-8420-43c6-9310-0bff4300240f/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /render/fcfcc5ab-8420-43c6-9310-0bff4300240f/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /render/fcfcc5ab-8420-43c6-9310-0bff4300240f/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /render/fcfcc5ab-8420-43c6-9310-0bff4300240f/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /render/fcfcc5ab-8420-43c6-9310-0bff4300240f/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63501 - "GET /renders/fcfcc5ab-8420-43c6-9310-0bff4300240f.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63503 - "GET /renders/fcfcc5ab-8420-43c6-9310-0bff4300240f.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63503 - "GET /renders/fcfcc5ab-8420-43c6-9310-0bff4300240f.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:63503 - "GET /renders/fcfcc5ab-8420-43c6-9310-0bff4300240f.mp4 HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63509 - "GET /renders/fcfcc5ab-8420-43c6-9310-0bff4300240f.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:63511 - "GET /renders/fcfcc5ab-8420-43c6-9310-0bff4300240f.mp4 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:63511 - "GET /renders/fcfcc5ab-8420-43c6-9310-0bff4300240f.mp4 HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'db/models.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [66546]
+INFO:     Started server process [72175]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'routes/render.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [72175]
+INFO:     Started server process [73293]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'routes/render.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [73293]
+INFO:     Started server process [73305]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'routes/render.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [73305]
+INFO:     Started server process [73328]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'video/renderer.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [73328]
+INFO:     Started server process [73345]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
