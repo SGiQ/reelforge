@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Zap, User } from "lucide-react";
 
-import { UserButton } from "@clerk/nextjs";
+
 
 const steps = [
     { label: "Brand", href: "/brand-setup" },
@@ -75,7 +75,7 @@ export default function Navbar({ currentStep }: NavbarProps) {
                     <Link href="/dashboard" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
                         Dashboard
                     </Link>
-                    <UserButton />
+
                 </div>
             </div>
         </nav>

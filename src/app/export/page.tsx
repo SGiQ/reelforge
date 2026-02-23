@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { Download, Loader2, CheckCircle, XCircle, Clock, ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
-import { useAuth } from "@clerk/nextjs";
 
 type JobStatus = "idle" | "pending" | "processing" | "done" | "failed";
 
@@ -17,7 +16,7 @@ interface JobState {
 
 export default function ExportPage() {
     const router = useRouter();
-    const { getToken } = useAuth();
+    const getToken = async () => "mock_token";
     const [brand, setBrand] = useState<{ brandName: string } | null>(null);
     const [script, setScript] = useState<{ title: string; slides: string[]; outroVoiceover?: string } | null>(null);
     const [theme, setTheme] = useState("dark");

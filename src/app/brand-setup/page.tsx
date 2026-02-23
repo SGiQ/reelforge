@@ -5,11 +5,10 @@ import { ArrowRight, Save } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import UploadZone from "@/components/UploadZone";
 
-import { useAuth } from "@clerk/nextjs";
 
 export default function BrandSetupPage() {
     const router = useRouter();
-    const { getToken } = useAuth();
+    const getToken = async () => "mock_token";
 
     const [brandName, setBrandName] = useState("");
     const [websiteUrl, setWebsiteUrl] = useState("");

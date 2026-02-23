@@ -3,10 +3,11 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Video, Download, RefreshCw, ExternalLink } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import { useAuth } from "@clerk/nextjs";
 
 export default function Dashboard() {
-    const { getToken, isLoaded, isSignedIn } = useAuth();
+    const getToken = async () => "mock_token";
+    const isLoaded = true;
+    const isSignedIn = true;
     const [jobs, setJobs] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
