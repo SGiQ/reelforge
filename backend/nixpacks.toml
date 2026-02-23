@@ -2,7 +2,7 @@
   PLAYWRIGHT_BROWSERS_PATH = "/app/pw-browsers"
 
 [providers]
-  nixpkgs = ["python311", "ffmpeg", "nss", "nss_mdns", "libSM", "libXext", "mesa", "alsa-lib", "atk", "at-spi2-atk", "cups", "libglvnd", "libxkbcommon", "pango"]
+  nixpkgs = ["python311", "chromium", "ffmpeg", "nss", "nss_mdns", "libSM", "libXext", "mesa", "alsa-lib", "atk", "at-spi2-atk", "cups", "libglvnd", "libxkbcommon", "pango"]
 
 [build]
   cmds = [
