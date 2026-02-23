@@ -563,10 +563,7 @@ class RenderEngine:
             # ── Screenshot each text slide via Playwright ─────────────────────
             from playwright.sync_api import sync_playwright
             with sync_playwright() as p:
-                browser = p.chromium.launch(
-                    headless=True,
-                    executable_path=os.getenv("PLAYWRIGHT_EXECUTABLE_PATH", "/usr/bin/chromium")
-                )
+                browser = p.chromium.launch(headless=True)
                 context = browser.new_context(
                     viewport={"width": 270, "height": 480},
                     device_scale_factor=4,   # 270*4=1080  480*4=1920

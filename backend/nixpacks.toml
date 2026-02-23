@@ -2,7 +2,7 @@
   PLAYWRIGHT_BROWSERS_PATH = "/app/pw-browsers"
 
 [providers]
-  nixpkgs = ["python311", "chromium", "ffmpeg", "nss", "nss_mdns", "libSM", "libXext", "mesa", "alsa-lib", "atk", "at-spi2-atk", "cups", "libglvnd", "libxkbcommon", "pango"]
+  nixpkgs = ["python311", "ffmpeg", "nss", "nss_mdns", "libSM", "libXext", "mesa", "alsa-lib", "atk", "at-spi2-atk", "cups", "libglvnd", "libxkbcommon", "pango"]
 
 [build]
   cmds = [
@@ -14,5 +14,5 @@
   ]
 
 [processes]
-  web = ". .venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port $PORT"
-  worker = ". .venv/bin/activate && celery -A worker.celery_app worker --loglevel=info"
+  web = "export PLAYWRIGHT_BROWSERS_PATH=/app/pw-browsers && . .venv/bin/activate && playwright install chromium && uvicorn main:app --host 0.0.0.0 --port $PORT"
+  worker = "export PLAYWRIGHT_BROWSERS_PATH=/app/pw-browsers && . .venv/bin/activate && celery -A worker.celery_app worker --loglevel=info"
