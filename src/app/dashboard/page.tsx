@@ -5,7 +5,7 @@ import { Video, Download, RefreshCw, ExternalLink } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
 export default function Dashboard() {
-    const getToken = async () => "mock_token";
+    const getToken = useCallback(async () => "mock_token", []);
     const isLoaded = true;
     const isSignedIn = true;
     const [jobs, setJobs] = useState<any[]>([]);
