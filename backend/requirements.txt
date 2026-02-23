@@ -18,3 +18,4 @@ aiofiles
 requests
 svix
 vercel-blob
+playwright
