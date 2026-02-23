@@ -19,3 +19,5 @@ requests
 svix
 vercel-blob
 playwright
+elevenlabs
+mutagen
