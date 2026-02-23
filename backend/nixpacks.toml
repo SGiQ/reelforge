@@ -3,13 +3,13 @@
 
 [build]
   cmds = [
-    "python -m venv /opt/venv", 
-    ". /opt/venv/bin/activate", 
+    "python -m venv .venv", 
+    ". .venv/bin/activate", 
     "pip install -r requirements.txt",
     "playwright install chromium",
     "playwright install-deps chromium"
   ]
 
 [processes]
-  web = ". /opt/venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port $PORT"
-  worker = ". /opt/venv/bin/activate && celery -A worker.celery_app worker --loglevel=info"
+  web = ". .venv/bin/activate && uvicorn main:app --host 0.0.0.0 --port $PORT"
+  worker = ". .venv/bin/activate && celery -A worker.celery_app worker --loglevel=info"
