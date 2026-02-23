@@ -81,7 +81,7 @@ def _run_render_sync(job_id: str):
     from video.renderer import RenderEngine
 
     sync_engine = create_engine(
-        settings.DATABASE_URL.replace("+asyncpg", "+psycopg"),
+        settings.get_database_url.replace("+asyncpg", "+psycopg"),
         pool_pre_ping=True,
     )
     Session = sessionmaker(bind=sync_engine)
