@@ -42,8 +42,8 @@ export default function Dashboard() {
         return (
             <div className="page-container flex items-center justify-center">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold mb-4">Please sign in to view your dashboard</h1>
-                    <Link href="/sign-in" className="btn-primary">Sign In</Link>
+                    <h1 className="text-2xl font-bold mb-4">Welcome to ReelForge</h1>
+                    <Link href="/brand-setup" className="btn-primary">Start Building</Link>
                 </div>
             </div>
         );

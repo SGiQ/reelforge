@@ -30,8 +30,8 @@ export default function HomePage() {
                         </span>
                     </div>
                     <div className="flex items-center gap-3">
-                        <Link href="/sign-in" className="text-sm font-medium" style={{ color: "#94a3b8" }}>Sign In</Link>
-                        <Link href="/sign-up" className="btn-primary py-2 px-4 text-sm">Get Started</Link>
+                        <Link href="/dashboard" className="text-sm font-medium" style={{ color: "#94a3b8" }}>Dashboard</Link>
+                        <Link href="/brand-setup" className="btn-primary py-2 px-4 text-sm">Create New Reel</Link>
                     </div>
                 </div>
             </header>
@@ -55,11 +55,11 @@ export default function HomePage() {
                         Upload your logo, pick an emotional script, choose a theme — and download a stunning 1080×1920 MP4 in minutes.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Link href="/sign-up" className="btn-primary text-base px-8 py-4">
+                        <Link href="/brand-setup" className="btn-primary text-base px-8 py-4">
                             Start Building Free <ArrowRight className="w-5 h-5" />
                         </Link>
-                        <Link href="/sign-in" className="btn-secondary text-base px-8 py-4">
-                            Sign In
+                        <Link href="/dashboard" className="btn-secondary text-base px-8 py-4">
+                            Dashboard
                         </Link>
                     </div>
                     <p className="mt-6 text-sm" style={{ color: "#64748b" }}>No credit card required — free plan available</p>
@@ -115,8 +115,8 @@ export default function HomePage() {
                         <div className="animated-border-inner p-12">
                             <h2 className="text-3xl font-bold mb-4">Ready to forge your first reel?</h2>
                             <p className="mb-8" style={{ color: "#94a3b8" }}>Join brand owners creating reels that convert.</p>
-                            <Link href="/sign-up" className="btn-primary text-base px-8 py-4 inline-flex">
-                                Get Started Free <ArrowRight className="w-5 h-5" />
+                            <Link href="/brand-setup" className="btn-primary text-base px-8 py-4 inline-flex">
+                                Start Building Free <ArrowRight className="w-5 h-5" />
                             </Link>
                         </div>
                     </div>
@@ -132,8 +132,8 @@ export default function HomePage() {
                     </div>
                     <p className="text-sm" style={{ color: "#64748b" }}>© 2026 ReelForge. All rights reserved.</p>
                     <div className="flex gap-6 text-sm" style={{ color: "#64748b" }}>
-                        <Link href="/sign-in">Sign In</Link>
-                        <Link href="/sign-up">Sign Up</Link>
+                        <Link href="/dashboard">Dashboard</Link>
+                        <Link href="/brand-setup">Start Building</Link>
                     </div>
                 </div>
             </footer>
