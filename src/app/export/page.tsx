@@ -213,14 +213,14 @@ export default function ExportPage() {
                     <div className="flex flex-col gap-4 w-full">
                         <div className="w-full flex justify-center bg-black/40 rounded-xl overflow-hidden mb-4 relative" style={{ aspectRatio: "9/16", maxHeight: "60vh" }}>
                             <video
-                                src={`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}${job.outputUrl}`}
+                                src={job.outputUrl}
                                 controls
                                 autoPlay
                                 className="w-full h-full object-contain"
                             />
                         </div>
                         <a
-                            href={`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}${job.outputUrl}`}
+                            href={job.outputUrl}
                             download={`${brand?.brandName || "reel"}-reel.mp4`}
                             className="btn-primary w-full justify-center py-4 text-base mb-4 inline-flex text-center"
                         >
