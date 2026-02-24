@@ -412,10 +412,33 @@ def _generate_tts_for_slide(text: str, voice_id: str, output_path: str) -> float
     return round(audio_info.info.length, 3)
 
 
+def _find_ffmpeg() -> str:
+    """Find the ffmpeg binary — on Railway/nix it may not be on PATH via shutil.which."""
+    # 1. Try PATH first (works locally and on most systems)
+    ffmpeg_path = shutil.which("ffmpeg")
+    if ffmpeg_path:
+        return ffmpeg_path
+    # 2. Search common nix store paths (Railway nixpacks installs here)
+    import glob as _glob
+    nix_patterns = [
+        "/nix/store/*ffmpeg*/bin/ffmpeg",
+        "/usr/bin/ffmpeg",
+        "/usr/local/bin/ffmpeg",
+        "/run/current-system/sw/bin/ffmpeg",
+    ]
+    for pat in nix_patterns:
+        matches = _glob.glob(pat)
+        if matches:
+            return sorted(matches)[-1]  # latest version
+    raise RuntimeError(
+        "FFmpeg not found. Checked PATH and common nix store paths. "
+        "Ensure ffmpeg is listed in nixpacks.toml providers."
+    )
+
+
 def _frames_to_mp4(frame_paths: list[str], slide_durations: list[float], output_path: str, music_path: str | None, voice_tracks: list[str]) -> None:
     """Use FFmpeg to concat frames with matching durations and multiplex audio."""
-    if not shutil.which("ffmpeg"):
-        raise RuntimeError("FFmpeg not found. Please install FFmpeg.")
+    ffmpeg_bin = _find_ffmpeg()  # raises RuntimeError if not found
 
     # Build FFmpeg concat filter with exact dynamic durations
     concat_file = output_path.replace(".mp4", "_concat.txt")
@@ -427,7 +450,7 @@ def _frames_to_mp4(frame_paths: list[str], slide_durations: list[float], output_
         f.write(f"file '{frame_paths[-1]}'\n")
 
     cmd = [
-        "ffmpeg", "-y",
+        ffmpeg_bin, "-y",
         "-f", "concat",
         "-safe", "0",
         "-i", concat_file
