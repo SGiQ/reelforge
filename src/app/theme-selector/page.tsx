@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import ThemeCard, { THEMES } from "@/components/ThemeCard";
 import UploadZone from "@/components/UploadZone";
+import AudioScrubber from "@/components/AudioScrubber";
 import { upload } from '@vercel/blob/client';
 
 // 6 Female and 6 Male voices from ElevenLabs
@@ -148,24 +149,13 @@ export default function ThemeSelectorPage() {
                                         />
                                     </div>
 
-                                    {/* Start Time Input */}
-                                    <div className="space-y-2">
-                                        <label className="block text-sm font-medium" style={{ color: "#a78bfa" }}>
-                                            Start Time (Seconds)
-                                        </label>
-                                        <div className="flex gap-4 items-center">
-                                            <input
-                                                type="number"
-                                                min="0"
-                                                step="0.5"
-                                                value={musicStartTime}
-                                                onChange={(e) => setMusicStartTime(Number(e.target.value))}
-                                                className="input-field w-32"
-                                            />
-                                            <span className="text-sm" style={{ color: "#64748b" }}>
-                                                Skips the beginning of the track.
-                                            </span>
-                                        </div>
+                                    {/* Visual Audio Scrubber (replaces number input) */}
+                                    <div className="space-y-4 pt-4 border-t border-slate-800/50">
+                                        <AudioScrubber
+                                            src={musicPreview!}
+                                            initialTime={musicStartTime}
+                                            onTimeChange={(val) => setMusicStartTime(val)}
+                                        />
                                     </div>
                                 </div>
                             )}
