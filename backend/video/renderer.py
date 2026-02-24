@@ -562,6 +562,10 @@ class RenderEngine:
 
             # ── Screenshot each text slide via Playwright ─────────────────────
             from playwright.sync_api import sync_playwright
+            # Ensure PLAYWRIGHT_BROWSERS_PATH is set — Railway background threads
+            # may not inherit the startup env var, so we set it explicitly here.
+            if os.path.isdir("/app/pw-browsers"):
+                os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", "/app/pw-browsers")
             with sync_playwright() as p:
                 browser = p.chromium.launch(headless=True)
                 context = browser.new_context(
