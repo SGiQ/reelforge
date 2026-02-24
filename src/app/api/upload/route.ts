@@ -1,38 +1,33 @@
-import { put } from '@vercel/blob';
+import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import { NextResponse } from 'next/server';
 
-export const runtime = 'edge';
-
 export async function POST(request: Request): Promise<NextResponse> {
-    const { searchParams } = new URL(request.url);
-    const filename = searchParams.get('filename');
-
-    if (!filename) {
-        return NextResponse.json(
-            { error: 'Filename is required' },
-            { status: 400 },
-        );
-    }
-
-    // The request.body is a readable stream of the file content
-    if (!request.body) {
-        return NextResponse.json(
-            { error: 'Request body is required' },
-            { status: 400 },
-        );
-    }
+    const body = (await request.json()) as HandleUploadBody;
+    console.log("Upload API Received Body:", JSON.stringify(body, null, 2));
 
     try {
-        const blob = await put(filename, request.body, {
-            access: 'public',
+        const jsonResponse = await handleUpload({
+            body,
+            request,
+            onBeforeGenerateToken: async (pathname) => {
+                return {
+                    allowedContentTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'],
+                    tokenPayload: JSON.stringify({
+                        // optional payload
+                    }),
+                };
+            },
+            onUploadCompleted: async ({ blob, tokenPayload }) => {
+                console.log('Upload completed:', blob.url);
+            },
         });
 
-        return NextResponse.json(blob);
+        return NextResponse.json(jsonResponse);
     } catch (error) {
         console.error("Vercel Blob failed:", error);
         return NextResponse.json(
-            { error: 'Failed to upload to blob storage' },
-            { status: 500 },
+            { error: (error as Error).message },
+            { status: 400 },
         );
     }
 }
