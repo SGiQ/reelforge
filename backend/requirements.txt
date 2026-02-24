@@ -21,3 +21,4 @@ vercel-blob
 playwright
 elevenlabs
 mutagen
+imageio-ffmpeg

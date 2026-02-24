@@ -413,27 +413,26 @@ def _generate_tts_for_slide(text: str, voice_id: str, output_path: str) -> float
 
 
 def _find_ffmpeg() -> str:
-    """Find the ffmpeg binary — on Railway/nix it may not be on PATH via shutil.which."""
-    # 1. Try PATH first (works locally and on most systems)
+    """Find the ffmpeg binary — uses imageio-ffmpeg's bundled binary first (always works)."""
+    # 1. imageio-ffmpeg ships its own binary — most reliable, works on Railway/Docker/Mac
+    try:
+        import imageio_ffmpeg
+        exe = imageio_ffmpeg.get_ffmpeg_exe()
+        if exe:
+            return exe
+    except Exception:
+        pass
+    # 2. Fallback: system PATH
     ffmpeg_path = shutil.which("ffmpeg")
     if ffmpeg_path:
         return ffmpeg_path
-    # 2. Search common nix store paths (Railway nixpacks installs here)
+    # 3. Fallback: common nix store paths
     import glob as _glob
-    nix_patterns = [
-        "/nix/store/*ffmpeg*/bin/ffmpeg",
-        "/usr/bin/ffmpeg",
-        "/usr/local/bin/ffmpeg",
-        "/run/current-system/sw/bin/ffmpeg",
-    ]
-    for pat in nix_patterns:
+    for pat in ["/nix/store/*ffmpeg*/bin/ffmpeg", "/usr/bin/ffmpeg", "/usr/local/bin/ffmpeg"]:
         matches = _glob.glob(pat)
         if matches:
-            return sorted(matches)[-1]  # latest version
-    raise RuntimeError(
-        "FFmpeg not found. Checked PATH and common nix store paths. "
-        "Ensure ffmpeg is listed in nixpacks.toml providers."
-    )
+            return sorted(matches)[-1]
+    raise RuntimeError("FFmpeg not found. imageio-ffmpeg, PATH, and nix store all exhausted.")
 
 
 def _frames_to_mp4(frame_paths: list[str], slide_durations: list[float], output_path: str, music_path: str | None, voice_tracks: list[str]) -> None:
