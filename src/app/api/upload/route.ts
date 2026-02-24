@@ -12,6 +12,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             onBeforeGenerateToken: async (pathname) => {
                 return {
                     allowedContentTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'],
+                    addRandomSuffix: true,
                     tokenPayload: JSON.stringify({
                         // optional payload
                     }),
