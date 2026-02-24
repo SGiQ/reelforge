@@ -16,6 +16,25 @@ async def lifespan(app: FastAPI):
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
+    # Ensure Playwright Chromium is installed — this runs inside the process
+    # where PLAYWRIGHT_BROWSERS_PATH is correctly set by Railway at runtime.
+    # nixpacks build cmds don't inherit [variables] env vars, so we install here.
+    browsers_path = os.environ.get("PLAYWRIGHT_BROWSERS_PATH", "")
+    sentinel = os.path.join(browsers_path, ".installed") if browsers_path else None
+    if browsers_path and not os.path.exists(sentinel):
+        import subprocess as _sp
+        print(f"[startup] Installing Playwright Chromium to {browsers_path}...")
+        result = _sp.run(
+            ["python", "-m", "playwright", "install", "chromium", "--with-deps"],
+            capture_output=True, text=True
+        )
+        print(result.stdout[-2000:] if result.stdout else "(no stdout)")
+        if result.returncode == 0:
+            open(sentinel, "w").close()
+            print("[startup] Playwright Chromium installed successfully.")
+        else:
+            print(f"[startup] Playwright install failed:\n{result.stderr[-2000:]}")
+
     yield
 
 
