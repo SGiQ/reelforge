@@ -562,12 +562,29 @@ class RenderEngine:
 
             # ── Screenshot each text slide via Playwright ─────────────────────
             from playwright.sync_api import sync_playwright
-            # Ensure PLAYWRIGHT_BROWSERS_PATH is set — Railway background threads
-            # may not inherit the startup env var, so we set it explicitly here.
-            if os.path.isdir("/app/pw-browsers"):
-                os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", "/app/pw-browsers")
+            import glob
+
+            # Dynamically find the Chromium binary — Railway's env var inheritance
+            # is unreliable for background threads. We search known install paths.
+            def _find_chromium() -> str | None:
+                patterns = [
+                    "/app/pw-browsers/**/chrome-headless-shell",
+                    "/app/pw-browsers/**/chromium",
+                    "/root/.cache/ms-playwright/**/chrome-headless-shell",
+                    "/root/.cache/ms-playwright/**/chromium",
+                ]
+                for pat in patterns:
+                    matches = glob.glob(pat, recursive=True)
+                    if matches:
+                        return matches[0]
+                return None
+
+            chromium_path = _find_chromium()
             with sync_playwright() as p:
-                browser = p.chromium.launch(headless=True)
+                launch_kwargs = {"headless": True}
+                if chromium_path:
+                    launch_kwargs["executable_path"] = chromium_path
+                browser = p.chromium.launch(**launch_kwargs)
                 context = browser.new_context(
                     viewport={"width": 270, "height": 480},
                     device_scale_factor=4,   # 270*4=1080  480*4=1920
