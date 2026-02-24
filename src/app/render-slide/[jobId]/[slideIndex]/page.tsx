@@ -53,8 +53,10 @@ export default function RenderSlidePage({
     const [ready, setReady] = useState(false);
 
     useEffect(() => {
-        // Always call the Next.js API route — this page is always served from localhost:3000
-        fetch(`/api/render-frame-data/${params.jobId}`)
+        // Fetch from the backend API directly — Next.js (/api/) won't work in production
+        // because Railway (Python) and Vercel (Next.js) don't share /tmp filesystem.
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        fetch(`${apiUrl}/render/frame-data/${params.jobId}`)
             .then((r) => {
                 if (!r.ok) throw new Error(`HTTP ${r.status}`);
                 return r.json();
