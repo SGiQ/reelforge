@@ -25,8 +25,11 @@ celery_app.conf.update(
     broker_connection_max_retries=None,   # retry forever
     broker_transport_options={
         "visibility_timeout": 3600,       # 1 hour
-        "socket_timeout": 30,
-        "socket_connect_timeout": 30,
+        "socket_timeout": 60,
+        "socket_connect_timeout": 60,
         "socket_keepalive": True,
+        "health_check_interval": 10,
     },
+    redis_backend_health_check_interval=10,
+    redis_socket_keepalive=True,
 )

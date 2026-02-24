@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Save } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import UploadZone from "@/components/UploadZone";
+import { upload } from '@vercel/blob/client';
 
 
 export default function BrandSetupPage() {
@@ -77,13 +78,12 @@ export default function BrandSetupPage() {
 
             // Helper to upload a file to our Vercel Blob route
             const uploadFile = async (file: File) => {
-                const res = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
-                    method: 'POST',
-                    body: file,
+                const blob = await upload(file.name, file, {
+                    access: 'public',
+                    handleUploadUrl: `${window.location.origin}/api/upload`,
+                    clientPayload: "brand-setup"
                 });
-                if (!res.ok) throw new Error(`Failed to upload ${file.name}`);
-                const data = await res.json();
-                return data.url;
+                return blob.url;
             };
 
             // Only upload if it's a fresh file (prevents re-uploading if they just tweaked a setting)
@@ -108,9 +108,12 @@ export default function BrandSetupPage() {
             localStorage.removeItem("reelforge_theme");
             localStorage.removeItem("reelforge_audio");
             router.push("/script-picker");
-        } catch (e) {
-            setError("Failed to save. Please try again.");
-            console.error(e);
+        } catch (e: any) {
+            setError(`Failed to save: ${e.message || 'Unknown error'}`);
+            console.error("Upload error details:", e);
+            if (e.name === 'BlobError') {
+                console.error("Vercel Blob specific error:", e.message);
+            }
         } finally {
             setSaving(false);
         }
