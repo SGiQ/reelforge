@@ -435,7 +435,7 @@ def _find_ffmpeg() -> str:
     raise RuntimeError("FFmpeg not found. imageio-ffmpeg, PATH, and nix store all exhausted.")
 
 
-def _frames_to_mp4(frame_paths: list[str], slide_durations: list[float], output_path: str, music_path: str | None, voice_tracks: list[str]) -> None:
+def _frames_to_mp4(frame_paths: list[str], slide_durations: list[float], output_path: str, music_path: str | None, voice_tracks: list[str], music_volume: float = 0.15, music_start_time: float = 0.0) -> None:
     """Use FFmpeg to concat frames with matching durations and multiplex audio."""
     ffmpeg_bin = _find_ffmpeg()  # raises RuntimeError if not found
 
@@ -459,9 +459,11 @@ def _frames_to_mp4(frame_paths: list[str], slide_durations: list[float], output_
     audio_filters = []
     
     if music_path and os.path.exists(music_path):
+        if music_start_time > 0:
+            cmd.extend(["-ss", str(music_start_time)])
         cmd.extend(["-i", music_path])
         # [1:a]volume=0.2[a1]
-        audio_filters.append(f"[{inputs}:a]volume=0.15[a1]")
+        audio_filters.append(f"[{inputs}:a]volume={music_volume}[a1]")
         inputs += 1
         
     master_voice_duration = sum(slide_durations)
@@ -531,6 +533,8 @@ class RenderEngine:
         qr_code_url: str | None = None,
         qr_text: str = "",
         music_url: str | None = None,
+        music_volume: float = 0.15,
+        music_start_time: float = 0.0,
         ai_voice_id: str | None = None,
         outro_voiceover: str | None = None,
     ) -> str:
@@ -666,7 +670,7 @@ class RenderEngine:
 
             # ── Render MP4 ────────────────────────────────────────────────────
             output_path = str(output_dir / f"{job_id}.mp4")
-            _frames_to_mp4(frame_paths, slide_durations, output_path, music_path, voice_tracks)
+            _frames_to_mp4(frame_paths, slide_durations, output_path, music_path, voice_tracks, music_volume, music_start_time)
 
         # Clean up the data JSON
         try:

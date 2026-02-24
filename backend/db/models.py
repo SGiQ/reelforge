@@ -68,6 +68,8 @@ class RenderJob(Base):
     qr_code_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     qr_text_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     music_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
+    music_volume_snapshot: Mapped[float] = mapped_column(default=0.15)
+    music_start_time_snapshot: Mapped[float] = mapped_column(default=0.0)
     ai_voice_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     outro_voiceover_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
 

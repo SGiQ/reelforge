@@ -20,7 +20,7 @@ export default function ExportPage() {
     const [brand, setBrand] = useState<{ brandName: string } | null>(null);
     const [script, setScript] = useState<{ title: string; slides: string[]; outroVoiceover?: string } | null>(null);
     const [theme, setTheme] = useState("dark");
-    const [audio, setAudio] = useState<{ musicPreview: string | null; aiVoice: string | null }>({ musicPreview: null, aiVoice: null });
+    const [audio, setAudio] = useState<{ musicPreview: string | null; aiVoice: string | null; musicVolume?: number; musicStartTime?: number }>({ musicPreview: null, aiVoice: null });
     const [job, setJob] = useState<JobState>({ id: null, status: "idle", outputUrl: null, errorMsg: null });
 
     useEffect(() => {
@@ -65,6 +65,8 @@ export default function ExportPage() {
                 watermark_url: (brand as any).watermarkPreview,
                 website_url: (brand as any).websiteUrl,
                 music_url: audio.musicPreview,
+                music_volume: audio.musicVolume !== undefined ? audio.musicVolume / 100 : 0.15,
+                music_start_time: audio.musicStartTime || 0,
                 ai_voice_id: audio.aiVoice,
                 outro_voiceover: script.outroVoiceover,
             };
