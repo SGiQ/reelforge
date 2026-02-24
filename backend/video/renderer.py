@@ -608,7 +608,7 @@ class RenderEngine:
                     slide_durations.append(slide_duration)
 
                     # 2. Screenshot via Playwright — pixel-identical to preview
-                    url = f"http://localhost:3000/render-slide/{job_id}/{i}"
+                    url = f"{settings.FRONTEND_URL}/render-slide/{job_id}/{i}"
                     page.goto(url, wait_until="networkidle", timeout=30000)
                     # Wait until the component signals it's ready
                     page.wait_for_selector("[data-ready='true']", timeout=10000)
@@ -632,7 +632,7 @@ class RenderEngine:
                     except Exception as e:
                         print(f"TTS failed for logo slide: {e}")
 
-                url = f"http://localhost:3000/render-slide/{job_id}/{logo_slide_idx}"
+                url = f"{settings.FRONTEND_URL}/render-slide/{job_id}/{logo_slide_idx}"
                 page.goto(url, wait_until="networkidle", timeout=30000)
                 page.wait_for_selector("[data-ready='true']", timeout=10000)
                 logo_frame_path = os.path.join(tmpdir, f"frame_{logo_slide_idx:04d}.png")

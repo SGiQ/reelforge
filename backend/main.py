@@ -16,24 +16,26 @@ async def lifespan(app: FastAPI):
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    # Ensure Playwright Chromium is installed — this runs inside the process
-    # where PLAYWRIGHT_BROWSERS_PATH is correctly set by Railway at runtime.
-    # nixpacks build cmds don't inherit [variables] env vars, so we install here.
-    browsers_path = os.environ.get("PLAYWRIGHT_BROWSERS_PATH", "")
-    sentinel = os.path.join(browsers_path, ".installed") if browsers_path else None
-    if browsers_path and not os.path.exists(sentinel):
-        import subprocess as _sp
-        print(f"[startup] Installing Playwright Chromium to {browsers_path}...")
-        result = _sp.run(
+    # Ensure Playwright Chromium is installed at runtime.
+    # nixpacks build cmds install to an ephemeral layer that gets wiped.
+    # We install here where the correct env (PLAYWRIGHT_BROWSERS_PATH) is set.
+    import glob as _glob, subprocess as _sp
+    _chromium_exists = bool(
+        _glob.glob("/app/pw-browsers/**/chrome-headless-shell", recursive=True) or
+        _glob.glob("/root/.cache/ms-playwright/**/chrome-headless-shell", recursive=True)
+    )
+    if not _chromium_exists:
+        print("[startup] Playwright Chromium not found — installing now...")
+        _result = _sp.run(
             ["python", "-m", "playwright", "install", "chromium", "--with-deps"],
             capture_output=True, text=True
         )
-        print(result.stdout[-2000:] if result.stdout else "(no stdout)")
-        if result.returncode == 0:
-            open(sentinel, "w").close()
+        if _result.returncode == 0:
             print("[startup] Playwright Chromium installed successfully.")
         else:
-            print(f"[startup] Playwright install failed:\n{result.stderr[-2000:]}")
+            print(f"[startup] Playwright install failed:\n{_result.stderr[-2000:]}")
+    else:
+        print("[startup] Playwright Chromium already installed — skipping.")
 
     yield
 
