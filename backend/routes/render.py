@@ -46,6 +46,8 @@ class RenderCreateRequest(BaseModel):
     logo_position: str = "bottom_center"
     qr_code_url: str | None = None
     music_url: str | None = None
+    music_volume: float = 0.15
+    music_start_time: float = 0.0
     ai_voice_id: str | None = None
     logo_size: int = 120
     qr_text: str = ""
@@ -110,8 +112,10 @@ def _run_render_sync(job_id: str):
                 logo_position=job.logo_position,
                 logo_size=job.logo_size_snapshot,
                 qr_code_url=job.qr_code_url_snapshot,
-                qr_text=job.qr_text_snapshot,
+                qr_text=job.qr_text_snapshot or "",
                 music_url=job.music_url_snapshot,
+                music_volume=job.music_volume_snapshot,
+                music_start_time=job.music_start_time_snapshot,
                 ai_voice_id=job.ai_voice_snapshot,
                 outro_voiceover=job.outro_voiceover_snapshot,
             )
@@ -182,6 +186,8 @@ async def create_render_job(
         qr_code_url_snapshot=payload.qr_code_url,
         qr_text_snapshot=payload.qr_text,
         music_url_snapshot=payload.music_url,
+        music_volume_snapshot=payload.music_volume,
+        music_start_time_snapshot=payload.music_start_time,
         ai_voice_snapshot=payload.ai_voice_id,
         outro_voiceover_snapshot=payload.outro_voiceover,
         brand_id=payload.brand_id,

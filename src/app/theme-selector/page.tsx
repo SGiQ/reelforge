@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import ThemeCard, { THEMES } from "@/components/ThemeCard";
 import UploadZone from "@/components/UploadZone";
+import { upload } from '@vercel/blob/client';
 
 // 6 Female and 6 Male voices from ElevenLabs
 const AI_VOICES = [
@@ -29,7 +30,10 @@ export default function ThemeSelectorPage() {
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [musicFile, setMusicFile] = useState<File | null>(null);
     const [musicPreview, setMusicPreview] = useState<string | null>(null);
+    const [musicVolume, setMusicVolume] = useState<number>(15);
+    const [musicStartTime, setMusicStartTime] = useState<number>(0);
     const [aiVoice, setAiVoice] = useState<string>("");
+    const [saving, setSaving] = useState(false);
 
     useEffect(() => {
         const savedTheme = localStorage.getItem("reelforge_theme");
@@ -40,14 +44,39 @@ export default function ThemeSelectorPage() {
             const parsed = JSON.parse(savedAudio);
             setMusicPreview(parsed.musicPreview);
             if (parsed.aiVoice) setAiVoice(parsed.aiVoice);
+            if (parsed.musicVolume !== undefined) setMusicVolume(parsed.musicVolume);
+            if (parsed.musicStartTime !== undefined) setMusicStartTime(parsed.musicStartTime);
         }
     }, []);
 
-    const handleContinue = () => {
+    const handleContinue = async () => {
         if (!selectedId) return;
+        setSaving(true);
         localStorage.setItem("reelforge_theme", selectedId);
-        localStorage.setItem("reelforge_audio", JSON.stringify({ musicPreview, aiVoice: aiVoice || null }));
-        router.push("/preview");
+
+        try {
+            let finalMusicUrl = musicPreview;
+            if (musicFile) {
+                const blob = await upload(musicFile.name, musicFile, {
+                    access: 'public',
+                    handleUploadUrl: `${window.location.origin}/api/upload`,
+                    clientPayload: "audio-upload"
+                });
+                finalMusicUrl = blob.url;
+            }
+
+            localStorage.setItem("reelforge_audio", JSON.stringify({
+                musicPreview: finalMusicUrl,
+                aiVoice: aiVoice || null,
+                musicVolume,
+                musicStartTime
+            }));
+            router.push("/preview");
+        } catch (e) {
+            console.error("Audio upload failed:", e);
+            alert("Failed to upload audio. Please try again.");
+            setSaving(false);
+        }
     };
 
     const handleMusicUpload = (file: File) => {
@@ -92,12 +121,54 @@ export default function ThemeSelectorPage() {
                         <div className="glass-card rounded-2xl p-6">
                             <UploadZone
                                 label="Background Music"
-                                hint="MP3 or WAV · Plays at 20% volume"
+                                hint="MP3 or WAV · Plays alongside video"
                                 accept="audio/*"
                                 onUpload={handleMusicUpload}
                                 preview={musicPreview ? "Audio File Attached" : null}
                                 onClear={() => { setMusicFile(null); setMusicPreview(null); }}
                             />
+
+                            {/* Audio Controls */}
+                            {musicPreview && (
+                                <div className="mt-6 space-y-6 pt-4 border-t border-slate-800">
+                                    {/* Volume Slider */}
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between items-center text-sm font-medium">
+                                            <span style={{ color: "#a78bfa" }}>Music Volume</span>
+                                            <span style={{ color: "#94a3b8" }}>{musicVolume}%</span>
+                                        </div>
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max="100"
+                                            value={musicVolume}
+                                            onChange={(e) => setMusicVolume(Number(e.target.value))}
+                                            className="w-full accent-brand-purple"
+                                            style={{ accentColor: "#7c3aed" }}
+                                        />
+                                    </div>
+
+                                    {/* Start Time Input */}
+                                    <div className="space-y-2">
+                                        <label className="block text-sm font-medium" style={{ color: "#a78bfa" }}>
+                                            Start Time (Seconds)
+                                        </label>
+                                        <div className="flex gap-4 items-center">
+                                            <input
+                                                type="number"
+                                                min="0"
+                                                step="0.5"
+                                                value={musicStartTime}
+                                                onChange={(e) => setMusicStartTime(Number(e.target.value))}
+                                                className="input-field w-32"
+                                            />
+                                            <span className="text-sm" style={{ color: "#64748b" }}>
+                                                Skips the beginning of the track.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div className="glass-card rounded-2xl p-6">
@@ -126,11 +197,11 @@ export default function ThemeSelectorPage() {
 
                 <button
                     onClick={handleContinue}
-                    disabled={!selectedId}
+                    disabled={!selectedId || saving}
                     className="btn-primary w-full justify-center py-4 text-base"
-                    style={{ opacity: !selectedId ? 0.5 : 1 }}
+                    style={{ opacity: !selectedId || saving ? 0.5 : 1 }}
                 >
-                    Preview My Reel <ArrowRight className="w-5 h-5" />
+                    {saving ? "Uploading audio..." : <>Preview My Reel <ArrowRight className="w-5 h-5" /></>}
                 </button>
             </main>
         </div>
