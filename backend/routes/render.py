@@ -232,6 +232,33 @@ async def get_render_history(
     return jobs_result.scalars().all()
 
 
+@router.get("/frame-data/{job_id}")
+async def get_render_frame_data(job_id: str):
+    """
+    Serve the render job JSON written by the renderer to /tmp.
+    The render-slide Next.js page fetches this before Playwright screenshots it.
+    This endpoint is needed in production because Railway (Python) and Vercel (Next.js)
+    do NOT share a filesystem — so the Next.js /api route can't read Railway's /tmp files.
+    """
+    import json as _json
+    import tempfile as _tf
+    from pathlib import Path as _Path
+    from fastapi.responses import JSONResponse
+
+    frame_data_path = _Path(_tf.gettempdir()) / "reelforge_frames" / f"{job_id}.json"
+    if not frame_data_path.exists():
+        raise HTTPException(status_code=404, detail="Frame data not found")
+
+    try:
+        data = _json.loads(frame_data_path.read_text())
+        return JSONResponse(
+            content=data,
+            headers={"Cache-Control": "no-store", "Access-Control-Allow-Origin": "*"},
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Failed to read frame data: {exc}")
+
+
 @router.get("/{job_id}/download")
 async def download_render(
     job_id: str,
