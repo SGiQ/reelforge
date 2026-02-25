@@ -227,8 +227,13 @@ async def get_render_history(
     from db.models import Brand
     brand_result = await db.execute(select(Brand).where(Brand.clerk_user_id == user_id))
     brand = brand_result.scalar_one_or_none()
+    
     if not brand:
-        return []
+        # Fallback: return recent renders if no brand exists (e.g. mock auth)
+        jobs_result = await db.execute(
+            select(RenderJob).order_by(RenderJob.created_at.desc()).limit(50)
+        )
+        return jobs_result.scalars().all()
 
     jobs_result = await db.execute(
         select(RenderJob)
