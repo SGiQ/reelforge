@@ -1,10 +1,12 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Video, Download, RefreshCw, ExternalLink } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
 export default function Dashboard() {
+    const router = useRouter();
     const getToken = useCallback(async () => "mock_token", []);
     const isLoaded = true;
     const isSignedIn = true;
@@ -31,6 +33,45 @@ export default function Dashboard() {
             setIsLoading(false);
         }
     }, [isLoaded, isSignedIn, getToken]);
+
+    const handleEdit = (job: any) => {
+        // Hydrate Brand
+        const brandData = {
+            brandName: job.brand_name || "Brand Video",
+            websiteUrl: job.website_url_snapshot || "",
+            logoPreview: job.logo_url_snapshot || null,
+            watermarkPreview: job.watermark_url_snapshot || null,
+            watermarkOpacity: job.watermark_opacity ?? 18,
+            logoPosition: job.logo_position || "bottom_center",
+            logoSize: job.logo_size_snapshot ?? 120,
+            qrCodePreview: job.qr_code_url_snapshot || null,
+            qrCodeText: job.qr_text_snapshot || "",
+        };
+        localStorage.setItem("reelforge_brand", JSON.stringify(brandData));
+
+        // Hydrate Script
+        const scriptData = {
+            title: job.brand_name ? `${job.brand_name} (Edited)` : "Edited Script",
+            slides: job.slides_snapshot ? job.slides_snapshot.map((s: any) => typeof s === "object" ? s.text : s) : [],
+            outroVoiceover: job.outro_voiceover_snapshot || "",
+        };
+        localStorage.setItem("reelforge_script", JSON.stringify(scriptData));
+
+        // Hydrate Theme
+        localStorage.setItem("reelforge_theme", job.theme || "dark");
+
+        // Hydrate Audio
+        const audioData = {
+            musicPreview: job.music_url_snapshot || null,
+            musicVolume: job.music_volume_snapshot ? job.music_volume_snapshot * 100 : 15,
+            musicStartTime: job.music_start_time_snapshot || 0,
+            aiVoice: job.ai_voice_snapshot || null,
+        };
+        localStorage.setItem("reelforge_audio", JSON.stringify(audioData));
+
+        // Redirect to first step
+        router.push("/brand-setup");
+    };
 
     useEffect(() => {
         fetchHistory();
@@ -124,14 +165,23 @@ export default function Dashboard() {
                                 </div>
 
                                 {job.status === "done" && job.output_url ? (
-                                    <a
-                                        href={`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}${job.output_url}`}
-                                        download={`reelforge-${job.id.substring(0, 6)}.mp4`}
-                                        className="btn-secondary w-full justify-center mt-2 group"
-                                    >
-                                        <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-                                        <span>Download MP4</span>
-                                    </a>
+                                    <div className="flex gap-2 w-full mt-2">
+                                        <a
+                                            href={`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}${job.output_url}`}
+                                            download={`reelforge-${job.id.substring(0, 6)}.mp4`}
+                                            className="btn-secondary flex-1 justify-center group"
+                                        >
+                                            <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                                            <span>Download</span>
+                                        </a>
+                                        <button
+                                            onClick={() => handleEdit(job)}
+                                            className="btn-secondary flex-1 justify-center group"
+                                        >
+                                            <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                            <span>Re-edit</span>
+                                        </button>
+                                    </div>
                                 ) : job.status === "failed" ? (
                                     <button disabled className="btn-secondary w-full justify-center mt-2 opacity-50 cursor-not-allowed">
                                         Render Failed
