@@ -61,6 +61,21 @@ class RenderJobOut(BaseModel):
     theme: str
     brand_name: str | None
     created_at: datetime
+    # Snapshot fields for re-editing reels
+    slides_snapshot: list | None = None
+    logo_url_snapshot: str | None = None
+    watermark_url_snapshot: str | None = None
+    website_url_snapshot: str | None = None
+    watermark_opacity: int = 18
+    logo_position: str = "bottom_center"
+    logo_size_snapshot: int = 120
+    qr_code_url_snapshot: str | None = None
+    qr_text_snapshot: str | None = None
+    music_url_snapshot: str | None = None
+    music_volume_snapshot: float = 0.15
+    music_start_time_snapshot: float = 0.0
+    ai_voice_snapshot: str | None = None
+    outro_voiceover_snapshot: str | None = None
 
     class Config:
         from_attributes = True
