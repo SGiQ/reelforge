@@ -16,6 +16,11 @@ class Settings(BaseSettings):
     QR_DEFAULT_URL: str = "https://checkwellcare.com"
     ELEVENLABS_API_KEY: str = ""
 
+    # Optional shared secret for server-to-server callers (e.g. the Social Media
+    # Agent). When set, costly endpoints require a matching X-API-Key header.
+    # Leave blank to disable the gate (default — preserves existing behavior).
+    REELFORGE_API_KEY: str = ""
+
     @property
     def get_database_url(self) -> str:
         url = self.DATABASE_URL

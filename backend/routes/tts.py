@@ -2,11 +2,12 @@
 TTS preview endpoint — generates a short ElevenLabs audio clip for the preview player.
 Returns MP3 audio bytes directly so the browser can play them.
 """
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from elevenlabs import ElevenLabs
 from config import settings
+from auth.clerk import require_service_key
 import io
 
 router = APIRouter(prefix="/tts", tags=["tts"])
@@ -20,7 +21,10 @@ class TTSPreviewRequest(BaseModel):
 
 
 @router.post("/preview")
-async def tts_preview(payload: TTSPreviewRequest):
+async def tts_preview(
+    payload: TTSPreviewRequest,
+    _: None = Depends(require_service_key),
+):
     """Generate a short ElevenLabs TTS clip and stream it back as audio/mpeg."""
     if not settings.ELEVENLABS_API_KEY:
         raise HTTPException(status_code=503, detail="ElevenLabs not configured.")

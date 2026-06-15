@@ -26,6 +26,10 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+.env.backup
+.env.*
+!.env.example
+!.env.local.example
 .env.development.local
 .env.test.local
 .env.production.local
@@ -42,3 +46,10 @@ backend/.venv/
 backend/__pycache__/
 backend/.pytest_cache/
 *.pyc
+
+# local databases, logs, and test artifacts (never commit)
+*.db
+*.sqlite
+*.sqlite3
+*.log
+test_large.bin

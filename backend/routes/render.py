@@ -13,7 +13,7 @@ import vercel_blob
 
 from db.database import get_db
 from db.models import RenderJob, JobStatus
-from auth.clerk import optional_user_id
+from auth.clerk import optional_user_id, require_service_key
 from config import settings
 
 router = APIRouter(prefix="/render", tags=["render"])
@@ -168,6 +168,7 @@ async def create_render_job(
     background_tasks: BackgroundTasks,
     db: AsyncSession = Depends(get_db),
     user_id: str | None = Depends(optional_user_id),
+    _: None = Depends(require_service_key),
 ):
     processed_slides = []
     for s in payload.slides:
