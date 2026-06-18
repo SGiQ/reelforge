@@ -165,8 +165,8 @@ export default function ReelPreview({
 
     return (
         <div className="relative mx-auto overflow-hidden rounded-3xl select-none" style={{ width: 270, height: 480, background: theme.bgGradient }}>
-            {/* Watermark photo */}
-            {watermarkUrl && (
+            {/* Watermark photo — hidden on the branding slide */}
+            {watermarkUrl && !isLogoSlide && (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                     src={watermarkUrl}

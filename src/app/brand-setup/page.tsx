@@ -26,23 +26,59 @@ export default function BrandSetupPage() {
     const [qrCodePreview, setQrCodePreview] = useState<string | null>(null);
     const [qrCodeText, setQrCodeText] = useState("");
 
-    // Load saved brand data
+    // Apply a saved brand object (from localStorage or a server job snapshot) to the form.
+    const hydrateBrand = (b: any) => {
+        if (b.brandName) setBrandName(b.brandName);
+        if (b.websiteUrl) setWebsiteUrl(b.websiteUrl);
+        if (b.logoPreview) setLogoPreview(b.logoPreview);
+        if (b.watermarkPreview) setWatermarkPreview(b.watermarkPreview);
+        if (b.watermarkOpacity !== undefined) setWatermarkOpacity(b.watermarkOpacity);
+        if (b.logoPosition) setLogoPosition(b.logoPosition);
+        if (b.logoSize !== undefined) setLogoSize(b.logoSize);
+        if (b.qrCodePreview) setQrCodePreview(b.qrCodePreview);
+        if (b.qrCodeText) setQrCodeText(b.qrCodeText);
+    };
+
+    // Load saved brand data — prefer localStorage, fall back to the most recent
+    // render job's snapshot so the brand (logo, watermark, QR, settings) is always
+    // restored and editable without having to re-upload anything.
     useEffect(() => {
         const saved = localStorage.getItem("reelforge_brand");
         if (saved) {
             try {
                 const parsed = JSON.parse(saved);
-                if (parsed.brandName) setBrandName(parsed.brandName);
-                if (parsed.websiteUrl) setWebsiteUrl(parsed.websiteUrl);
-                if (parsed.logoPreview) setLogoPreview(parsed.logoPreview);
-                if (parsed.watermarkPreview) setWatermarkPreview(parsed.watermarkPreview);
-                if (parsed.watermarkOpacity !== undefined) setWatermarkOpacity(parsed.watermarkOpacity);
-                if (parsed.logoPosition) setLogoPosition(parsed.logoPosition);
-                if (parsed.logoSize !== undefined) setLogoSize(parsed.logoSize);
-                if (parsed.qrCodePreview) setQrCodePreview(parsed.qrCodePreview);
-                if (parsed.qrCodeText) setQrCodeText(parsed.qrCodeText);
+                if (parsed.brandName) {
+                    hydrateBrand(parsed);
+                    return;
+                }
             } catch (e) { }
         }
+
+        // No usable local brand — recover the last one from the server.
+        (async () => {
+            try {
+                const token = await getToken();
+                const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+                const res = await fetch(`${apiBase}/render/history`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                if (!res.ok) return;
+                const jobs = await res.json();
+                const last = Array.isArray(jobs) ? jobs.find((j: any) => j.brand_name || j.logo_url_snapshot || j.watermark_url_snapshot) : null;
+                if (!last) return;
+                hydrateBrand({
+                    brandName: last.brand_name || "",
+                    websiteUrl: last.website_url_snapshot || "",
+                    logoPreview: last.logo_url_snapshot || null,
+                    watermarkPreview: last.watermark_url_snapshot || null,
+                    watermarkOpacity: last.watermark_opacity ?? 18,
+                    logoPosition: last.logo_position || "bottom_center",
+                    logoSize: last.logo_size_snapshot ?? 120,
+                    qrCodePreview: last.qr_code_url_snapshot || null,
+                    qrCodeText: last.qr_text_snapshot || "",
+                });
+            } catch (e) { }
+        })();
     }, []);
 
     const [saving, setSaving] = useState(false);

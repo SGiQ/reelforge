@@ -96,12 +96,7 @@ export default function RenderSlidePage({
                 }}
                 data-ready="true"
             >
-                {data.watermark_url && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={data.watermark_url} alt=""
-                        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: data.watermark_opacity / 100 }}
-                    />
-                )}
+                {/* No watermark on the branding slide — keep it clean */}
                 <div style={{ position: "absolute", inset: 0, background: theme.overlayColor, opacity: 0.7 }} />
                 <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16 }}>
                     {data.logo_url ? (

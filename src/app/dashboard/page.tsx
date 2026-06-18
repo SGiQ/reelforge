@@ -1,9 +1,136 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Video, Download, RefreshCw, ExternalLink } from "lucide-react";
+import { Video, Download, RefreshCw, ExternalLink, Play } from "lucide-react";
 import Navbar from "@/components/Navbar";
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+// output_url may be absolute (Vercel Blob) or relative (local API) — handle both.
+function resolveUrl(url: string | null | undefined): string | null {
+    if (!url) return null;
+    return url.startsWith("http") ? url : `${API_BASE}${url}`;
+}
+
+// Use the reel's opening line as a human-friendly card title.
+function getReelTitle(job: any): string {
+    const slides = job.slides_snapshot;
+    if (Array.isArray(slides) && slides.length) {
+        const first = slides[0];
+        const text = typeof first === "string" ? first : first?.text;
+        if (text && text.trim()) return text.trim();
+    }
+    return job.brand_name || "Untitled Reel";
+}
+
+function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const videoUrl = resolveUrl(job.output_url);
+    const isDone = job.status === "done" && !!videoUrl;
+    const title = getReelTitle(job);
+
+    const handleEnter = () => {
+        const v = videoRef.current;
+        if (v) { v.currentTime = 0; v.play().catch(() => { }); }
+    };
+    const handleLeave = () => {
+        const v = videoRef.current;
+        if (v) { v.pause(); try { v.currentTime = 0.5; } catch { } }
+    };
+
+    return (
+        <div className="glass-card-hover rounded-2xl overflow-hidden flex flex-col">
+            {/* Thumbnail (9:16 reel, first frame as poster, plays on hover) */}
+            <div
+                className="group relative w-full"
+                style={{ aspectRatio: "4 / 5", background: "#0d0d18" }}
+                onMouseEnter={handleEnter}
+                onMouseLeave={handleLeave}
+            >
+                {isDone ? (
+                    <>
+                        <video
+                            ref={videoRef}
+                            src={`${videoUrl}#t=0.5`}
+                            muted
+                            loop
+                            playsInline
+                            preload="metadata"
+                            onLoadedMetadata={(e) => { try { e.currentTarget.currentTime = 0.5; } catch { } }}
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 opacity-100 group-hover:opacity-0">
+                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgba(15,15,26,0.65)", border: "1px solid rgba(255,255,255,0.25)" }}>
+                                <Play className="w-5 h-5 text-white ml-0.5" />
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg, rgba(124,58,237,0.25), rgba(13,148,136,0.25))" }}>
+                        <Video className="w-10 h-10" style={{ color: "rgba(255,255,255,0.35)" }} />
+                    </div>
+                )}
+
+                {/* Status badge */}
+                <div
+                    className="absolute top-3 left-3 px-2 py-1 rounded text-xs font-bold uppercase tracking-wider"
+                    style={{
+                        background: job.status === "done" ? "rgba(52,211,153,0.25)" : job.status === "failed" ? "rgba(248,113,113,0.25)" : "rgba(124,58,237,0.25)",
+                        color: job.status === "done" ? "#34d399" : job.status === "failed" ? "#f87171" : "#a78bfa",
+                        backdropFilter: "blur(4px)",
+                    }}
+                >
+                    {job.status}
+                </div>
+            </div>
+
+            {/* Body */}
+            <div className="p-5 flex flex-col flex-1">
+                <h3 className="font-bold text-base mb-1 line-clamp-2" style={{ color: "#f8fafc" }}>
+                    {title}
+                </h3>
+                <div className="flex items-center gap-2 text-xs mb-4" style={{ color: "#94a3b8" }}>
+                    <span className="truncate max-w-[55%]">{job.brand_name || "Brand Video"}</span>
+                    <span>•</span>
+                    <span className="capitalize">{job.theme.replace("-", " ")}</span>
+                    <span>•</span>
+                    <span>{new Date(job.created_at).toLocaleDateString()}</span>
+                </div>
+
+                <div className="mt-auto">
+                    {isDone ? (
+                        <div className="flex gap-2 w-full">
+                            <a
+                                href={videoUrl!}
+                                download={`reelforge-${job.id.substring(0, 6)}.mp4`}
+                                className="btn-secondary flex-1 justify-center group"
+                            >
+                                <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                                <span>Download</span>
+                            </a>
+                            <button
+                                onClick={() => onEdit(job)}
+                                className="btn-secondary flex-1 justify-center group"
+                            >
+                                <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                <span>Re-edit</span>
+                            </button>
+                        </div>
+                    ) : job.status === "failed" ? (
+                        <button disabled className="btn-secondary w-full justify-center opacity-50 cursor-not-allowed">
+                            Render Failed
+                        </button>
+                    ) : (
+                        <button disabled className="btn-secondary w-full justify-center opacity-50 cursor-wait">
+                            Processing...
+                        </button>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export default function Dashboard() {
     const router = useRouter();
@@ -138,60 +265,7 @@ export default function Dashboard() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {jobs.map((job) => (
-                            <div key={job.id} className="glass-card-hover rounded-2xl p-5 flex flex-col justify-between">
-                                <div className="mb-4">
-                                    <div className="flex items-start justify-between mb-3">
-                                        <div
-                                            className="px-2 py-1 rounded text-xs font-bold uppercase tracking-wider"
-                                            style={{
-                                                background: job.status === "done" ? "rgba(52,211,153,0.2)" : job.status === "failed" ? "rgba(248,113,113,0.2)" : "rgba(124,58,237,0.2)",
-                                                color: job.status === "done" ? "#34d399" : job.status === "failed" ? "#f87171" : "#a78bfa"
-                                            }}
-                                        >
-                                            {job.status}
-                                        </div>
-                                        <span className="text-xs" style={{ color: "#64748b" }}>
-                                            {new Date(job.created_at).toLocaleDateString()}
-                                        </span>
-                                    </div>
-                                    <h3 className="font-bold text-lg mb-1 truncate" style={{ color: "#f8fafc" }}>
-                                        {job.brand_name || "Brand Video"}
-                                    </h3>
-                                    <div className="flex items-center gap-2 text-sm" style={{ color: "#94a3b8" }}>
-                                        <span className="capitalize">{job.theme.replace("-", " ")}</span>
-                                        <span>•</span>
-                                        <span className="truncate">{job.id.substring(0, 8)}</span>
-                                    </div>
-                                </div>
-
-                                {job.status === "done" && job.output_url ? (
-                                    <div className="flex gap-2 w-full mt-2">
-                                        <a
-                                            href={`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}${job.output_url}`}
-                                            download={`reelforge-${job.id.substring(0, 6)}.mp4`}
-                                            className="btn-secondary flex-1 justify-center group"
-                                        >
-                                            <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-                                            <span>Download</span>
-                                        </a>
-                                        <button
-                                            onClick={() => handleEdit(job)}
-                                            className="btn-secondary flex-1 justify-center group"
-                                        >
-                                            <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                                            <span>Re-edit</span>
-                                        </button>
-                                    </div>
-                                ) : job.status === "failed" ? (
-                                    <button disabled className="btn-secondary w-full justify-center mt-2 opacity-50 cursor-not-allowed">
-                                        Render Failed
-                                    </button>
-                                ) : (
-                                    <button disabled className="btn-secondary w-full justify-center mt-2 opacity-50 cursor-wait">
-                                        Processing...
-                                    </button>
-                                )}
-                            </div>
+                            <ReelCard key={job.id} job={job} onEdit={handleEdit} />
                         ))}
                     </div>
                 )}
