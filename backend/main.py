@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy import text
 
 from config import settings
 from db.database import engine
@@ -10,11 +11,24 @@ from db.models import Base
 from routes import brands, scripts, render, tts, webhooks
 
 
+# Lightweight, idempotent column adds for tables that already exist.
+# create_all() never ALTERs existing tables, so new columns are added here.
+# Postgres supports ADD COLUMN IF NOT EXISTS, so this is safe to run every boot.
+_COLUMN_MIGRATIONS = [
+    "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS slide_logo_position VARCHAR(50) DEFAULT 'none'",
+]
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Create DB tables on startup (in production use Alembic migrations)
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        for stmt in _COLUMN_MIGRATIONS:
+            try:
+                await conn.execute(text(stmt))
+            except Exception as e:
+                print(f"[startup] column migration skipped: {e}")
 
     # Ensure Playwright Chromium is installed at runtime.
     # nixpacks build cmds install to an ephemeral layer that gets wiped.

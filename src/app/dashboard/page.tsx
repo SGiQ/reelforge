@@ -171,6 +171,7 @@ export default function Dashboard() {
             watermarkOpacity: job.watermark_opacity ?? 18,
             logoPosition: job.logo_position || "bottom_center",
             logoSize: job.logo_size_snapshot ?? 120,
+            slideLogoPosition: job.slide_logo_position || "none",
             qrCodePreview: job.qr_code_url_snapshot || null,
             qrCodeText: job.qr_text_snapshot || "",
         };

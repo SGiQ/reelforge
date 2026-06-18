@@ -59,6 +59,7 @@ export default function ExportPage() {
                 watermark_opacity: (brand as any).watermarkOpacity ?? 18,
                 logo_position: (brand as any).logoPosition ?? "bottom_center",
                 logo_size: (brand as any).logoSize ?? 120,
+                slide_logo_position: (brand as any).slideLogoPosition ?? "none",
                 qr_code_url: (brand as any).qrCodePreview,
                 qr_text: (brand as any).qrCodeText ?? "",
                 logo_url: (brand as any).logoPreview,

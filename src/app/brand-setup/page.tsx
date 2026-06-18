@@ -22,6 +22,7 @@ export default function BrandSetupPage() {
     const [watermarkOpacity, setWatermarkOpacity] = useState(18);
     const [logoPosition, setLogoPosition] = useState("bottom_center");
     const [logoSize, setLogoSize] = useState(120);
+    const [slideLogoPosition, setSlideLogoPosition] = useState("top_right");
     const [qrCodeFile, setQrCodeFile] = useState<File | null>(null);
     const [qrCodePreview, setQrCodePreview] = useState<string | null>(null);
     const [qrCodeText, setQrCodeText] = useState("");
@@ -35,6 +36,7 @@ export default function BrandSetupPage() {
         if (b.watermarkOpacity !== undefined) setWatermarkOpacity(b.watermarkOpacity);
         if (b.logoPosition) setLogoPosition(b.logoPosition);
         if (b.logoSize !== undefined) setLogoSize(b.logoSize);
+        if (b.slideLogoPosition) setSlideLogoPosition(b.slideLogoPosition);
         if (b.qrCodePreview) setQrCodePreview(b.qrCodePreview);
         if (b.qrCodeText) setQrCodeText(b.qrCodeText);
     };
@@ -74,6 +76,7 @@ export default function BrandSetupPage() {
                     watermarkOpacity: last.watermark_opacity ?? 18,
                     logoPosition: last.logo_position || "bottom_center",
                     logoSize: last.logo_size_snapshot ?? 120,
+                    slideLogoPosition: last.slide_logo_position || "none",
                     qrCodePreview: last.qr_code_url_snapshot || null,
                     qrCodeText: last.qr_text_snapshot || "",
                 });
@@ -135,14 +138,27 @@ export default function BrandSetupPage() {
                 watermarkOpacity,
                 logoPosition,
                 logoSize,
+                slideLogoPosition,
                 qrCodePreview: finalQrCodeUrl,
                 qrCodeText: qrCodeText.trim(),
             };
+            // Detect whether this is a different brand than what was saved before.
+            let prevBrandName = "";
+            try {
+                const prevRaw = localStorage.getItem("reelforge_brand");
+                if (prevRaw) prevBrandName = (JSON.parse(prevRaw).brandName || "").trim();
+            } catch (e) { }
+
             localStorage.setItem("reelforge_brand", JSON.stringify(brandData));
-            // Clear prior session data so the new brand always gets a fresh script
-            localStorage.removeItem("reelforge_script");
-            localStorage.removeItem("reelforge_theme");
-            localStorage.removeItem("reelforge_audio");
+
+            // Only reset downstream work when switching to a NEW/different brand.
+            // Editing the current brand (logo, watermark, settings) must NOT wipe
+            // the script/theme/audio the user already created.
+            if (prevBrandName && prevBrandName !== brandData.brandName) {
+                localStorage.removeItem("reelforge_script");
+                localStorage.removeItem("reelforge_theme");
+                localStorage.removeItem("reelforge_audio");
+            }
             router.push("/script-picker");
         } catch (e: any) {
             setError(`Failed to save: ${e.message || 'Unknown error'}`);
@@ -250,6 +266,29 @@ export default function BrandSetupPage() {
                                     className="w-full accent-brand-purple"
                                     style={{ accentColor: "#7c3aed" }}
                                 />
+                            </div>
+
+                            {/* Logo on every slide (brand recognition) */}
+                            <div className="space-y-2">
+                                <label className="block text-sm font-medium" style={{ color: "#a78bfa" }}>
+                                    Brand Logo on Every Slide
+                                </label>
+                                <select
+                                    value={slideLogoPosition}
+                                    onChange={(e) => setSlideLogoPosition(e.target.value)}
+                                    className="input-field w-full cursor-pointer"
+                                >
+                                    <option value="none">Off — final slide only</option>
+                                    <option value="top_left">Top Left</option>
+                                    <option value="top_center">Top Center</option>
+                                    <option value="top_right">Top Right</option>
+                                    <option value="bottom_left">Bottom Left</option>
+                                    <option value="bottom_center">Bottom Center</option>
+                                    <option value="bottom_right">Bottom Right</option>
+                                </select>
+                                <p className="text-xs" style={{ color: "#64748b" }}>
+                                    Shows a small logo on every text slide so viewers recognize your brand even while scrubbing.
+                                </p>
                             </div>
                         </div>
                     </div>

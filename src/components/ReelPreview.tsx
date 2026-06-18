@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, CSSProperties } from "react";
 import { THEMES, Theme } from "./ThemeCard";
 
 interface Slide {
@@ -7,6 +7,22 @@ interface Slide {
     fontSize: number;
     textColor: string;
     fontFamily: string;
+}
+
+// Position style for the small persistent "logo bug" shown on every text slide.
+// Returns null when disabled ("none"). Sizes are relative to the 270×480 preview.
+export function slideBugStyle(pos: string, size = 44): CSSProperties | null {
+    const m = 14;
+    const base: CSSProperties = { position: "absolute", maxWidth: size, maxHeight: size, objectFit: "contain", opacity: 0.92, zIndex: 6 };
+    switch (pos) {
+        case "top_left": return { ...base, top: m, left: m };
+        case "top_center": return { ...base, top: m, left: "50%", transform: "translateX(-50%)" };
+        case "top_right": return { ...base, top: m, right: m };
+        case "bottom_left": return { ...base, bottom: m, left: m };
+        case "bottom_center": return { ...base, bottom: m, left: "50%", transform: "translateX(-50%)" };
+        case "bottom_right": return { ...base, bottom: m, right: m };
+        default: return null;
+    }
 }
 
 interface ReelPreviewProps {
@@ -17,6 +33,7 @@ interface ReelPreviewProps {
     watermarkOpacity?: number;
     logoUrl?: string | null;
     logoSize?: number;
+    slideLogoPosition?: string;
     qrCodeUrl?: string | null;
     qrText?: string;
     autoPlay?: boolean;
@@ -32,6 +49,7 @@ export default function ReelPreview({
     watermarkOpacity = 18,
     logoUrl,
     logoSize = 120,
+    slideLogoPosition = "none",
     qrCodeUrl = null,
     qrText = "",
     autoPlay = true,
@@ -236,6 +254,12 @@ export default function ReelPreview({
                     </p>
                 )}
             </div>
+
+            {/* Persistent logo bug on text slides (brand recognition) */}
+            {!isLogoSlide && logoUrl && slideBugStyle(slideLogoPosition) && (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={logoUrl} alt="" style={slideBugStyle(slideLogoPosition)!} />
+            )}
 
             {/* Progress dots */}
             <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-1.5">

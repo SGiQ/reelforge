@@ -7,7 +7,7 @@
  * URL: /render-slide/{jobId}/{slideIndex}
  * Data source: /api/render-frame-data/{jobId}
  */
-import { useEffect, useState } from "react";
+import { useEffect, useState, CSSProperties } from "react";
 import { THEMES } from "@/components/ThemeCard";
 
 interface SlideData {
@@ -26,9 +26,25 @@ interface RenderJobData {
     logo_url: string | null;
     logo_position?: string;
     logo_size?: number;
+    slide_logo_position?: string;
     qr_code_url?: string | null;
     qr_text?: string;
     website_url?: string;
+}
+
+// Position style for the small persistent "logo bug" on every text slide.
+function slideBugStyle(pos: string | undefined, size = 44): CSSProperties | null {
+    const m = 14;
+    const base: CSSProperties = { position: "absolute", maxWidth: size, maxHeight: size, objectFit: "contain", opacity: 0.92, zIndex: 6 };
+    switch (pos) {
+        case "top_left": return { ...base, top: m, left: m };
+        case "top_center": return { ...base, top: m, left: "50%", transform: "translateX(-50%)" };
+        case "top_right": return { ...base, top: m, right: m };
+        case "bottom_left": return { ...base, bottom: m, left: m };
+        case "bottom_center": return { ...base, bottom: m, left: "50%", transform: "translateX(-50%)" };
+        case "bottom_right": return { ...base, bottom: m, right: m };
+        default: return null;
+    }
 }
 
 const FONT_MAP: Record<string, string> = {
@@ -194,6 +210,12 @@ export default function RenderSlidePage({
                     {slide.text}
                 </p>
             </div>
+
+            {/* Persistent logo bug for brand recognition */}
+            {data.logo_url && slideBugStyle(data.slide_logo_position) && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={data.logo_url} alt="" style={slideBugStyle(data.slide_logo_position)!} />
+            )}
         </div>
     );
 }

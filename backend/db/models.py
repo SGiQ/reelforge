@@ -65,6 +65,8 @@ class RenderJob(Base):
     watermark_opacity: Mapped[int] = mapped_column(default=18)
     logo_position: Mapped[str] = mapped_column(String(50), default="bottom_center")
     logo_size_snapshot: Mapped[int] = mapped_column(Integer, default=120)
+    # Position of the small persistent logo shown on every text slide ("none" = off)
+    slide_logo_position: Mapped[str] = mapped_column(String(50), default="none")
     qr_code_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     qr_text_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     music_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)

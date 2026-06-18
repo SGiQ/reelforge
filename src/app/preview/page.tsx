@@ -106,6 +106,7 @@ export default function PreviewPage() {
                                 logoUrl={brand.logoPreview}
                                 watermarkOpacity={(brand as any).watermarkOpacity ?? 18}
                                 logoSize={(brand as any).logoSize ?? 120}
+                                slideLogoPosition={(brand as any).slideLogoPosition ?? "none"}
                                 qrCodeUrl={(brand as any).qrCodePreview ?? null}
                                 qrText={(brand as any).qrCodeText ?? ""}
                                 autoPlay={playing}

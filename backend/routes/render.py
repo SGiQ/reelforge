@@ -44,6 +44,7 @@ class RenderCreateRequest(BaseModel):
     script_id: str | None = None
     watermark_opacity: int = 18
     logo_position: str = "bottom_center"
+    slide_logo_position: str = "none"
     qr_code_url: str | None = None
     music_url: str | None = None
     music_volume: float = 0.15
@@ -69,6 +70,7 @@ class RenderJobOut(BaseModel):
     watermark_opacity: int = 18
     logo_position: str = "bottom_center"
     logo_size_snapshot: int = 120
+    slide_logo_position: str = "none"
     qr_code_url_snapshot: str | None = None
     qr_text_snapshot: str | None = None
     music_url_snapshot: str | None = None
@@ -126,6 +128,7 @@ def _run_render_sync(job_id: str):
                 watermark_opacity=job.watermark_opacity,
                 logo_position=job.logo_position,
                 logo_size=job.logo_size_snapshot,
+                slide_logo_position=job.slide_logo_position,
                 qr_code_url=job.qr_code_url_snapshot,
                 qr_text=job.qr_text_snapshot or "",
                 music_url=job.music_url_snapshot,
@@ -199,6 +202,7 @@ async def create_render_job(
         watermark_opacity=payload.watermark_opacity,
         logo_position=payload.logo_position,
         logo_size_snapshot=payload.logo_size,
+        slide_logo_position=payload.slide_logo_position,
         qr_code_url_snapshot=payload.qr_code_url,
         qr_text_snapshot=payload.qr_text,
         music_url_snapshot=payload.music_url,
