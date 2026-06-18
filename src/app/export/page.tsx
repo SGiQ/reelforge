@@ -49,7 +49,6 @@ export default function ExportPage() {
 
         try {
             const token = await getToken();
-            const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
             const body = {
                 brand_name: brand.brandName,
@@ -72,7 +71,9 @@ export default function ExportPage() {
                 outro_voiceover: script.outroVoiceover,
             };
 
-            const res = await fetch(`${apiBase}/render/create`, {
+            // Goes through the same-origin Next proxy, which injects the
+            // server-side X-API-Key so the secret never reaches the browser.
+            const res = await fetch(`/api/render/create`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

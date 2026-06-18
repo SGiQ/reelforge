@@ -148,9 +148,9 @@ export default function ReelPreview({
 
         const controller = new AbortController();
         abortRef.current = controller;
-        const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-        fetch(`${apiBase}/tts/preview`, {
+        // Same-origin proxy injects the server-side X-API-Key.
+        fetch(`/api/tts/preview`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text: slideText, voice_id: voiceId }),
