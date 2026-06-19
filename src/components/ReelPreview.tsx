@@ -12,8 +12,8 @@ interface Slide {
 
 // Position style for the small persistent "logo bug" shown on every text slide.
 // Returns null when disabled ("none"). Sizes are relative to the 270×480 preview.
-// A dual dark+light glow so the logo reads on any background color.
-const LOGO_GLOW = "drop-shadow(0 0 2px rgba(0,0,0,0.85)) drop-shadow(0 0 5px rgba(0,0,0,0.55)) drop-shadow(0 0 6px rgba(255,255,255,0.45))";
+// A soft white glow so the logo reads on any background color.
+const LOGO_GLOW = "drop-shadow(0 0 2px rgba(255,255,255,0.95)) drop-shadow(0 0 6px rgba(255,255,255,0.8)) drop-shadow(0 0 11px rgba(255,255,255,0.55))";
 
 // Where the brand block sits on the final slide.
 export function logoSlideAlign(pos: string | undefined): { justifyContent: string; alignItems: string } {
