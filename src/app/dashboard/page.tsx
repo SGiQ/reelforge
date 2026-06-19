@@ -2,8 +2,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Video, Download, RefreshCw, ExternalLink, Play, X } from "lucide-react";
+import { Video, Download, RefreshCw, ExternalLink, Play, X, Share2, Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import { authHeaders, useRequireAuth } from "@/lib/auth";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
@@ -27,9 +28,26 @@ function getReelTitle(job: any): string {
 function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [playerOpen, setPlayerOpen] = useState(false);
+    const [shareOpen, setShareOpen] = useState(false);
+    const [shared, setShared] = useState(!!job.shared);
+    const [sharing, setSharing] = useState(false);
     const videoUrl = resolveUrl(job.output_url);
     const isDone = job.status === "done" && !!videoUrl;
     const title = getReelTitle(job);
+
+    const shareToCommunity = async () => {
+        setSharing(true);
+        try {
+            const res = await fetch(`${API_BASE}/render/${job.id}/share`, {
+                method: "POST",
+                headers: authHeaders(),
+            });
+            if (res.ok) setShared(true);
+        } catch { /* ignore */ } finally {
+            setSharing(false);
+            setShareOpen(false);
+        }
+    };
 
     const [downloading, setDownloading] = useState(false);
 
@@ -66,6 +84,8 @@ function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
             window.location.href = `${videoUrl}${videoUrl!.includes("?") ? "&" : "?"}download=${encodeURIComponent(filename)}`;
         } finally {
             setDownloading(false);
+            // After downloading, offer to share to the community (once).
+            if (!shared) setShareOpen(true);
         }
     };
 
@@ -189,29 +209,43 @@ function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
                     </div>
                 </div>
             )}
+
+            {/* Share-to-community prompt (after download) */}
+            {shareOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.7)" }} onClick={() => setShareOpen(false)}>
+                    <div className="glass-card rounded-2xl p-6 max-w-sm w-full text-center" onClick={(e) => e.stopPropagation()}>
+                        <div className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ background: "rgba(124,58,237,0.2)" }}>
+                            <Share2 className="w-6 h-6" style={{ color: "#a78bfa" }} />
+                        </div>
+                        <h3 className="text-lg font-bold mb-1" style={{ color: "#f8fafc" }}>Share to the community?</h3>
+                        <p className="text-sm mb-5" style={{ color: "#94a3b8" }}>
+                            Your reel downloaded. Add it to the community dashboard so other members can see it.
+                        </p>
+                        <div className="flex gap-2">
+                            <button onClick={() => setShareOpen(false)} className="btn-secondary flex-1 justify-center">Not now</button>
+                            <button onClick={shareToCommunity} disabled={sharing} className="btn-primary flex-1 justify-center" style={{ opacity: sharing ? 0.6 : 1 }}>
+                                {sharing ? "Sharing…" : "Share"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
 
 export default function Dashboard() {
     const router = useRouter();
-    const getToken = useCallback(async () => "mock_token", []);
-    const isLoaded = true;
-    const isSignedIn = true;
+    const authed = useRequireAuth();
     const [jobs, setJobs] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const fetchHistory = useCallback(async () => {
-        if (!isLoaded || !isSignedIn) return;
         setIsLoading(true);
         setError(null);
         try {
-            const token = await getToken();
-            const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-            const res = await fetch(`${apiBase}/render/history`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await fetch(`${API_BASE}/render/history`, { headers: authHeaders() });
             if (!res.ok) throw new Error("Failed to load render history");
             const data = await res.json();
             setJobs(data);
@@ -220,7 +254,7 @@ export default function Dashboard() {
         } finally {
             setIsLoading(false);
         }
-    }, [isLoaded, isSignedIn, getToken]);
+    }, []);
 
     const handleEdit = (job: any) => {
         // Hydrate Brand
@@ -266,21 +300,10 @@ export default function Dashboard() {
     };
 
     useEffect(() => {
-        fetchHistory();
-    }, [fetchHistory]);
+        if (authed) fetchHistory();
+    }, [authed, fetchHistory]);
 
-    if (!isLoaded) return null;
-
-    if (!isSignedIn) {
-        return (
-            <div className="page-container flex items-center justify-center">
-                <div className="text-center">
-                    <h1 className="text-2xl font-bold mb-4">Welcome to ReelForge</h1>
-                    <Link href="/brand-setup" className="btn-primary">Start Building</Link>
-                </div>
-            </div>
-        );
-    }
+    if (!authed) return null;
 
     return (
         <div className="page-container">

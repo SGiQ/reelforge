@@ -5,11 +5,12 @@ import { ArrowRight, Save } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import UploadZone from "@/components/UploadZone";
 import { upload } from '@vercel/blob/client';
+import { getToken, useRequireAuth } from "@/lib/auth";
 
 
 export default function BrandSetupPage() {
     const router = useRouter();
-    const getToken = async () => "mock_token";
+    useRequireAuth();
 
     const [brandName, setBrandName] = useState("");
     const [websiteUrl, setWebsiteUrl] = useState("");

@@ -8,7 +8,7 @@ from sqlalchemy import text
 from config import settings
 from db.database import engine
 from db.models import Base
-from routes import brands, scripts, render, tts, webhooks
+from routes import brands, scripts, render, tts, webhooks, auth, community
 
 
 # Lightweight, idempotent column adds for tables that already exist.
@@ -19,6 +19,9 @@ _COLUMN_MIGRATIONS = [
     "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS slide_logo_size INTEGER DEFAULT 44",
     "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS video_overlay BOOLEAN DEFAULT FALSE",
     "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS phone_snapshot TEXT",
+    "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS owner_id VARCHAR",
+    "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS shared BOOLEAN DEFAULT FALSE",
+    "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS shared_at TIMESTAMPTZ",
 ]
 
 
@@ -75,6 +78,8 @@ app.add_middleware(
 )
 
 # Routers
+app.include_router(auth.router)
+app.include_router(community.router)
 app.include_router(brands.router)
 app.include_router(scripts.router)
 app.include_router(render.router)

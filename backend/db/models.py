@@ -15,6 +15,16 @@ class JobStatus(str, enum.Enum):
     failed = "failed"
 
 
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    email: Mapped[str] = mapped_column(String(320), unique=True, index=True, nullable=False)
+    password_hash: Mapped[str] = mapped_column(Text, nullable=False)
+    display_name: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
 class Brand(Base):
     __tablename__ = "brands"
 
@@ -49,6 +59,9 @@ class RenderJob(Base):
     __tablename__ = "render_jobs"
 
     id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    owner_id: Mapped[str | None] = mapped_column(String, index=True, nullable=True)
+    shared: Mapped[bool] = mapped_column(Boolean, default=False)
+    shared_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     brand_id: Mapped[str | None] = mapped_column(String, ForeignKey("brands.id", ondelete="SET NULL"), nullable=True)
     script_id: Mapped[str | None] = mapped_column(String, ForeignKey("scripts.id", ondelete="SET NULL"), nullable=True)
     theme: Mapped[str] = mapped_column(String(50), nullable=False, default="dark")

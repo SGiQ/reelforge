@@ -21,6 +21,10 @@ class Settings(BaseSettings):
     # Leave blank to disable the gate (default — preserves existing behavior).
     REELFORGE_API_KEY: str = ""
 
+    # Secret for signing user JWTs (custom email/password auth).
+    # Set a strong value in production via the JWT_SECRET env var.
+    JWT_SECRET: str = "dev-insecure-change-me"
+
     @property
     def get_database_url(self) -> str:
         url = self.DATABASE_URL

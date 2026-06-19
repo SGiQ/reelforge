@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
-import { Zap, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Zap, User, LogOut } from "lucide-react";
+import { clearAuth } from "@/lib/auth";
 
 
 
@@ -17,6 +19,8 @@ interface NavbarProps {
 }
 
 export default function Navbar({ currentStep }: NavbarProps) {
+    const router = useRouter();
+    const logout = () => { clearAuth(); router.replace("/login"); };
     return (
         <nav className="sticky top-0 z-50 w-full" style={{ borderBottom: "1px solid rgba(45,45,74,0.6)", background: "rgba(15,15,26,0.9)", backdropFilter: "blur(12px)" }}>
             <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -72,12 +76,18 @@ export default function Navbar({ currentStep }: NavbarProps) {
 
                 {/* User button */}
                 <div className="flex items-center gap-4">
+                    <Link href="/community" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
+                        Community
+                    </Link>
                     <Link href="/help" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
                         Help
                     </Link>
                     <Link href="/dashboard" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
                         Dashboard
                     </Link>
+                    <button onClick={logout} title="Log out" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
+                        <LogOut className="w-4 h-4" />
+                    </button>
 
                 </div>
             </div>

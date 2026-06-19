@@ -70,6 +70,7 @@ class RenderJobOut(BaseModel):
     theme: str
     brand_name: str | None
     created_at: datetime
+    shared: bool = False
     # Snapshot fields for re-editing reels
     slides_snapshot: list | None = None
     logo_url_snapshot: str | None = None
@@ -206,6 +207,7 @@ async def create_render_job(
         raise HTTPException(status_code=400, detail="One or more slides exceeds the 150 character limit.")
 
     job = RenderJob(
+        owner_id=user_id,
         theme=payload.theme,
         status=JobStatus.pending,
         brand_name=payload.brand_name,
@@ -261,23 +263,37 @@ async def get_render_history(
     if not user_id:
         raise HTTPException(status_code=401, detail="Unauthorized")
 
-    from db.models import Brand
-    brand_result = await db.execute(select(Brand).where(Brand.clerk_user_id == user_id))
-    brand = brand_result.scalar_one_or_none()
-    
-    if not brand:
-        # Fallback: return recent renders if no brand exists (e.g. mock auth)
-        jobs_result = await db.execute(
-            select(RenderJob).order_by(RenderJob.created_at.desc()).limit(50)
-        )
-        return jobs_result.scalars().all()
-
     jobs_result = await db.execute(
         select(RenderJob)
-        .where(RenderJob.brand_id == brand.id)
+        .where(RenderJob.owner_id == user_id)
         .order_by(RenderJob.created_at.desc())
+        .limit(100)
     )
     return jobs_result.scalars().all()
+
+
+@router.post("/{job_id}/share", response_model=RenderJobOut)
+async def share_render(
+    job_id: str,
+    db: AsyncSession = Depends(get_db),
+    user_id: str | None = Depends(optional_user_id),
+):
+    """Mark one of your own reels as shared to the community feed."""
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    result = await db.execute(select(RenderJob).where(RenderJob.id == job_id))
+    job = result.scalar_one_or_none()
+    if not job:
+        raise HTTPException(status_code=404, detail="Render job not found.")
+    if job.owner_id and job.owner_id != user_id:
+        raise HTTPException(status_code=403, detail="Not your reel.")
+    job.shared = True
+    job.shared_at = datetime.now(timezone.utc)
+    if not job.owner_id:
+        job.owner_id = user_id
+    await db.commit()
+    await db.refresh(job)
+    return job
 
 
 @router.get("/frame-data/{job_id}")

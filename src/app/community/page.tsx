@@ -1,0 +1,125 @@
+"use client";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { Users, Play, X, RefreshCw } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import { API_BASE, authHeaders, useRequireAuth } from "@/lib/auth";
+
+function resolveUrl(url: string | null | undefined): string | null {
+    if (!url) return null;
+    return url.startsWith("http") ? url : `${API_BASE}${url}`;
+}
+
+function CommunityCard({ reel }: { reel: any }) {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const [open, setOpen] = useState(false);
+    const url = resolveUrl(reel.output_url);
+    if (!url) return null;
+
+    return (
+        <div className="glass-card-hover rounded-2xl overflow-hidden flex flex-col">
+            <div
+                className="group relative w-full cursor-pointer"
+                style={{ aspectRatio: "4 / 5", background: "#0d0d18" }}
+                onMouseEnter={() => { const v = videoRef.current; if (v) { v.currentTime = 0; v.play().catch(() => { }); } }}
+                onMouseLeave={() => { const v = videoRef.current; if (v) { v.pause(); try { v.currentTime = 0.5; } catch { } } }}
+                onClick={() => setOpen(true)}
+            >
+                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                <video ref={videoRef} src={`${url}#t=0.5`} muted loop playsInline preload="metadata"
+                    onLoadedMetadata={(e) => { try { e.currentTarget.currentTime = 0.5; } catch { } }}
+                    className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 opacity-100 group-hover:opacity-0">
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgba(15,15,26,0.65)", border: "1px solid rgba(255,255,255,0.25)" }}>
+                        <Play className="w-5 h-5 text-white ml-0.5" />
+                    </div>
+                </div>
+            </div>
+            <div className="p-4">
+                <h3 className="font-bold text-sm truncate" style={{ color: "#f8fafc" }}>{reel.brand_name || "Untitled Reel"}</h3>
+                <p className="text-xs mt-0.5" style={{ color: "#94a3b8" }}>
+                    Shared by <span style={{ color: "#a78bfa" }}>{reel.shared_by || "Someone"}</span>
+                </p>
+            </div>
+
+            {open && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.85)" }} onClick={() => setOpen(false)}>
+                    <div className="relative" onClick={(e) => e.stopPropagation()}>
+                        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                        <video src={url} controls autoPlay playsInline className="rounded-xl" style={{ maxHeight: "88vh", maxWidth: "92vw", background: "#000" }} />
+                        <button onClick={() => setOpen(false)} className="absolute -top-3 -right-3 w-9 h-9 rounded-full flex items-center justify-center"
+                            style={{ background: "#1a1a2e", border: "1px solid rgba(255,255,255,0.25)" }} aria-label="Close">
+                            <X className="w-5 h-5 text-white" />
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+export default function CommunityPage() {
+    const authed = useRequireAuth();
+    const [reels, setReels] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchFeed = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const res = await fetch(`${API_BASE}/community`, { headers: authHeaders() });
+            if (!res.ok) throw new Error("Failed to load the community feed.");
+            setReels(await res.json());
+        } catch (e: any) {
+            setError(e.message);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => { if (authed) fetchFeed(); }, [authed, fetchFeed]);
+
+    if (!authed) return null;
+
+    return (
+        <div className="page-container">
+            <Navbar />
+            <main className="max-w-6xl mx-auto px-6 py-12">
+                <div className="flex items-end justify-between mb-10 gap-6">
+                    <div>
+                        <h1 className="section-title text-3xl mb-2 flex items-center gap-2">
+                            <Users className="w-7 h-7" style={{ color: "#a78bfa" }} /> Community
+                        </h1>
+                        <p className="text-sm" style={{ color: "#94a3b8" }}>Reels shared by members. Download yours and share to add it here.</p>
+                    </div>
+                    <button onClick={fetchFeed} className="flex items-center justify-center w-12 h-12 rounded-xl border transition-colors hover:bg-white/5"
+                        style={{ borderColor: "rgba(45,45,74,0.6)", color: "#94a3b8" }}>
+                        <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
+                    </button>
+                </div>
+
+                {error && <p className="text-sm mb-6" style={{ color: "#f87171" }}>{error}</p>}
+
+                {loading ? (
+                    <div className="flex items-center justify-center py-20">
+                        <div className="w-8 h-8 rounded-full border-2 border-brand-purple border-t-transparent animate-spin" />
+                    </div>
+                ) : reels.length === 0 ? (
+                    <div className="text-center py-24 rounded-3xl border border-dashed" style={{ borderColor: "rgba(45,45,74,0.6)", background: "rgba(26,26,46,0.5)" }}>
+                        <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ background: "rgba(124,58,237,0.1)" }}>
+                            <Users className="w-8 h-8" style={{ color: "#a78bfa" }} />
+                        </div>
+                        <h3 className="text-lg font-bold mb-2">No shared reels yet</h3>
+                        <p className="text-sm max-w-sm mx-auto" style={{ color: "#94a3b8" }}>
+                            Be the first — download a reel from your dashboard and choose “Share” to feature it here.
+                        </p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {reels.map((r) => <CommunityCard key={r.id} reel={r} />)}
+                    </div>
+                )}
+            </main>
+        </div>
+    );
+}

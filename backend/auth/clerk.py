@@ -1,17 +1,29 @@
-import httpx
 from fastapi import HTTPException, Header
-from jose import jwt, JWTError
 from config import settings
+from auth.security import decode_token
+
+
+def _uid_from_auth(authorization: str | None) -> str | None:
+    """Decode the Bearer JWT from the Authorization header → user id (sub)."""
+    if not authorization:
+        return None
+    parts = authorization.split()
+    token = parts[1] if len(parts) == 2 and parts[0].lower() == "bearer" else authorization
+    payload = decode_token(token)
+    return payload.get("sub") if payload else None
 
 
 async def get_current_user_id(authorization: str = Header(None)) -> str:
-    """Extract and verify Clerk JWT, return clerk_user_id (sub claim)."""
-    return "guest_user_123"
+    """Return the authenticated user id, or 401 if not signed in."""
+    uid = _uid_from_auth(authorization)
+    if not uid:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    return uid
 
 
 async def optional_user_id(authorization: str = Header(None)) -> str | None:
-    """Same as get_current_user_id but returns None instead of raising for unauthenticated."""
-    return "guest_user_123"
+    """Return the authenticated user id, or None if not signed in."""
+    return _uid_from_auth(authorization)
 
 
 async def require_service_key(x_api_key: str = Header(None)) -> None:
