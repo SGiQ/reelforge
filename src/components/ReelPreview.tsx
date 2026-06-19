@@ -262,9 +262,11 @@ export default function ReelPreview({
                                 {brandName.slice(0, 2).toUpperCase()}
                             </div>
                         )}
-                        <p className="text-sm font-bold text-center" style={{ color: theme.textColor }}>
-                            {brandName}
-                        </p>
+                        {!logoUrl && (
+                            <p className="text-sm font-bold text-center" style={{ color: theme.textColor }}>
+                                {brandName}
+                            </p>
+                        )}
                         {/* Custom QR Code (Optional) */}
                         {qrCodeUrl && (
                             <div className="flex flex-col items-center gap-1 mt-2">

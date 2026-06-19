@@ -108,9 +108,11 @@ export default function BrandSetupPage() {
         setQrCodePreview(URL.createObjectURL(file));
     };
 
+    const hasLogo = !!logoFile || !!logoPreview;
+
     const handleSave = async () => {
-        if (!brandName.trim()) {
-            setError("Brand name is required.");
+        if (!brandName.trim() && !hasLogo) {
+            setError("Add a brand name or upload a logo.");
             return;
         }
         setSaving(true);
@@ -201,7 +203,8 @@ export default function BrandSetupPage() {
                     {/* Brand name */}
                     <div className="space-y-2">
                         <label className="block text-sm font-medium" style={{ color: "#94a3b8" }}>
-                            Brand Name <span style={{ color: "#7c3aed" }}>*</span>
+                            Brand Name {!hasLogo && <span style={{ color: "#7c3aed" }}>*</span>}
+                            {hasLogo && <span className="text-xs ml-1" style={{ color: "#64748b" }}>(optional — your logo is used instead)</span>}
                         </label>
                         <input
                             type="text"
@@ -424,9 +427,9 @@ export default function BrandSetupPage() {
                     {/* Submit */}
                     <button
                         onClick={handleSave}
-                        disabled={saving || !brandName.trim()}
+                        disabled={saving || (!brandName.trim() && !hasLogo)}
                         className="btn-primary w-full justify-center py-4 text-base"
-                        style={{ opacity: saving || !brandName.trim() ? 0.6 : 1 }}
+                        style={{ opacity: saving || (!brandName.trim() && !hasLogo) ? 0.6 : 1 }}
                     >
                         {saving ? "Saving..." : "Save & Continue"}
                         <ArrowRight className="w-5 h-5" />

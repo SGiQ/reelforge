@@ -184,9 +184,11 @@ export default function RenderSlidePage({
                             {data.brand_name.slice(0, 2).toUpperCase()}
                         </div>
                     )}
-                    <p style={{ fontSize: "0.875rem", fontWeight: 700, color: theme.textColor, textAlign: "center", margin: 0 }}>
-                        {data.brand_name}
-                    </p>
+                    {!data.logo_url && (
+                        <p style={{ fontSize: "0.875rem", fontWeight: 700, color: theme.textColor, textAlign: "center", margin: 0 }}>
+                            {data.brand_name}
+                        </p>
+                    )}
 
                     {/* Custom QR Code (Optional) */}
                     {data.qr_code_url && (
