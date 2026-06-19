@@ -118,6 +118,33 @@ def _download_image(url: str, dest_dir: str) -> str | None:
         return None
 
 
+def _download_clip(url: str, dest_dir: str) -> str | None:
+    """Download a video clip to a temp file. Sends a real User-Agent so CDNs that
+    block the default urllib agent (e.g. Pexels) don't 403. Returns the path or None."""
+    if not url:
+        return None
+    try:
+        if url.startswith("data:"):
+            # Reuse the data-URI handler (rare for clips, but supported).
+            return _download_image(url, dest_dir)
+        if not url.startswith("http"):
+            return None
+        suffix = Path(url.split("?")[0]).suffix or ".mp4"
+        dest = os.path.join(dest_dir, f"clip_{abs(hash(url))}{suffix}")
+        req = urllib.request.Request(url, headers={
+            "User-Agent": "Mozilla/5.0 (compatible; ReelForge/1.0; +https://reelforge.app)",
+            "Accept": "*/*",
+        })
+        with urllib.request.urlopen(req, timeout=60) as resp, open(dest, "wb") as f:
+            shutil.copyfileobj(resp, f)
+        if os.path.getsize(dest) < 1024:  # too small to be a real clip
+            return None
+        return dest
+    except Exception as e:
+        print(f"clip download failed for {url}: {e}")
+        return None
+
+
 def _draw_gradient(start_color: tuple, end_color: tuple) -> Image.Image:
     """Draw a 135° diagonal gradient from start_color to end_color (matching CSS linear-gradient(135deg))."""
     base = Image.new("RGB", (FRAME_W, FRAME_H), start_color)
@@ -731,10 +758,9 @@ class RenderEngine:
 
                     if is_video:
                         tts_path, tts_dur = _tts(caption, i)
-                        clip_path = _download_image(slide["video_url"], tmpdir)
+                        clip_path = _download_clip(slide["video_url"], tmpdir)
                         if not clip_path:
-                            print(f"Scene {i}: clip download failed — skipping")
-                            continue
+                            raise RuntimeError(f"Could not download the video clip for scene {i + 1}: {slide['video_url']}")
                         try:
                             trim_start = float(slide.get("trim_start") or 0)
                         except Exception:
