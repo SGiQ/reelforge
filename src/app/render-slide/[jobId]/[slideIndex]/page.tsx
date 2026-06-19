@@ -176,7 +176,7 @@ export default function RenderSlidePage({
             >
                 {/* No watermark on the branding slide — keep it clean */}
                 <div style={{ position: "absolute", inset: 0, background: theme.overlayColor, opacity: 0.7 }} />
-                <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", gap: 14, padding: "24px 24px", textAlign: "center", ...logoSlideAlign(data.logo_position) }}>
+                <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", gap: 10, padding: "12px 20px", textAlign: "center", ...logoSlideAlign(data.logo_position) }}>
                     {data.logo_url ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={data.logo_url} alt={data.brand_name} style={{ maxWidth: data.logo_size || 120, maxHeight: data.logo_size || 120, objectFit: "contain" }} />
@@ -199,7 +199,7 @@ export default function RenderSlidePage({
 
                     {/* Custom QR Code (Optional) */}
                     {data.qr_code_url && (
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, marginTop: 8 }}>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
                             <div style={{ width: Math.min((data.logo_size || 120) * 0.6, 108), height: Math.min((data.logo_size || 120) * 0.6, 108), background: "#fff", padding: "4px", borderRadius: 8, overflow: "hidden" }}>
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src={data.qr_code_url} alt="QR Code" style={{ width: "100%", height: "100%", objectFit: "contain" }} />

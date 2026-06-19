@@ -240,13 +240,13 @@ export default function ReelPreview({
                 className="absolute inset-0 flex flex-col px-8"
                 style={
                     isLogoSlide
-                        ? { ...logoSlideAlign(logoPosition), paddingTop: 24, paddingBottom: 24 }
+                        ? { ...logoSlideAlign(logoPosition), paddingTop: 12, paddingBottom: 12 }
                         : { justifyContent: "center", alignItems: "center" }
                 }
             >
                 {isLogoSlide ? (
                     <div
-                        className="flex flex-col items-center gap-4"
+                        className="flex flex-col items-center gap-2.5"
                         style={{
                             opacity,
                             transform: `translateY(${translateY}px)`,
@@ -276,7 +276,7 @@ export default function ReelPreview({
                         )}
                         {/* Custom QR Code (Optional) */}
                         {qrCodeUrl && (
-                            <div className="flex flex-col items-center gap-1 mt-2">
+                            <div className="flex flex-col items-center gap-1">
                                 <div className="rounded-lg overflow-hidden" style={{ width: Math.min(logoSize * 0.6, 108), height: Math.min(logoSize * 0.6, 108), background: "#fff", padding: "4px" }}>
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img src={qrCodeUrl} alt="QR Code" className="w-full h-full object-contain" />
