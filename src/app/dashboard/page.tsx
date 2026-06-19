@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Video, Download, RefreshCw, ExternalLink, Play } from "lucide-react";
+import { Video, Download, RefreshCw, ExternalLink, Play, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
@@ -26,6 +26,7 @@ function getReelTitle(job: any): string {
 
 function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const [playerOpen, setPlayerOpen] = useState(false);
     const videoUrl = resolveUrl(job.output_url);
     const isDone = job.status === "done" && !!videoUrl;
     const title = getReelTitle(job);
@@ -41,12 +42,13 @@ function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
 
     return (
         <div className="glass-card-hover rounded-2xl overflow-hidden flex flex-col">
-            {/* Thumbnail (9:16 reel, first frame as poster, plays on hover) */}
+            {/* Thumbnail (9:16 reel, first frame as poster, plays on hover, click to open player) */}
             <div
-                className="group relative w-full"
+                className={`group relative w-full ${isDone ? "cursor-pointer" : ""}`}
                 style={{ aspectRatio: "4 / 5", background: "#0d0d18" }}
                 onMouseEnter={handleEnter}
                 onMouseLeave={handleLeave}
+                onClick={() => { if (isDone) setPlayerOpen(true); }}
             >
                 {isDone ? (
                     <>
@@ -128,6 +130,35 @@ function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
                     )}
                 </div>
             </div>
+
+            {/* Full-screen player */}
+            {playerOpen && isDone && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                    style={{ background: "rgba(0,0,0,0.85)" }}
+                    onClick={() => setPlayerOpen(false)}
+                >
+                    <div className="relative" onClick={(e) => e.stopPropagation()}>
+                        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                        <video
+                            src={videoUrl!}
+                            controls
+                            autoPlay
+                            playsInline
+                            className="rounded-xl"
+                            style={{ maxHeight: "88vh", maxWidth: "92vw", background: "#000" }}
+                        />
+                        <button
+                            onClick={() => setPlayerOpen(false)}
+                            className="absolute -top-3 -right-3 w-9 h-9 rounded-full flex items-center justify-center"
+                            style={{ background: "#1a1a2e", border: "1px solid rgba(255,255,255,0.25)" }}
+                            aria-label="Close"
+                        >
+                            <X className="w-5 h-5 text-white" />
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
