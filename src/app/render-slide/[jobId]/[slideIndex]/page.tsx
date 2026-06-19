@@ -36,8 +36,8 @@ interface RenderJobData {
 }
 
 // Position style for the small persistent "logo bug" on every text slide.
-// A soft white glow so the logo reads on any background color.
-const LOGO_GLOW = "drop-shadow(0 0 2px rgba(255,255,255,0.95)) drop-shadow(0 0 6px rgba(255,255,255,0.8)) drop-shadow(0 0 11px rgba(255,255,255,0.55))";
+// A soft, spread-out white glow that feathers the logo into the background.
+const LOGO_GLOW = "drop-shadow(0 0 3px rgba(255,255,255,0.85)) drop-shadow(0 0 10px rgba(255,255,255,0.6)) drop-shadow(0 0 20px rgba(255,255,255,0.4)) drop-shadow(0 0 34px rgba(255,255,255,0.24))";
 
 // Where the brand block sits on the final slide.
 function logoSlideAlign(pos: string | undefined): { justifyContent: string; alignItems: string } {
