@@ -45,6 +45,7 @@ class RenderCreateRequest(BaseModel):
     logo_url: str | None = None
     watermark_url: str | None = None
     website_url: str | None = None
+    phone: str | None = None
     brand_id: str | None = None
     script_id: str | None = None
     watermark_opacity: int = 18
@@ -74,6 +75,7 @@ class RenderJobOut(BaseModel):
     logo_url_snapshot: str | None = None
     watermark_url_snapshot: str | None = None
     website_url_snapshot: str | None = None
+    phone_snapshot: str | None = None
     watermark_opacity: int = 18
     logo_position: str = "bottom_center"
     logo_size_snapshot: int = 120
@@ -134,6 +136,7 @@ def _run_render_sync(job_id: str):
                 logo_url=job.logo_url_snapshot,
                 watermark_url=job.watermark_url_snapshot,
                 website_url=job.website_url_snapshot or settings.QR_DEFAULT_URL,
+                phone=job.phone_snapshot,
                 watermark_opacity=job.watermark_opacity,
                 logo_position=job.logo_position,
                 logo_size=job.logo_size_snapshot,
@@ -210,6 +213,7 @@ async def create_render_job(
         logo_url_snapshot=payload.logo_url,
         watermark_url_snapshot=payload.watermark_url,
         website_url_snapshot=payload.website_url or "https://checkwellcare.com",
+        phone_snapshot=payload.phone,
         watermark_opacity=payload.watermark_opacity,
         logo_position=payload.logo_position,
         logo_size_snapshot=payload.logo_size,

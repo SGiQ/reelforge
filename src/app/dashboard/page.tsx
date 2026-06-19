@@ -227,6 +227,7 @@ export default function Dashboard() {
         const brandData = {
             brandName: job.brand_name || "Brand Video",
             websiteUrl: job.website_url_snapshot || "",
+            phone: job.phone_snapshot || "",
             logoPreview: job.logo_url_snapshot || null,
             watermarkPreview: job.watermark_url_snapshot || null,
             watermarkOpacity: job.watermark_opacity ?? 18,

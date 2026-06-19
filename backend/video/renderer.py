@@ -645,6 +645,7 @@ class RenderEngine:
         logo_url: str | None = None,
         watermark_url: str | None = None,
         website_url: str = "https://checkwellcare.com",
+        phone: str | None = None,
         watermark_opacity: int = 18,
         logo_position: str = "bottom_center",
         logo_size: int = 120,
@@ -700,6 +701,7 @@ class RenderEngine:
                 "qr_code_url": qr_code_url,
                 "qr_text": qr_text,
                 "website_url": website_url,
+                "phone": phone,
             }
             render_data_path = frames_dir / f"{job_id}.json"
             with open(render_data_path, "w") as f:

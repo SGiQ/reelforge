@@ -40,6 +40,7 @@ interface ReelPreviewProps {
     slides: (string | Slide)[];
     themeId: string;
     brandName?: string;
+    phone?: string;
     watermarkUrl?: string | null;
     watermarkOpacity?: number;
     logoUrl?: string | null;
@@ -59,6 +60,7 @@ export default function ReelPreview({
     slides,
     themeId,
     brandName = "YourBrand",
+    phone = "",
     watermarkUrl,
     watermarkOpacity = 18,
     logoUrl,
@@ -265,6 +267,11 @@ export default function ReelPreview({
                         {!logoUrl && (
                             <p className="text-sm font-bold text-center" style={{ color: theme.textColor }}>
                                 {brandName}
+                            </p>
+                        )}
+                        {phone && phone.trim() && (
+                            <p className="text-sm font-semibold text-center" style={{ color: theme.textColor }}>
+                                📞 {phone}
                             </p>
                         )}
                         {/* Custom QR Code (Optional) */}

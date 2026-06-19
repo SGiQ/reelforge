@@ -102,6 +102,7 @@ export default function PreviewPage() {
                                 slides={script.slides}
                                 themeId={theme}
                                 brandName={brand.brandName}
+                                phone={(brand as any).phone ?? ""}
                                 watermarkUrl={brand.watermarkPreview}
                                 logoUrl={brand.logoPreview}
                                 watermarkOpacity={(brand as any).watermarkOpacity ?? 18}

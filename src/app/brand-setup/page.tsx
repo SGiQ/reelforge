@@ -13,6 +13,7 @@ export default function BrandSetupPage() {
 
     const [brandName, setBrandName] = useState("");
     const [websiteUrl, setWebsiteUrl] = useState("");
+    const [phone, setPhone] = useState("");
     const [logoFile, setLogoFile] = useState<File | null>(null);
     const [watermarkFile, setWatermarkFile] = useState<File | null>(null);
     const [logoPreview, setLogoPreview] = useState<string | null>(null);
@@ -33,6 +34,7 @@ export default function BrandSetupPage() {
     const hydrateBrand = (b: any) => {
         if (b.brandName) setBrandName(b.brandName);
         if (b.websiteUrl) setWebsiteUrl(b.websiteUrl);
+        if (b.phone) setPhone(b.phone);
         if (b.logoPreview) setLogoPreview(b.logoPreview);
         if (b.watermarkPreview) setWatermarkPreview(b.watermarkPreview);
         if (b.watermarkOpacity !== undefined) setWatermarkOpacity(b.watermarkOpacity);
@@ -75,6 +77,7 @@ export default function BrandSetupPage() {
                 hydrateBrand({
                     brandName: last.brand_name || "",
                     websiteUrl: last.website_url_snapshot || "",
+                    phone: last.phone_snapshot || "",
                     logoPreview: last.logo_url_snapshot || null,
                     watermarkPreview: last.watermark_url_snapshot || null,
                     watermarkOpacity: last.watermark_opacity ?? 18,
@@ -141,6 +144,7 @@ export default function BrandSetupPage() {
             const brandData = {
                 brandName: brandName.trim(),
                 websiteUrl: websiteUrl.trim(),
+                phone: phone.trim(),
                 logoPreview: finalLogoUrl,
                 watermarkPreview: finalWatermarkUrl,
                 watermarkOpacity,
@@ -228,6 +232,21 @@ export default function BrandSetupPage() {
                             placeholder="https://yourwebsite.com"
                             className="input-field"
                             id="website-url"
+                        />
+                    </div>
+
+                    {/* Phone number */}
+                    <div className="space-y-2">
+                        <label className="block text-sm font-medium" style={{ color: "#94a3b8" }}>
+                            Business Phone <span className="text-xs" style={{ color: "#64748b" }}>(optional — shown on the final slide)</span>
+                        </label>
+                        <input
+                            type="tel"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="(555) 123-4567"
+                            className="input-field"
+                            id="phone"
                         />
                     </div>
 

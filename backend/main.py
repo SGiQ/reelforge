@@ -18,6 +18,7 @@ _COLUMN_MIGRATIONS = [
     "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS slide_logo_position VARCHAR(50) DEFAULT 'none'",
     "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS slide_logo_size INTEGER DEFAULT 44",
     "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS video_overlay BOOLEAN DEFAULT FALSE",
+    "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS phone_snapshot TEXT",
 ]
 
 

@@ -66,6 +66,7 @@ export default function ExportPage() {
                 logo_url: (brand as any).logoPreview,
                 watermark_url: (brand as any).watermarkPreview,
                 website_url: (brand as any).websiteUrl,
+                phone: (brand as any).phone,
                 music_url: audio.musicPreview,
                 music_volume: audio.musicVolume !== undefined ? audio.musicVolume / 100 : 0.15,
                 music_start_time: audio.musicStartTime || 0,

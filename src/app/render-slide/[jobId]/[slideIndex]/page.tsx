@@ -32,6 +32,7 @@ interface RenderJobData {
     qr_code_url?: string | null;
     qr_text?: string;
     website_url?: string;
+    phone?: string | null;
 }
 
 // Position style for the small persistent "logo bug" on every text slide.
@@ -187,6 +188,12 @@ export default function RenderSlidePage({
                     {!data.logo_url && (
                         <p style={{ fontSize: "0.875rem", fontWeight: 700, color: theme.textColor, textAlign: "center", margin: 0 }}>
                             {data.brand_name}
+                        </p>
+                    )}
+
+                    {data.phone && data.phone.trim() && (
+                        <p style={{ fontSize: "0.85rem", fontWeight: 600, color: theme.textColor, textAlign: "center", margin: 0 }}>
+                            📞 {data.phone}
                         </p>
                     )}
 

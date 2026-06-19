@@ -61,6 +61,7 @@ class RenderJob(Base):
     logo_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     watermark_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     website_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
+    phone_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     # New configurations
     watermark_opacity: Mapped[int] = mapped_column(default=18)
     logo_position: Mapped[str] = mapped_column(String(50), default="bottom_center")
