@@ -53,3 +53,6 @@ backend/.pytest_cache/
 *.sqlite3
 *.log
 test_large.bin
+
+# Local render verification artifacts
+_frametest/
