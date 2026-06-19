@@ -192,6 +192,13 @@ export default function ReelPreview({
                     key={currentVideo.videoUrl + currentSlide}
                     src={`${currentVideo.videoUrl}#t=${currentVideo.trimStart || 0}`}
                     autoPlay muted loop playsInline preload="metadata"
+                    onTimeUpdate={(e) => {
+                        const v = e.currentTarget;
+                        const s = currentVideo.trimStart || 0;
+                        const en = currentVideo.trimEnd && currentVideo.trimEnd > s ? currentVideo.trimEnd : 0;
+                        if (en && v.currentTime >= en) { try { v.currentTime = s; } catch { } }
+                        else if (v.currentTime < s - 0.1) { try { v.currentTime = s; } catch { } }
+                    }}
                     className="absolute inset-0 w-full h-full object-cover"
                 />
             )}

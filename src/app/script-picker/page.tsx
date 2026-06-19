@@ -5,6 +5,7 @@ import { ArrowRight, Settings2, Trash2, Plus, Video, Film, ChevronUp, ChevronDow
 import { upload } from "@vercel/blob/client";
 import Navbar from "@/components/Navbar";
 import StockSearch, { StockClip } from "@/components/StockSearch";
+import TrimPreview from "@/components/TrimPreview";
 import { Scene, VideoScene, DEFAULT_SCENE_STYLE, isVideoScene, toScene, isRenderableScene } from "@/lib/scenes";
 
 const FONT_OPTIONS = [
@@ -111,7 +112,7 @@ export default function ScriptPickerPage() {
             });
             // Default trim = whole clip (capped so a stray long upload doesn't bloat the reel).
             const end = duration > 0 ? Math.min(duration, 15) : 0;
-            updateScene(index, { videoUrl: blob.url, trimStart: 0, trimEnd: end } as Partial<VideoScene>);
+            updateScene(index, { videoUrl: blob.url, trimStart: 0, trimEnd: end, durationHint: duration || undefined } as Partial<VideoScene>);
         } catch (e: any) {
             setAiError(`Video upload failed: ${e.message || "unknown error"}`);
         } finally {
@@ -121,7 +122,7 @@ export default function ScriptPickerPage() {
 
     const handleStockSelect = (index: number, clip: StockClip) => {
         const end = clip.duration && clip.duration > 0 ? Math.min(clip.duration, 15) : 0;
-        updateScene(index, { videoUrl: clip.downloadUrl, trimStart: 0, trimEnd: end } as Partial<VideoScene>);
+        updateScene(index, { videoUrl: clip.downloadUrl, trimStart: 0, trimEnd: end, durationHint: clip.duration || undefined } as Partial<VideoScene>);
         setShowStock((s) => ({ ...s, [index]: false }));
     };
 
@@ -366,34 +367,55 @@ export default function ScriptPickerPage() {
                                                             </div>
                                                         ) : (
                                                             <>
-                                                                <div className="flex gap-4 items-start">
-                                                                    {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                                                                    <video
-                                                                        src={(scene as VideoScene).videoUrl}
-                                                                        controls muted playsInline
-                                                                        className="rounded-lg flex-shrink-0 bg-black"
-                                                                        style={{ width: 120, height: 213, objectFit: "cover" }}
-                                                                    />
-                                                                    <div className="flex-1 space-y-3">
-                                                                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider" style={{ color: "#2dd4bf" }}>
-                                                                            <Scissors className="w-3.5 h-3.5" /> Trim
+                                                                {(() => {
+                                                                    const vs = scene as VideoScene;
+                                                                    const dur = vs.durationHint;
+                                                                    const trimLen = Math.max(0, (vs.trimEnd || 0) - (vs.trimStart || 0));
+                                                                    return (
+                                                                        <div className="flex gap-4 items-start">
+                                                                            <TrimPreview
+                                                                                src={vs.videoUrl}
+                                                                                start={vs.trimStart || 0}
+                                                                                end={vs.trimEnd || 0}
+                                                                                className="rounded-lg flex-shrink-0 bg-black object-cover"
+                                                                                style={{ width: 120, height: 213 }}
+                                                                            />
+                                                                            <div className="flex-1 space-y-3">
+                                                                                <div className="flex items-center justify-between">
+                                                                                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider" style={{ color: "#2dd4bf" }}>
+                                                                                        <Scissors className="w-3.5 h-3.5" /> Trim
+                                                                                    </div>
+                                                                                    <span className="text-[11px]" style={{ color: "#64748b" }}>
+                                                                                        {trimLen > 0 ? `${trimLen.toFixed(1)}s used` : "set a range"}{dur ? ` · clip ${dur.toFixed(1)}s` : ""}
+                                                                                    </span>
+                                                                                </div>
+                                                                                <p className="text-[11px]" style={{ color: "#64748b" }}>Preview shows only the trimmed section, looping.</p>
+                                                                                <div className="flex items-center gap-3">
+                                                                                    <label className="text-[11px]" style={{ color: "#94a3b8" }}>Start (s)</label>
+                                                                                    <input type="number" min={0} max={dur || undefined} step={0.1}
+                                                                                        value={vs.trimStart}
+                                                                                        onChange={(e) => {
+                                                                                            let s = Math.max(0, parseFloat(e.target.value) || 0);
+                                                                                            if (dur) s = Math.min(s, dur);
+                                                                                            updateScene(index, { trimStart: s } as Partial<VideoScene>);
+                                                                                        }}
+                                                                                        className="input-field w-20 py-1 text-sm" />
+                                                                                    <label className="text-[11px]" style={{ color: "#94a3b8" }}>End (s)</label>
+                                                                                    <input type="number" min={0} max={dur || undefined} step={0.1}
+                                                                                        value={vs.trimEnd}
+                                                                                        onChange={(e) => {
+                                                                                            let en = Math.max(0, parseFloat(e.target.value) || 0);
+                                                                                            if (dur) en = Math.min(en, dur);
+                                                                                            updateScene(index, { trimEnd: en } as Partial<VideoScene>);
+                                                                                        }}
+                                                                                        className="input-field w-20 py-1 text-sm" />
+                                                                                </div>
+                                                                                <button onClick={() => updateScene(index, { videoUrl: "", durationHint: undefined } as Partial<VideoScene>)}
+                                                                                    className="text-xs text-red-400 hover:underline">Replace clip</button>
+                                                                            </div>
                                                                         </div>
-                                                                        <div className="flex items-center gap-3">
-                                                                            <label className="text-[11px]" style={{ color: "#94a3b8" }}>Start (s)</label>
-                                                                            <input type="number" min={0} step={0.1}
-                                                                                value={(scene as VideoScene).trimStart}
-                                                                                onChange={(e) => updateScene(index, { trimStart: Math.max(0, parseFloat(e.target.value) || 0) } as Partial<VideoScene>)}
-                                                                                className="input-field w-20 py-1 text-sm" />
-                                                                            <label className="text-[11px]" style={{ color: "#94a3b8" }}>End (s)</label>
-                                                                            <input type="number" min={0} step={0.1}
-                                                                                value={(scene as VideoScene).trimEnd}
-                                                                                onChange={(e) => updateScene(index, { trimEnd: Math.max(0, parseFloat(e.target.value) || 0) } as Partial<VideoScene>)}
-                                                                                className="input-field w-20 py-1 text-sm" />
-                                                                        </div>
-                                                                        <button onClick={() => updateScene(index, { videoUrl: "" } as Partial<VideoScene>)}
-                                                                            className="text-xs text-red-400 hover:underline">Replace clip</button>
-                                                                    </div>
-                                                                </div>
+                                                                    );
+                                                                })()}
                                                                 <textarea
                                                                     value={scene.text}
                                                                     onChange={(e) => updateScene(index, { text: e.target.value })}

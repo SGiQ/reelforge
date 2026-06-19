@@ -16,6 +16,8 @@ export interface VideoScene {
     // Trim window within the source clip, in seconds.
     trimStart: number;
     trimEnd: number;
+    // Full length of the source clip in seconds (for bounding the trim UI).
+    durationHint?: number;
     // Optional caption rendered over the clip (same styling as text scenes).
     text: string;
     fontSize: number;
@@ -44,6 +46,7 @@ export function toScene(s: any): Scene {
             videoUrl: s.videoUrl,
             trimStart: typeof s.trimStart === "number" ? s.trimStart : 0,
             trimEnd: typeof s.trimEnd === "number" ? s.trimEnd : 0,
+            durationHint: typeof s.durationHint === "number" ? s.durationHint : undefined,
             text: s.text ?? "",
             fontSize: s.fontSize ?? DEFAULT_SCENE_STYLE.fontSize,
             textColor: s.textColor ?? DEFAULT_SCENE_STYLE.textColor,
