@@ -23,15 +23,16 @@ export function logoSlideAlign(pos: string | undefined): { justifyContent: strin
 }
 
 export function slideBugStyle(pos: string, size = 44): CSSProperties | null {
-    const m = 14;
+    const m = 14;   // top / side inset
+    const mb = 6;   // bottom inset — sits lower toward the edge
     const base: CSSProperties = { position: "absolute", maxWidth: size, maxHeight: size, objectFit: "contain", opacity: 1, zIndex: 6, filter: LOGO_GLOW };
     switch (pos) {
         case "top_left": return { ...base, top: m, left: m };
         case "top_center": return { ...base, top: m, left: "50%", transform: "translateX(-50%)" };
         case "top_right": return { ...base, top: m, right: m };
-        case "bottom_left": return { ...base, bottom: m, left: m };
-        case "bottom_center": return { ...base, bottom: m, left: "50%", transform: "translateX(-50%)" };
-        case "bottom_right": return { ...base, bottom: m, right: m };
+        case "bottom_left": return { ...base, bottom: mb, left: m };
+        case "bottom_center": return { ...base, bottom: mb, left: "50%", transform: "translateX(-50%)" };
+        case "bottom_right": return { ...base, bottom: mb, right: m };
         default: return null;
     }
 }

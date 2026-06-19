@@ -326,7 +326,7 @@ export default function BrandSetupPage() {
                                             <span style={{ color: "#94a3b8" }}>{slideLogoSize}px</span>
                                         </div>
                                         <input
-                                            type="range" min="24" max="96" step="2"
+                                            type="range" min="24" max="150" step="2"
                                             value={slideLogoSize}
                                             onChange={(e) => setSlideLogoSize(Number(e.target.value))}
                                             className="w-full accent-brand-purple"
