@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Settings2, Trash2, Plus, Video, Film, ChevronUp, ChevronDown, Type, Scissors } from "lucide-react";
+import { ArrowRight, Settings2, Trash2, Plus, Video, Film, ChevronUp, ChevronDown, Type, Scissors, Search } from "lucide-react";
 import { upload } from "@vercel/blob/client";
 import Navbar from "@/components/Navbar";
+import StockSearch, { StockClip } from "@/components/StockSearch";
 import { Scene, VideoScene, DEFAULT_SCENE_STYLE, isVideoScene, toScene, isRenderableScene } from "@/lib/scenes";
 
 const FONT_OPTIONS = [
@@ -46,6 +47,7 @@ export default function ScriptPickerPage() {
 
     // Per-scene video upload progress (index -> uploading?)
     const [uploading, setUploading] = useState<Record<number, boolean>>({});
+    const [showStock, setShowStock] = useState<Record<number, boolean>>({});
     const fileInputs = useRef<Record<number, HTMLInputElement | null>>({});
 
     // AI Generation States
@@ -115,6 +117,12 @@ export default function ScriptPickerPage() {
         } finally {
             setUploading((u) => ({ ...u, [index]: false }));
         }
+    };
+
+    const handleStockSelect = (index: number, clip: StockClip) => {
+        const end = clip.duration && clip.duration > 0 ? Math.min(clip.duration, 15) : 0;
+        updateScene(index, { videoUrl: clip.downloadUrl, trimStart: 0, trimEnd: end } as Partial<VideoScene>);
+        setShowStock((s) => ({ ...s, [index]: false }));
     };
 
     const handleContinue = () => {
@@ -330,18 +338,32 @@ export default function ScriptPickerPage() {
                                                             onChange={(e) => { const f = e.target.files?.[0]; if (f) handleVideoUpload(index, f); e.currentTarget.value = ""; }}
                                                         />
                                                         {!(scene as VideoScene).videoUrl ? (
-                                                            <button
-                                                                onClick={() => fileInputs.current[index]?.click()}
-                                                                disabled={uploading[index]}
-                                                                className="w-full flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed py-8 transition-all hover:bg-white/5 disabled:opacity-60"
-                                                                style={{ borderColor: "rgba(45,212,191,0.4)" }}
-                                                            >
-                                                                <Video className="w-6 h-6" style={{ color: "#2dd4bf" }} />
-                                                                <span className="text-sm font-medium" style={{ color: "#2dd4bf" }}>
-                                                                    {uploading[index] ? "Uploading…" : "Upload a video clip"}
-                                                                </span>
-                                                                <span className="text-xs" style={{ color: "#64748b" }}>MP4, MOV or WebM</span>
-                                                            </button>
+                                                            <div className="space-y-2">
+                                                                <button
+                                                                    onClick={() => fileInputs.current[index]?.click()}
+                                                                    disabled={uploading[index]}
+                                                                    className="w-full flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed py-8 transition-all hover:bg-white/5 disabled:opacity-60"
+                                                                    style={{ borderColor: "rgba(45,212,191,0.4)" }}
+                                                                >
+                                                                    <Video className="w-6 h-6" style={{ color: "#2dd4bf" }} />
+                                                                    <span className="text-sm font-medium" style={{ color: "#2dd4bf" }}>
+                                                                        {uploading[index] ? "Uploading…" : "Upload a video clip"}
+                                                                    </span>
+                                                                    <span className="text-xs" style={{ color: "#64748b" }}>MP4, MOV or WebM</span>
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => setShowStock((s) => ({ ...s, [index]: !s[index] }))}
+                                                                    className="w-full flex items-center justify-center gap-2 rounded-xl border py-2.5 text-sm font-medium transition-all hover:bg-white/5"
+                                                                    style={{ borderColor: "rgba(45,45,74,0.6)", color: "#2dd4bf" }}
+                                                                >
+                                                                    <Search className="w-4 h-4" /> {showStock[index] ? "Hide stock search" : "Search stock footage"}
+                                                                </button>
+                                                                {showStock[index] && (
+                                                                    <div className="pt-1">
+                                                                        <StockSearch onSelect={(clip) => handleStockSelect(index, clip)} />
+                                                                    </div>
+                                                                )}
+                                                            </div>
                                                         ) : (
                                                             <>
                                                                 <div className="flex gap-4 items-start">
