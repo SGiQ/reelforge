@@ -22,11 +22,16 @@ router = APIRouter(prefix="/render", tags=["render"])
 # ── Pydantic models ─────────────────────────────────────────────────────────
 
 class Slide(BaseModel):
-    text: str
+    text: str = ""  # optional caption for video scenes
     font_size: int = Field(88, alias="fontSize")
     text_color: str = Field("", alias="textColor")  # empty = theme default
     font_family: str = Field("DejaVuSans-Bold.ttf", alias="fontFamily")
     transition: str = "fade"
+    # Video scene fields ("kind" == "video"); ignored for text scenes.
+    kind: str | None = None
+    video_url: str | None = Field(None, alias="videoUrl")
+    trim_start: float = Field(0.0, alias="trimStart")
+    trim_end: float = Field(0.0, alias="trimEnd")
 
     class Config:
         populate_by_name = True

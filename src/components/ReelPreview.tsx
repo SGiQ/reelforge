@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, CSSProperties } from "react";
 import { THEMES, Theme } from "./ThemeCard";
+import { VideoScene, isVideoScene } from "@/lib/scenes";
 
 interface Slide {
     text: string;
@@ -111,6 +112,7 @@ export default function ReelPreview({
     const isLogoSlide = allSlides[currentSlide] === "__LOGO__";
     const currentSlideData = allSlides[currentSlide];
     const isObjectSlide = typeof currentSlideData === "object" && currentSlideData !== null && "text" in currentSlideData;
+    const currentVideo: VideoScene | null = !isLogoSlide && isVideoScene(currentSlideData as any) ? (currentSlideData as any as VideoScene) : null;
 
     // Font mapping helper
     const getFontCSS = (file: string) => {
@@ -183,8 +185,19 @@ export default function ReelPreview({
 
     return (
         <div className="relative mx-auto overflow-hidden rounded-3xl select-none" style={{ width: 270, height: 480, background: theme.bgGradient }}>
-            {/* Watermark photo — hidden on the branding slide */}
-            {watermarkUrl && !isLogoSlide && (
+            {/* Video scene clip — fills the frame behind the caption */}
+            {currentVideo && currentVideo.videoUrl && (
+                /* eslint-disable-next-line jsx-a11y/media-has-caption */
+                <video
+                    key={currentVideo.videoUrl + currentSlide}
+                    src={`${currentVideo.videoUrl}#t=${currentVideo.trimStart || 0}`}
+                    autoPlay muted loop playsInline preload="metadata"
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+            )}
+
+            {/* Watermark photo — hidden on the branding slide and on video scenes */}
+            {watermarkUrl && !isLogoSlide && !currentVideo && (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                     src={watermarkUrl}
@@ -194,8 +207,8 @@ export default function ReelPreview({
                 />
             )}
 
-            {/* Color overlay */}
-            <div className="absolute inset-0" style={{ background: theme.overlayColor, opacity: 0.7 }} />
+            {/* Color overlay — lighter over video so the clip shows through */}
+            <div className="absolute inset-0" style={{ background: theme.overlayColor, opacity: currentVideo ? 0.28 : 0.7 }} />
 
             {/* Content */}
             <div className="absolute inset-0 flex flex-col items-center justify-center px-8">

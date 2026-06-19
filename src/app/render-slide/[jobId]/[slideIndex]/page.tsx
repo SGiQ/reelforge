@@ -67,6 +67,18 @@ export default function RenderSlidePage({
 }) {
     const [data, setData] = useState<RenderJobData | null>(null);
     const [ready, setReady] = useState(false);
+    const [overlay, setOverlay] = useState(false);
+
+    // Overlay mode (?layer=overlay): render only the caption + logo on a
+    // transparent background, so the renderer can composite it over a video clip.
+    useEffect(() => {
+        const isOverlay = new URLSearchParams(window.location.search).get("layer") === "overlay";
+        setOverlay(isOverlay);
+        if (isOverlay) {
+            document.documentElement.style.background = "transparent";
+            document.body.style.background = "transparent";
+        }
+    }, []);
 
     useEffect(() => {
         // Fetch from the backend API directly — Next.js (/api/) won't work in production
@@ -100,6 +112,40 @@ export default function RenderSlidePage({
     const theme = THEMES.find((t) => t.id === data.theme) || THEMES[0];
     const isLogoSlide = slideIndex >= data.slides.length;
     const slide = data.slides[slideIndex];
+
+    // ── Overlay mode (caption + logo only, transparent) for video scenes ────────
+    if (overlay && !isLogoSlide && slide) {
+        const ovFont = FONT_MAP[slide.font_family] || "Inter, sans-serif";
+        const ovColor = slide.text_color && slide.text_color !== "" ? slide.text_color : theme.textColor;
+        return (
+            <div
+                style={{ width: 270, height: 480, position: "relative", overflow: "hidden", background: "transparent" }}
+                data-ready="true"
+            >
+                {slide.text && slide.text.trim() && (
+                    <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 32px" }}>
+                        <p style={{
+                            color: ovColor,
+                            fontSize: `${slide.font_size / 80}rem`,
+                            fontFamily: ovFont,
+                            fontWeight: "bold",
+                            lineHeight: 1.3,
+                            textAlign: "center",
+                            textShadow: "0 2px 12px rgba(0,0,0,0.55)",
+                            wordBreak: "break-word",
+                            margin: 0,
+                        }}>
+                            {slide.text}
+                        </p>
+                    </div>
+                )}
+                {data.logo_url && slideBugStyle(data.slide_logo_position) && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={data.logo_url} alt="" style={slideBugStyle(data.slide_logo_position)!} />
+                )}
+            </div>
+        );
+    }
 
     // ── Logo slide ────────────────────────────────────────────────────────────
     if (isLogoSlide) {

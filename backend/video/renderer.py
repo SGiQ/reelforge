@@ -517,6 +517,97 @@ def _frames_to_mp4(frame_paths: list[str], slide_durations: list[float], output_
         raise RuntimeError(f"FFmpeg failed:\n{result.stderr}")
 
 
+# ── Per-scene segment helpers (video + still) ────────────────────────────────
+# A reel is assembled as one normalized MP4 segment per scene, then concatenated.
+# Every segment is 1080×1920 / 30fps with an AAC stereo audio track (TTS or
+# silence) so the concat demuxer can stitch them without stream-layout mismatches.
+
+_VPAD = (
+    f"scale={FRAME_W}:{FRAME_H}:force_original_aspect_ratio=decrease,"
+    f"pad={FRAME_W}:{FRAME_H}:(ow-iw)/2:(oh-ih)/2:color=black,setsar=1,fps={FPS}"
+)
+_VCOVER = (
+    f"scale={FRAME_W}:{FRAME_H}:force_original_aspect_ratio=increase,"
+    f"crop={FRAME_W}:{FRAME_H},setsar=1,fps={FPS}"
+)
+
+
+def _ff_run(cmd: list[str], timeout: int = 300) -> None:
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+    if result.returncode != 0:
+        raise RuntimeError(f"FFmpeg failed:\n{' '.join(cmd)}\n{result.stderr[-2000:]}")
+
+
+def _build_still_segment(ffmpeg_bin: str, image_path: str, duration: float, tts_path: str | None, out_path: str) -> None:
+    """A still image (1080×1920 screenshot) held for `duration`, with TTS or silent audio."""
+    has_tts = bool(tts_path and os.path.exists(tts_path))
+    cmd = [ffmpeg_bin, "-y", "-loop", "1", "-i", image_path]
+    if has_tts:
+        cmd += ["-i", tts_path]
+        fc = f"[0:v]{_VPAD},format=yuv420p[v];[1:a]apad[a]"
+        amap = "[a]"
+    else:
+        cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo"]
+        fc = f"[0:v]{_VPAD},format=yuv420p[v]"
+        amap = "1:a"
+    cmd += ["-filter_complex", fc, "-map", "[v]", "-map", amap, "-t", str(duration),
+            "-c:v", "libx264", "-preset", "fast", "-crf", "23", "-pix_fmt", "yuv420p", "-r", str(FPS),
+            "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-ac", "2", out_path]
+    _ff_run(cmd)
+
+
+def _build_video_segment(ffmpeg_bin: str, clip_path: str, trim_start: float, duration: float,
+                         overlay_png: str, tts_path: str | None, out_path: str) -> None:
+    """A trimmed clip scaled to cover 1080×1920, with a transparent caption/logo overlay
+    and TTS (or silent) audio. The clip loops if the voiceover outlasts it."""
+    has_tts = bool(tts_path and os.path.exists(tts_path))
+    cmd = [ffmpeg_bin, "-y", "-stream_loop", "-1", "-ss", str(max(0.0, trim_start)), "-i", clip_path]
+    if has_tts:
+        cmd += ["-i", tts_path]
+    else:
+        cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo"]
+    cmd += ["-i", overlay_png]
+    fc = (
+        f"[0:v]{_VCOVER}[bg];"
+        f"[2:v]scale={FRAME_W}:{FRAME_H}[ov];"
+        f"[bg][ov]overlay=0:0:format=auto,format=yuv420p[v]"
+    )
+    if has_tts:
+        fc += ";[1:a]apad[a]"
+        amap = "[a]"
+    else:
+        amap = "1:a"
+    cmd += ["-filter_complex", fc, "-map", "[v]", "-map", amap, "-t", str(duration),
+            "-c:v", "libx264", "-preset", "fast", "-crf", "23", "-pix_fmt", "yuv420p", "-r", str(FPS),
+            "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-ac", "2", out_path]
+    _ff_run(cmd)
+
+
+def _concat_segments(ffmpeg_bin: str, segment_paths: list[str], out_path: str) -> None:
+    """Concatenate scene segments (re-encode for safety against minor param drift)."""
+    list_file = out_path.replace(".mp4", "_segs.txt")
+    with open(list_file, "w") as f:
+        for sp in segment_paths:
+            f.write(f"file '{sp}'\n")
+    cmd = [ffmpeg_bin, "-y", "-f", "concat", "-safe", "0", "-i", list_file,
+           "-c:v", "libx264", "-preset", "fast", "-crf", "23", "-pix_fmt", "yuv420p", "-r", str(FPS),
+           "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-ac", "2", out_path]
+    _ff_run(cmd)
+
+
+def _mux_music(ffmpeg_bin: str, video_path: str, music_path: str, music_volume: float,
+               music_start: float, out_path: str) -> None:
+    """Mix background music under the reel's existing audio (voiceovers)."""
+    cmd = [ffmpeg_bin, "-y", "-i", video_path]
+    if music_start and music_start > 0:
+        cmd += ["-ss", str(music_start)]
+    cmd += ["-i", music_path,
+            "-filter_complex",
+            f"[1:a]volume={music_volume}[m];[0:a][m]amix=inputs=2:duration=first:dropout_transition=3[a]",
+            "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", out_path]
+    _ff_run(cmd)
+
+
 class RenderEngine:
     def render(
         self,
@@ -584,11 +675,10 @@ class RenderEngine:
                 import json
                 json.dump(render_data, f)
 
-            frame_paths = []
-            slide_durations = []
-            voice_tracks = []
+            segment_paths: list[str] = []
+            ffmpeg_bin = _find_ffmpeg()
+            FRONTEND = settings.FRONTEND_URL
 
-            # ── Screenshot each text slide via Playwright ─────────────────────
             from playwright.sync_api import sync_playwright
             import glob
 
@@ -619,60 +709,82 @@ class RenderEngine:
                 )
                 page = context.new_page()
 
-                for i, slide in enumerate(normalised_slides):
-                    slide_text = slide.get("text", "")
-
-                    # 1. Generate TTS voiceover
-                    slide_duration = DEFAULT_SLIDE_DURATION
-                    if ai_voice_id and settings.ELEVENLABS_API_KEY:
-                        tts_path = os.path.join(tmpdir, f"tts_{i:04d}.mp3")
-                        try:
-                            exact_dur = _generate_tts_for_slide(slide_text, ai_voice_id, tts_path)
-                            slide_duration = exact_dur + 1.7
-                            voice_tracks.append(tts_path)
-                        except Exception as e:
-                            print(f"TTS failed for slide {i}: {e}")
-
-                    slide_durations.append(slide_duration)
-
-                    # 2. Screenshot via Playwright — pixel-identical to preview
-                    url = f"{settings.FRONTEND_URL}/render-slide/{job_id}/{i}"
+                def _shoot(url: str, out_png: str, transparent: bool = False):
                     page.goto(url, wait_until="networkidle", timeout=30000)
-                    # Wait until the component signals it's ready
                     page.wait_for_selector("[data-ready='true']", timeout=10000)
-                    frame_path = os.path.join(tmpdir, f"frame_{i:04d}.png")
-                    page.screenshot(path=frame_path)   # deviceScaleFactor=4 → 1080×1920
-                    frame_paths.append(frame_path)
+                    page.screenshot(path=out_png, omit_background=transparent)
 
-            # ── Logo slide (Playwright) ───────────────────────────────────────
-                logo_slide_idx = len(normalised_slides)
-                
-                # 1. Generate TTS voiceover for brand name or custom outro
-                logo_duration = 4.25
-                if ai_voice_id and settings.ELEVENLABS_API_KEY:
-                    tts_path = os.path.join(tmpdir, f"tts_{logo_slide_idx:04d}.mp3")
+                def _tts(text: str, idx: int):
+                    if not (ai_voice_id and settings.ELEVENLABS_API_KEY and text and text.strip()):
+                        return None, 0.0
+                    path = os.path.join(tmpdir, f"tts_{idx:04d}.mp3")
                     try:
-                        # Fallback to brand_name if outro_voiceover is empty or missing
-                        spoken_text = outro_voiceover.strip() if outro_voiceover and outro_voiceover.strip() else brand_name
-                        exact_dur = _generate_tts_for_slide(spoken_text, ai_voice_id, tts_path)
-                        logo_duration = max(4.25, exact_dur + 1.7)
-                        voice_tracks.append(tts_path)
+                        return path, _generate_tts_for_slide(text, ai_voice_id, path)
                     except Exception as e:
-                        print(f"TTS failed for logo slide: {e}")
+                        print(f"TTS failed for scene {idx}: {e}")
+                        return None, 0.0
 
-                url = f"{settings.FRONTEND_URL}/render-slide/{job_id}/{logo_slide_idx}"
-                page.goto(url, wait_until="networkidle", timeout=30000)
-                page.wait_for_selector("[data-ready='true']", timeout=10000)
-                logo_frame_path = os.path.join(tmpdir, f"frame_{logo_slide_idx:04d}.png")
-                page.screenshot(path=logo_frame_path)   # deviceScaleFactor=4 → 1080×1920
-                frame_paths.append(logo_frame_path)
-                slide_durations.append(logo_duration)
-                
+                for i, slide in enumerate(normalised_slides):
+                    is_video = slide.get("kind") == "video" and slide.get("video_url")
+                    caption = (slide.get("text") or "").strip()
+                    seg_path = os.path.join(tmpdir, f"seg_{i:04d}.mp4")
+
+                    if is_video:
+                        tts_path, tts_dur = _tts(caption, i)
+                        clip_path = _download_image(slide["video_url"], tmpdir)
+                        if not clip_path:
+                            print(f"Scene {i}: clip download failed — skipping")
+                            continue
+                        try:
+                            trim_start = float(slide.get("trim_start") or 0)
+                        except Exception:
+                            trim_start = 0.0
+                        try:
+                            trim_end = float(slide.get("trim_end") or 0)
+                        except Exception:
+                            trim_end = 0.0
+                        trim_dur = (trim_end - trim_start) if trim_end > trim_start else 0.0
+                        voice_dur = (tts_dur + 0.7) if tts_path else 0.0
+                        if trim_dur <= 0:
+                            trim_dur = max(voice_dur, DEFAULT_SLIDE_DURATION)
+                        duration = max(trim_dur, voice_dur) if voice_dur else trim_dur
+                        overlay_png = os.path.join(tmpdir, f"ov_{i:04d}.png")
+                        _shoot(f"{FRONTEND}/render-slide/{job_id}/{i}?layer=overlay", overlay_png, transparent=True)
+                        _build_video_segment(ffmpeg_bin, clip_path, trim_start, duration, overlay_png, tts_path, seg_path)
+                    else:
+                        tts_path, tts_dur = _tts(slide.get("text", ""), i)
+                        frame_png = os.path.join(tmpdir, f"frame_{i:04d}.png")
+                        _shoot(f"{FRONTEND}/render-slide/{job_id}/{i}", frame_png)
+                        duration = (tts_dur + 1.7) if tts_path else DEFAULT_SLIDE_DURATION
+                        _build_still_segment(ffmpeg_bin, frame_png, duration, tts_path, seg_path)
+
+                    segment_paths.append(seg_path)
+
+                # ── Logo slide ───────────────────────────────────────────────
+                logo_idx = len(normalised_slides)
+                spoken = outro_voiceover.strip() if outro_voiceover and outro_voiceover.strip() else brand_name
+                logo_tts, logo_tts_dur = _tts(spoken, logo_idx)
+                logo_png = os.path.join(tmpdir, f"frame_{logo_idx:04d}.png")
+                _shoot(f"{FRONTEND}/render-slide/{job_id}/{logo_idx}", logo_png)
+                logo_dur = max(4.25, (logo_tts_dur + 1.7) if logo_tts else 4.25)
+                logo_seg = os.path.join(tmpdir, f"seg_{logo_idx:04d}.mp4")
+                _build_still_segment(ffmpeg_bin, logo_png, logo_dur, logo_tts, logo_seg)
+                segment_paths.append(logo_seg)
+
                 browser.close()
 
-            # ── Render MP4 ────────────────────────────────────────────────────
+            if not segment_paths:
+                raise RuntimeError("No renderable scenes produced.")
+
+            # ── Concatenate scene segments, then mix background music ─────────
             output_path = str(output_dir / f"{job_id}.mp4")
-            _frames_to_mp4(frame_paths, slide_durations, output_path, music_path, voice_tracks, music_volume, music_start_time)
+            concat_path = os.path.join(tmpdir, "concat.mp4")
+            _concat_segments(ffmpeg_bin, segment_paths, concat_path)
+
+            if music_path and os.path.exists(music_path):
+                _mux_music(ffmpeg_bin, concat_path, music_path, music_volume, music_start_time, output_path)
+            else:
+                shutil.move(concat_path, output_path)
 
         # Clean up the data JSON
         try:
