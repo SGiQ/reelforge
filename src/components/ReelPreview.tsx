@@ -270,8 +270,8 @@ export default function ReelPreview({
                             </p>
                         )}
                         {phone && phone.trim() && (
-                            <p className="text-sm font-semibold text-center" style={{ color: theme.textColor }}>
-                                📞 {phone}
+                            <p className="text-lg font-bold text-center" style={{ color: theme.textColor }}>
+                                {phone}
                             </p>
                         )}
                         {/* Custom QR Code (Optional) */}

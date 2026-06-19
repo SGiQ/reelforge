@@ -192,8 +192,8 @@ export default function RenderSlidePage({
                     )}
 
                     {data.phone && data.phone.trim() && (
-                        <p style={{ fontSize: "0.85rem", fontWeight: 600, color: theme.textColor, textAlign: "center", margin: 0 }}>
-                            📞 {data.phone}
+                        <p style={{ fontSize: "1.15rem", fontWeight: 700, color: theme.textColor, textAlign: "center", margin: 0 }}>
+                            {data.phone}
                         </p>
                     )}
 
