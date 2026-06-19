@@ -31,6 +31,8 @@ function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
     const isDone = job.status === "done" && !!videoUrl;
     const title = getReelTitle(job);
 
+    const [downloading, setDownloading] = useState(false);
+
     const handleEnter = () => {
         const v = videoRef.current;
         if (v) { v.currentTime = 0; v.play().catch(() => { }); }
@@ -38,6 +40,33 @@ function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
     const handleLeave = () => {
         const v = videoRef.current;
         if (v) { v.pause(); try { v.currentTime = 0.5; } catch { } }
+    };
+
+    // Force a real download (the `download` attr is ignored cross-origin, so the
+    // browser would otherwise just open the Blob URL). Fetch → blob → save.
+    const handleDownload = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (!videoUrl || downloading) return;
+        const filename = `reelforge-${job.id.substring(0, 6)}.mp4`;
+        setDownloading(true);
+        try {
+            const res = await fetch(videoUrl);
+            if (!res.ok) throw new Error("fetch failed");
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 2000);
+        } catch {
+            // Fallback: Vercel Blob honors ?download to set Content-Disposition.
+            window.location.href = `${videoUrl}${videoUrl!.includes("?") ? "&" : "?"}download=${encodeURIComponent(filename)}`;
+        } finally {
+            setDownloading(false);
+        }
     };
 
     return (
@@ -105,11 +134,12 @@ function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
                         <div className="flex gap-2 w-full">
                             <a
                                 href={videoUrl!}
-                                download={`reelforge-${job.id.substring(0, 6)}.mp4`}
+                                onClick={handleDownload}
                                 className="btn-secondary flex-1 justify-center group"
+                                style={{ opacity: downloading ? 0.6 : 1 }}
                             >
                                 <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-                                <span>Download</span>
+                                <span>{downloading ? "Downloading…" : "Download"}</span>
                             </a>
                             <button
                                 onClick={() => onEdit(job)}
