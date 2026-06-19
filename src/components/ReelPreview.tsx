@@ -12,9 +12,19 @@ interface Slide {
 
 // Position style for the small persistent "logo bug" shown on every text slide.
 // Returns null when disabled ("none"). Sizes are relative to the 270×480 preview.
+// A dual dark+light glow so the logo reads on any background color.
+const LOGO_GLOW = "drop-shadow(0 0 2px rgba(0,0,0,0.85)) drop-shadow(0 0 5px rgba(0,0,0,0.55)) drop-shadow(0 0 6px rgba(255,255,255,0.45))";
+
+// Where the brand block sits on the final slide.
+export function logoSlideAlign(pos: string | undefined): { justifyContent: string; alignItems: string } {
+    const vert = pos?.startsWith("top") ? "flex-start" : pos?.startsWith("bottom") ? "flex-end" : "center";
+    const horiz = pos?.endsWith("left") ? "flex-start" : pos?.endsWith("right") ? "flex-end" : "center";
+    return { justifyContent: vert, alignItems: horiz };
+}
+
 export function slideBugStyle(pos: string, size = 44): CSSProperties | null {
     const m = 14;
-    const base: CSSProperties = { position: "absolute", maxWidth: size, maxHeight: size, objectFit: "contain", opacity: 0.92, zIndex: 6 };
+    const base: CSSProperties = { position: "absolute", maxWidth: size, maxHeight: size, objectFit: "contain", opacity: 1, zIndex: 6, filter: LOGO_GLOW };
     switch (pos) {
         case "top_left": return { ...base, top: m, left: m };
         case "top_center": return { ...base, top: m, left: "50%", transform: "translateX(-50%)" };
@@ -34,6 +44,7 @@ interface ReelPreviewProps {
     watermarkOpacity?: number;
     logoUrl?: string | null;
     logoSize?: number;
+    logoPosition?: string;
     slideLogoPosition?: string;
     slideLogoSize?: number;
     videoOverlay?: boolean;
@@ -52,6 +63,7 @@ export default function ReelPreview({
     watermarkOpacity = 18,
     logoUrl,
     logoSize = 120,
+    logoPosition = "center",
     slideLogoPosition = "none",
     slideLogoSize = 44,
     videoOverlay = false,
@@ -222,7 +234,14 @@ export default function ReelPreview({
             <div className="absolute inset-0" style={{ background: theme.overlayColor, opacity: currentVideo ? (videoOverlay ? 0.28 : 0) : 0.7 }} />
 
             {/* Content */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-8">
+            <div
+                className="absolute inset-0 flex flex-col px-8"
+                style={
+                    isLogoSlide
+                        ? { ...logoSlideAlign(logoPosition), paddingTop: 40, paddingBottom: 40 }
+                        : { justifyContent: "center", alignItems: "center" }
+                }
+            >
                 {isLogoSlide ? (
                     <div
                         className="flex flex-col items-center gap-4"

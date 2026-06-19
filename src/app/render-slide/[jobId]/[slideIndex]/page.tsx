@@ -35,9 +35,19 @@ interface RenderJobData {
 }
 
 // Position style for the small persistent "logo bug" on every text slide.
+// A dual dark+light glow so the logo reads on any background color.
+const LOGO_GLOW = "drop-shadow(0 0 2px rgba(0,0,0,0.85)) drop-shadow(0 0 5px rgba(0,0,0,0.55)) drop-shadow(0 0 6px rgba(255,255,255,0.45))";
+
+// Where the brand block sits on the final slide.
+function logoSlideAlign(pos: string | undefined): { justifyContent: string; alignItems: string } {
+    const vert = pos?.startsWith("top") ? "flex-start" : pos?.startsWith("bottom") ? "flex-end" : "center";
+    const horiz = pos?.endsWith("left") ? "flex-start" : pos?.endsWith("right") ? "flex-end" : "center";
+    return { justifyContent: vert, alignItems: horiz };
+}
+
 function slideBugStyle(pos: string | undefined, size = 44): CSSProperties | null {
     const m = 14;
-    const base: CSSProperties = { position: "absolute", maxWidth: size, maxHeight: size, objectFit: "contain", opacity: 0.92, zIndex: 6 };
+    const base: CSSProperties = { position: "absolute", maxWidth: size, maxHeight: size, objectFit: "contain", opacity: 1, zIndex: 6, filter: LOGO_GLOW };
     switch (pos) {
         case "top_left": return { ...base, top: m, left: m };
         case "top_center": return { ...base, top: m, left: "50%", transform: "translateX(-50%)" };
@@ -165,7 +175,7 @@ export default function RenderSlidePage({
             >
                 {/* No watermark on the branding slide — keep it clean */}
                 <div style={{ position: "absolute", inset: 0, background: theme.overlayColor, opacity: 0.7 }} />
-                <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16 }}>
+                <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", gap: 16, padding: "48px 32px", textAlign: "center", ...logoSlideAlign(data.logo_position) }}>
                     {data.logo_url ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={data.logo_url} alt={data.brand_name} style={{ maxWidth: data.logo_size || 120, maxHeight: data.logo_size || 120, objectFit: "contain" }} />

@@ -106,6 +106,7 @@ export default function PreviewPage() {
                                 logoUrl={brand.logoPreview}
                                 watermarkOpacity={(brand as any).watermarkOpacity ?? 18}
                                 logoSize={(brand as any).logoSize ?? 120}
+                                logoPosition={(brand as any).logoPosition ?? "bottom_center"}
                                 slideLogoPosition={(brand as any).slideLogoPosition ?? "none"}
                                 slideLogoSize={(brand as any).slideLogoSize ?? 44}
                                 videoOverlay={(brand as any).videoOverlay ?? false}
