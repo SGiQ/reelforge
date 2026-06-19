@@ -203,6 +203,8 @@ export default function Dashboard() {
             logoPosition: job.logo_position || "bottom_center",
             logoSize: job.logo_size_snapshot ?? 120,
             slideLogoPosition: job.slide_logo_position || "none",
+            slideLogoSize: job.slide_logo_size ?? 44,
+            videoOverlay: job.video_overlay ?? false,
             qrCodePreview: job.qr_code_url_snapshot || null,
             qrCodeText: job.qr_text_snapshot || "",
         };

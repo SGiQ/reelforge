@@ -23,6 +23,8 @@ export default function BrandSetupPage() {
     const [logoPosition, setLogoPosition] = useState("bottom_center");
     const [logoSize, setLogoSize] = useState(120);
     const [slideLogoPosition, setSlideLogoPosition] = useState("top_right");
+    const [slideLogoSize, setSlideLogoSize] = useState(44);
+    const [videoOverlay, setVideoOverlay] = useState(false);
     const [qrCodeFile, setQrCodeFile] = useState<File | null>(null);
     const [qrCodePreview, setQrCodePreview] = useState<string | null>(null);
     const [qrCodeText, setQrCodeText] = useState("");
@@ -37,6 +39,8 @@ export default function BrandSetupPage() {
         if (b.logoPosition) setLogoPosition(b.logoPosition);
         if (b.logoSize !== undefined) setLogoSize(b.logoSize);
         if (b.slideLogoPosition) setSlideLogoPosition(b.slideLogoPosition);
+        if (b.slideLogoSize !== undefined) setSlideLogoSize(b.slideLogoSize);
+        if (b.videoOverlay !== undefined) setVideoOverlay(b.videoOverlay);
         if (b.qrCodePreview) setQrCodePreview(b.qrCodePreview);
         if (b.qrCodeText) setQrCodeText(b.qrCodeText);
     };
@@ -77,6 +81,8 @@ export default function BrandSetupPage() {
                     logoPosition: last.logo_position || "bottom_center",
                     logoSize: last.logo_size_snapshot ?? 120,
                     slideLogoPosition: last.slide_logo_position || "none",
+                    slideLogoSize: last.slide_logo_size ?? 44,
+                    videoOverlay: last.video_overlay ?? false,
                     qrCodePreview: last.qr_code_url_snapshot || null,
                     qrCodeText: last.qr_text_snapshot || "",
                 });
@@ -139,6 +145,8 @@ export default function BrandSetupPage() {
                 logoPosition,
                 logoSize,
                 slideLogoPosition,
+                slideLogoSize,
+                videoOverlay,
                 qrCodePreview: finalQrCodeUrl,
                 qrCodeText: qrCodeText.trim(),
             };
@@ -289,6 +297,21 @@ export default function BrandSetupPage() {
                                 <p className="text-xs" style={{ color: "#64748b" }}>
                                     Shows a small logo on every text slide so viewers recognize your brand even while scrubbing.
                                 </p>
+                                {slideLogoPosition !== "none" && (
+                                    <div className="space-y-2 pt-1">
+                                        <div className="flex justify-between items-center text-sm font-medium">
+                                            <span style={{ color: "#a78bfa" }}>Logo Size on Slides</span>
+                                            <span style={{ color: "#94a3b8" }}>{slideLogoSize}px</span>
+                                        </div>
+                                        <input
+                                            type="range" min="24" max="96" step="2"
+                                            value={slideLogoSize}
+                                            onChange={(e) => setSlideLogoSize(Number(e.target.value))}
+                                            className="w-full accent-brand-purple"
+                                            style={{ accentColor: "#7c3aed" }}
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -338,6 +361,27 @@ export default function BrandSetupPage() {
                                 </div>
                             )}
                         </div>
+                    </div>
+
+                    {/* Video scene tint */}
+                    <div className="glass-card rounded-2xl p-6">
+                        <label className="flex items-start gap-3 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={videoOverlay}
+                                onChange={(e) => setVideoOverlay(e.target.checked)}
+                                className="mt-1 w-4 h-4 cursor-pointer"
+                                style={{ accentColor: "#7c3aed" }}
+                            />
+                            <span>
+                                <span className="block text-sm font-medium" style={{ color: "#a78bfa" }}>
+                                    Tint video scenes with theme color
+                                </span>
+                                <span className="block text-xs mt-0.5" style={{ color: "#64748b" }}>
+                                    Off (default) shows your video clips clean, with no color overlay. Turn on to wash them in the theme color (helps caption readability).
+                                </span>
+                            </span>
+                        </label>
                     </div>
 
                     {/* QR Code Upload (Optional) */}

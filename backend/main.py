@@ -16,6 +16,8 @@ from routes import brands, scripts, render, tts, webhooks
 # Postgres supports ADD COLUMN IF NOT EXISTS, so this is safe to run every boot.
 _COLUMN_MIGRATIONS = [
     "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS slide_logo_position VARCHAR(50) DEFAULT 'none'",
+    "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS slide_logo_size INTEGER DEFAULT 44",
+    "ALTER TABLE render_jobs ADD COLUMN IF NOT EXISTS video_overlay BOOLEAN DEFAULT FALSE",
 ]
 
 

@@ -35,6 +35,8 @@ interface ReelPreviewProps {
     logoUrl?: string | null;
     logoSize?: number;
     slideLogoPosition?: string;
+    slideLogoSize?: number;
+    videoOverlay?: boolean;
     qrCodeUrl?: string | null;
     qrText?: string;
     autoPlay?: boolean;
@@ -51,6 +53,8 @@ export default function ReelPreview({
     logoUrl,
     logoSize = 120,
     slideLogoPosition = "none",
+    slideLogoSize = 44,
+    videoOverlay = false,
     qrCodeUrl = null,
     qrText = "",
     autoPlay = true,
@@ -214,8 +218,8 @@ export default function ReelPreview({
                 />
             )}
 
-            {/* Color overlay — lighter over video so the clip shows through */}
-            <div className="absolute inset-0" style={{ background: theme.overlayColor, opacity: currentVideo ? 0.28 : 0.7 }} />
+            {/* Color overlay — on video scenes only when the tint option is on */}
+            <div className="absolute inset-0" style={{ background: theme.overlayColor, opacity: currentVideo ? (videoOverlay ? 0.28 : 0) : 0.7 }} />
 
             {/* Content */}
             <div className="absolute inset-0 flex flex-col items-center justify-center px-8">
@@ -276,9 +280,9 @@ export default function ReelPreview({
             </div>
 
             {/* Persistent logo bug on text slides (brand recognition) */}
-            {!isLogoSlide && logoUrl && slideBugStyle(slideLogoPosition) && (
+            {!isLogoSlide && logoUrl && slideBugStyle(slideLogoPosition, slideLogoSize) && (
                 /* eslint-disable-next-line @next/next/no-img-element */
-                <img src={logoUrl} alt="" style={slideBugStyle(slideLogoPosition)!} />
+                <img src={logoUrl} alt="" style={slideBugStyle(slideLogoPosition, slideLogoSize)!} />
             )}
 
             {/* Progress dots */}

@@ -59,6 +59,8 @@ export default function ExportPage() {
                 logo_position: (brand as any).logoPosition ?? "bottom_center",
                 logo_size: (brand as any).logoSize ?? 120,
                 slide_logo_position: (brand as any).slideLogoPosition ?? "none",
+                slide_logo_size: (brand as any).slideLogoSize ?? 44,
+                video_overlay: (brand as any).videoOverlay ?? false,
                 qr_code_url: (brand as any).qrCodePreview,
                 qr_text: (brand as any).qrCodeText ?? "",
                 logo_url: (brand as any).logoPreview,

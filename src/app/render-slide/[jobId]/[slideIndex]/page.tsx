@@ -27,6 +27,8 @@ interface RenderJobData {
     logo_position?: string;
     logo_size?: number;
     slide_logo_position?: string;
+    slide_logo_size?: number;
+    video_overlay?: boolean;
     qr_code_url?: string | null;
     qr_text?: string;
     website_url?: string;
@@ -122,6 +124,9 @@ export default function RenderSlidePage({
                 style={{ width: 270, height: 480, position: "relative", overflow: "hidden", background: "transparent" }}
                 data-ready="true"
             >
+                {data.video_overlay && (
+                    <div style={{ position: "absolute", inset: 0, background: theme.overlayColor, opacity: 0.4 }} />
+                )}
                 {slide.text && slide.text.trim() && (
                     <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 32px" }}>
                         <p style={{
@@ -139,9 +144,9 @@ export default function RenderSlidePage({
                         </p>
                     </div>
                 )}
-                {data.logo_url && slideBugStyle(data.slide_logo_position) && (
+                {data.logo_url && slideBugStyle(data.slide_logo_position, data.slide_logo_size) && (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={data.logo_url} alt="" style={slideBugStyle(data.slide_logo_position)!} />
+                    <img src={data.logo_url} alt="" style={slideBugStyle(data.slide_logo_position, data.slide_logo_size)!} />
                 )}
             </div>
         );

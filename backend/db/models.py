@@ -67,6 +67,10 @@ class RenderJob(Base):
     logo_size_snapshot: Mapped[int] = mapped_column(Integer, default=120)
     # Position of the small persistent logo shown on every text slide ("none" = off)
     slide_logo_position: Mapped[str] = mapped_column(String(50), default="none")
+    # Size (px in the 270-wide preview space) of that per-slide logo
+    slide_logo_size: Mapped[int] = mapped_column(Integer, default=44)
+    # Whether to tint video scenes with the theme color overlay
+    video_overlay: Mapped[bool] = mapped_column(Boolean, default=False)
     qr_code_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     qr_text_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
     music_url_snapshot: Mapped[str | None] = mapped_column(Text, nullable=True)
