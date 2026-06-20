@@ -45,3 +45,10 @@ def decode_token(token: str) -> dict | None:
         return jwt.decode(token, settings.JWT_SECRET, algorithms=[_ALGO])
     except JWTError:
         return None
+
+
+def is_admin_email(email: str | None) -> bool:
+    if not email:
+        return False
+    admins = {e.strip().lower() for e in settings.ADMIN_EMAILS.split(",") if e.strip()}
+    return email.lower() in admins

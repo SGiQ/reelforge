@@ -6,7 +6,11 @@ export const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:800
 const TOKEN_KEY = "reelforge_token";
 const USER_KEY = "reelforge_user";
 
-export interface AuthUser { id: string; email: string; display_name?: string | null; }
+export interface AuthUser { id: string; email: string; display_name?: string | null; is_admin?: boolean; }
+
+export function isAdmin(): boolean {
+    return !!getUser()?.is_admin;
+}
 
 export function getToken(): string | null {
     if (typeof window === "undefined") return null;

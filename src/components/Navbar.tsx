@@ -1,8 +1,9 @@
 "use client";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Zap, User, LogOut } from "lucide-react";
-import { clearAuth } from "@/lib/auth";
+import { Zap, User, LogOut, Shield } from "lucide-react";
+import { clearAuth, isAdmin } from "@/lib/auth";
 
 
 
@@ -20,6 +21,8 @@ interface NavbarProps {
 
 export default function Navbar({ currentStep }: NavbarProps) {
     const router = useRouter();
+    const [admin, setAdmin] = useState(false);
+    useEffect(() => { setAdmin(isAdmin()); }, []);
     const logout = () => { clearAuth(); router.replace("/login"); };
     return (
         <nav className="sticky top-0 z-50 w-full" style={{ borderBottom: "1px solid rgba(45,45,74,0.6)", background: "rgba(15,15,26,0.9)", backdropFilter: "blur(12px)" }}>
@@ -76,6 +79,11 @@ export default function Navbar({ currentStep }: NavbarProps) {
 
                 {/* User button */}
                 <div className="flex items-center gap-4">
+                    {admin && (
+                        <Link href="/admin" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "#a78bfa" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#a78bfa"}>
+                            <Shield className="w-4 h-4" /> Admin
+                        </Link>
+                    )}
                     <Link href="/community" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
                         Community
                     </Link>

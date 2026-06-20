@@ -25,6 +25,10 @@ class Settings(BaseSettings):
     # Set a strong value in production via the JWT_SECRET env var.
     JWT_SECRET: str = "dev-insecure-change-me"
 
+    # Comma-separated emails granted admin access (moderate community, delete
+    # reels/users). Override/extend via the ADMIN_EMAILS env var.
+    ADMIN_EMAILS: str = "shaunjgov1@gmail.com"
+
     @property
     def get_database_url(self) -> str:
         url = self.DATABASE_URL
