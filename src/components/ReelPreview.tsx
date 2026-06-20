@@ -108,16 +108,19 @@ export default function ReelPreview({
         };
         advanceRef.current = doAdvance;
 
+        // Per-scene hold time (text/image scenes can set their own duration).
+        const cur = allSlides[currentSlide] as any;
+        const sceneDurMs = cur && typeof cur === "object" && cur.duration ? Math.max(1000, cur.duration * 1000) : null;
+
         setAnimState("in");
         timerRef.current = setTimeout(() => {
             setAnimState("hold");
 
             if (!voiceId) {
-                // No voice selected — use fixed 4-second hold
-                timerRef.current = setTimeout(doAdvance, 4000);
+                // No voice — use the scene's chosen hold, or a 4-second default.
+                timerRef.current = setTimeout(doAdvance, sceneDurMs ?? 4000);
             } else {
-                // Voice is selected — slide will advance from the TTS onended handler.
-                // Safety net: advance after 12s regardless so slides never hang.
+                // Voice selected — advance from the TTS onended handler; safety net after 12s.
                 timerRef.current = setTimeout(doAdvance, 12000);
             }
         }, 600);

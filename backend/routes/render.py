@@ -33,6 +33,9 @@ class Slide(BaseModel):
     image_url: str | None = Field(None, alias="imageUrl")
     trim_start: float = Field(0.0, alias="trimStart")
     trim_end: float = Field(0.0, alias="trimEnd")
+    # Still-scene timing/motion (text & image scenes).
+    duration: float = 0.0
+    animation: str = "none"
 
     class Config:
         populate_by_name = True

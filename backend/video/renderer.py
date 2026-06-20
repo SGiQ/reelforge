@@ -565,22 +565,57 @@ def _ff_run(cmd: list[str], timeout: int = 300) -> None:
         raise RuntimeError(f"FFmpeg failed:\n{' '.join(cmd)}\n{result.stderr[-2000:]}")
 
 
-def _build_still_segment(ffmpeg_bin: str, image_path: str, duration: float, tts_path: str | None, out_path: str) -> None:
-    """A still image (1080×1920 screenshot) held for `duration`, with TTS or silent audio."""
-    has_tts = bool(tts_path and os.path.exists(tts_path))
-    cmd = [ffmpeg_bin, "-y", "-loop", "1", "-i", image_path]
-    if has_tts:
-        cmd += ["-i", tts_path]
-        fc = f"[0:v]{_VPAD},format=yuv420p[v];[1:a]apad[a]"
-        amap = "[a]"
+def _still_video_filter(animation: str, duration: float) -> str:
+    """Video-filter chain for a still scene. 'none' just fits the frame; the motion
+    presets apply a slow Ken-Burns zoom/pan via zoompan (image pre-scaled 2x for
+    quality). Returns a filtergraph ending in [v]."""
+    if not animation or animation == "none":
+        return f"[0:v]{_VPAD},format=yuv420p[v]"
+    frames = max(1, int(round(duration * FPS)))
+    up = f"scale={FRAME_W * 2}:{FRAME_H * 2}"
+    cx, cy = "iw/2-(iw/zoom/2)", "ih/2-(ih/zoom/2)"
+    if animation == "zoom_in":
+        z, x, y = "min(zoom+0.0008,1.25)", cx, cy
+    elif animation == "zoom_out":
+        z, x, y = "if(eq(on,0),1.25,max(zoom-0.0008,1.0))", cx, cy
+    elif animation == "pan_right":
+        z, x, y = "1.2", f"(iw-iw/zoom)*on/{frames}", cy
+    elif animation == "pan_left":
+        z, x, y = "1.2", f"(iw-iw/zoom)*(1-on/{frames})", cy
     else:
-        cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo"]
-        fc = f"[0:v]{_VPAD},format=yuv420p[v]"
-        amap = "1:a"
-    cmd += ["-filter_complex", fc, "-map", "[v]", "-map", amap, "-t", str(duration),
-            "-c:v", "libx264", "-preset", "fast", "-crf", "23", "-pix_fmt", "yuv420p", "-r", str(FPS),
-            "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-ac", "2", out_path]
-    _ff_run(cmd)
+        return f"[0:v]{_VPAD},format=yuv420p[v]"
+    zp = f"zoompan=z='{z}':x='{x}':y='{y}':d={frames}:s={FRAME_W}x{FRAME_H}:fps={FPS}"
+    return f"[0:v]{up},{zp},format=yuv420p[v]"
+
+
+def _build_still_segment(ffmpeg_bin: str, image_path: str, duration: float, tts_path: str | None,
+                         out_path: str, animation: str = "none") -> None:
+    """A still scene held for `duration` (optionally with a motion preset), with
+    TTS or silent audio. Falls back to a static frame if the motion filter errors."""
+    has_tts = bool(tts_path and os.path.exists(tts_path))
+
+    def _run(vfilter: str):
+        cmd = [ffmpeg_bin, "-y", "-loop", "1", "-i", image_path]
+        if has_tts:
+            cmd += ["-i", tts_path]
+            fc = f"{vfilter};[1:a]apad[a]"
+            amap = "[a]"
+        else:
+            cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo"]
+            fc = vfilter
+            amap = "1:a"
+        cmd += ["-filter_complex", fc, "-map", "[v]", "-map", amap, "-t", str(duration),
+                "-c:v", "libx264", "-preset", "fast", "-crf", "23", "-pix_fmt", "yuv420p", "-r", str(FPS),
+                "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-ac", "2", out_path]
+        _ff_run(cmd)
+
+    if animation and animation != "none":
+        try:
+            _run(_still_video_filter(animation, duration))
+            return
+        except Exception as e:
+            print(f"Motion '{animation}' failed ({e}); using a static frame.")
+    _run(_still_video_filter("none", duration))
 
 
 def _build_video_segment(ffmpeg_bin: str, clip_path: str, trim_start: float, duration: float,
@@ -822,8 +857,15 @@ class RenderEngine:
                         tts_path, tts_dur = _tts(slide.get("text", ""), i)
                         frame_png = os.path.join(tmpdir, f"frame_{i:04d}.png")
                         _shoot(f"{FRONTEND}/render-slide/{job_id}/{i}", frame_png)
-                        duration = (tts_dur + 1.7) if tts_path else DEFAULT_SLIDE_DURATION
-                        _build_still_segment(ffmpeg_bin, frame_png, duration, tts_path, seg_path)
+                        # Use the scene's chosen hold time; never cut a longer voiceover.
+                        auto = (tts_dur + 1.7) if tts_path else DEFAULT_SLIDE_DURATION
+                        try:
+                            chosen = float(slide.get("duration") or 0)
+                        except Exception:
+                            chosen = 0.0
+                        duration = max(chosen, auto) if chosen > 0 else auto
+                        _build_still_segment(ffmpeg_bin, frame_png, duration, tts_path, seg_path,
+                                             animation=slide.get("animation") or "none")
 
                     segment_paths.append(seg_path)
                     segment_durations.append(duration)

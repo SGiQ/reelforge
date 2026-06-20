@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Settings2, Trash2, Plus, Video, Film, ChevronUp, ChevronDown, Type, Scissors, Search, Image as ImageIcon } from "lucide-react";
+import { ArrowRight, Settings2, Trash2, Plus, Video, Film, ChevronUp, ChevronDown, Type, Scissors, Search, Image as ImageIcon, Clock, Sparkles as SparklesIcon } from "lucide-react";
 import { upload } from "@vercel/blob/client";
 import Navbar from "@/components/Navbar";
 import StockSearch, { StockClip } from "@/components/StockSearch";
@@ -252,6 +252,37 @@ export default function ScriptPickerPage() {
         </div>
     );
 
+    // Hold time + motion preset for still (text/image) scenes.
+    const ANIMATIONS = [
+        { value: "none", label: "None" },
+        { value: "zoom_in", label: "Zoom in" },
+        { value: "zoom_out", label: "Zoom out" },
+        { value: "pan_right", label: "Pan →" },
+        { value: "pan_left", label: "Pan ←" },
+    ];
+    const motionControls = (index: number, scene: any) => (
+        <div className="flex flex-wrap items-center gap-4 pt-3 border-t" style={{ borderColor: "rgba(45,45,74,0.4)" }}>
+            <div className="flex items-center gap-2">
+                <Clock className="w-3.5 h-3.5" style={{ color: "#64748b" }} />
+                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Hold</span>
+                <input type="number" min={1} max={30} step={0.5}
+                    value={scene.duration ?? ""}
+                    placeholder="auto"
+                    onChange={(e) => updateScene(index, { duration: e.target.value ? Math.max(0, parseFloat(e.target.value)) : undefined })}
+                    className="input-field w-16 py-1 text-sm" />
+                <span className="text-[11px]" style={{ color: "#64748b" }}>sec</span>
+            </div>
+            <div className="flex items-center gap-2">
+                <SparklesIcon className="w-3.5 h-3.5" style={{ color: "#64748b" }} />
+                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Animation</span>
+                <select value={scene.animation || "none"} onChange={(e) => updateScene(index, { animation: e.target.value })}
+                    className="bg-transparent text-[11px] border border-white/10 rounded px-1 outline-none focus:ring-1 focus:ring-brand-purple" style={{ color: "#a78bfa" }}>
+                    {ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[#1a1a2e] text-white">{a.label}</option>)}
+                </select>
+            </div>
+        </div>
+    );
+
     return (
         <div className="page-container">
             <Navbar currentStep={1} />
@@ -487,6 +518,7 @@ export default function ScriptPickerPage() {
                                                                     className="input-field w-full min-h-[60px] text-sm py-2 leading-relaxed border-none bg-transparent focus:ring-1 focus:ring-brand-purple"
                                                                 />
                                                                 {scene.text.trim() && styleControls(index, scene)}
+                                                                {motionControls(index, scene)}
                                                             </>
                                                         )}
                                                     </div>
@@ -499,6 +531,7 @@ export default function ScriptPickerPage() {
                                                             className="input-field w-full min-h-[80px] text-sm py-2 mb-3 leading-relaxed border-none bg-transparent focus:ring-1 focus:ring-brand-purple"
                                                         />
                                                         {styleControls(index, scene)}
+                                                        {motionControls(index, scene)}
                                                     </>
                                                 )}
                                             </div>
