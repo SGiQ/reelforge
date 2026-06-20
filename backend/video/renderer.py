@@ -622,6 +622,40 @@ def _concat_segments(ffmpeg_bin: str, segment_paths: list[str], out_path: str) -
     _ff_run(cmd)
 
 
+def _concat_with_xfade(ffmpeg_bin: str, segment_paths: list[str], durations: list[float],
+                       out_path: str, d: float = 0.4) -> None:
+    """Concatenate scene segments with a crossfade (video xfade + audio acrossfade)
+    between each pair. Raises on failure so the caller can fall back to a hard cut."""
+    n = len(segment_paths)
+    if n < 2:
+        _concat_segments(ffmpeg_bin, segment_paths, out_path)
+        return
+    # Keep the crossfade shorter than the shortest scene so offsets stay valid.
+    d = max(0.15, min(d, min(durations) / 2.0))
+
+    cmd = [ffmpeg_bin, "-y"]
+    for sp in segment_paths:
+        cmd += ["-i", sp]
+
+    vparts, aparts = [], []
+    prev_v, prev_a = "0:v", "0:a"
+    running = durations[0]
+    for i in range(1, n):
+        offset = max(0.0, running - d)
+        vout = f"vx{i}"
+        aout = f"ax{i}"
+        vparts.append(f"[{prev_v}][{i}:v]xfade=transition=fade:duration={d:.3f}:offset={offset:.3f}[{vout}]")
+        aparts.append(f"[{prev_a}][{i}:a]acrossfade=d={d:.3f}[{aout}]")
+        prev_v, prev_a = vout, aout
+        running = running + durations[i] - d
+
+    fc = ";".join(vparts + aparts)
+    cmd += ["-filter_complex", fc, "-map", f"[{prev_v}]", "-map", f"[{prev_a}]",
+            "-c:v", "libx264", "-preset", "fast", "-crf", "23", "-pix_fmt", "yuv420p", "-r", str(FPS),
+            "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-ac", "2", out_path]
+    _ff_run(cmd, timeout=600)
+
+
 def _mux_music(ffmpeg_bin: str, video_path: str, music_path: str, music_volume: float,
                music_start: float, out_path: str) -> None:
     """Mix background music under the reel's existing audio (voiceovers)."""
@@ -709,6 +743,7 @@ class RenderEngine:
                 json.dump(render_data, f)
 
             segment_paths: list[str] = []
+            segment_durations: list[float] = []
             ffmpeg_bin = _find_ffmpeg()
             FRONTEND = settings.FRONTEND_URL
 
@@ -791,6 +826,7 @@ class RenderEngine:
                         _build_still_segment(ffmpeg_bin, frame_png, duration, tts_path, seg_path)
 
                     segment_paths.append(seg_path)
+                    segment_durations.append(duration)
 
                 # ── Logo slide ───────────────────────────────────────────────
                 logo_idx = len(normalised_slides)
@@ -802,16 +838,21 @@ class RenderEngine:
                 logo_seg = os.path.join(tmpdir, f"seg_{logo_idx:04d}.mp4")
                 _build_still_segment(ffmpeg_bin, logo_png, logo_dur, logo_tts, logo_seg)
                 segment_paths.append(logo_seg)
+                segment_durations.append(logo_dur)
 
                 browser.close()
 
             if not segment_paths:
                 raise RuntimeError("No renderable scenes produced.")
 
-            # ── Concatenate scene segments, then mix background music ─────────
+            # ── Stitch scene segments (crossfade), then mix background music ──
             output_path = str(output_dir / f"{job_id}.mp4")
             concat_path = os.path.join(tmpdir, "concat.mp4")
-            _concat_segments(ffmpeg_bin, segment_paths, concat_path)
+            try:
+                _concat_with_xfade(ffmpeg_bin, segment_paths, segment_durations, concat_path)
+            except Exception as e:
+                print(f"Crossfade failed ({e}); falling back to hard cuts.")
+                _concat_segments(ffmpeg_bin, segment_paths, concat_path)
 
             if music_path and os.path.exists(music_path):
                 _mux_music(ffmpeg_bin, concat_path, music_path, music_volume, music_start_time, output_path)
