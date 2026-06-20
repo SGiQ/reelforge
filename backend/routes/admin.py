@@ -86,6 +86,16 @@ async def delete_reel(job_id: str, db: AsyncSession = Depends(get_db), _: User =
     return {"ok": True}
 
 
+@router.post("/claim-orphans")
+async def claim_orphans(db: AsyncSession = Depends(get_db), admin: User = Depends(require_admin)):
+    """Assign all owner-less reels (created before login existed) to the admin."""
+    res = await db.execute(
+        RenderJob.__table__.update().where(RenderJob.owner_id.is_(None)).values(owner_id=admin.id)
+    )
+    await db.commit()
+    return {"claimed": res.rowcount}
+
+
 @router.get("/users", response_model=list[AdminUser])
 async def all_users(db: AsyncSession = Depends(get_db), _: User = Depends(require_admin)):
     users = (await db.execute(select(User).order_by(User.created_at.desc()))).scalars().all()

@@ -46,6 +46,18 @@ export default function AdminPage() {
         } catch (e: any) { alert(`Action failed: ${e.message}`); }
     };
 
+    const orphanCount = reels.filter((r) => !r.owner_email).length;
+
+    const claimOrphans = async () => {
+        try {
+            const res = await fetch(`${API_BASE}/admin/claim-orphans`, { method: "POST", headers: authHeaders() });
+            if (!res.ok) throw new Error(await res.text());
+            const d = await res.json();
+            alert(`Claimed ${d.claimed} reel(s) to your account. They'll now show on your dashboard.`);
+            load();
+        } catch (e: any) { alert(`Claim failed: ${e.message}`); }
+    };
+
     if (!ready) return null;
 
     return (
@@ -77,6 +89,17 @@ export default function AdminPage() {
                 </div>
 
                 {error && <p className="text-sm mb-6" style={{ color: "#f87171" }}>{error}</p>}
+
+                {tab === "reels" && orphanCount > 0 && (
+                    <div className="rounded-xl px-4 py-3 mb-5 flex items-center justify-between gap-4" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.25)" }}>
+                        <p className="text-sm" style={{ color: "#cbd5e1" }}>
+                            <strong style={{ color: "#a78bfa" }}>{orphanCount}</strong> reel(s) were created before login and have no owner.
+                        </p>
+                        <button onClick={claimOrphans} className="btn-primary px-4 py-2 text-sm whitespace-nowrap">
+                            Claim to my account
+                        </button>
+                    </div>
+                )}
 
                 {tab === "reels" ? (
                     <div className="space-y-2">
