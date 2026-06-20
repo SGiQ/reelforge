@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Video, Download, RefreshCw, ExternalLink, Play, X, Share2, Check } from "lucide-react";
+import { Video, Download, RefreshCw, ExternalLink, Play, X, Share2, Check, Trash2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { authHeaders, useRequireAuth } from "@/lib/auth";
 
@@ -25,15 +25,29 @@ function getReelTitle(job: any): string {
     return job.brand_name || "Untitled Reel";
 }
 
-function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
+function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => void; onDeleted: (id: string) => void }) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [playerOpen, setPlayerOpen] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [shareOpen, setShareOpen] = useState(false);
     const [shared, setShared] = useState(!!job.shared);
     const [sharing, setSharing] = useState(false);
     const videoUrl = resolveUrl(job.output_url);
     const isDone = job.status === "done" && !!videoUrl;
     const title = getReelTitle(job);
+
+    const handleDelete = async () => {
+        if (!window.confirm("Delete this reel permanently?")) return;
+        setDeleting(true);
+        try {
+            const res = await fetch(`${API_BASE}/render/${job.id}`, { method: "DELETE", headers: authHeaders() });
+            if (!res.ok) throw new Error(await res.text());
+            onDeleted(job.id);
+        } catch (e: any) {
+            alert(`Delete failed: ${e.message}`);
+            setDeleting(false);
+        }
+    };
 
     const shareToCommunity = async () => {
         setSharing(true);
@@ -149,35 +163,46 @@ function ReelCard({ job, onEdit }: { job: any; onEdit: (job: any) => void }) {
                     <span>{new Date(job.created_at).toLocaleDateString()}</span>
                 </div>
 
-                <div className="mt-auto">
-                    {isDone ? (
-                        <div className="flex gap-2 w-full">
-                            <a
-                                href={videoUrl!}
-                                onClick={handleDownload}
-                                className="btn-secondary flex-1 justify-center group"
-                                style={{ opacity: downloading ? 0.6 : 1 }}
-                            >
-                                <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
-                                <span>{downloading ? "Downloading…" : "Download"}</span>
-                            </a>
-                            <button
-                                onClick={() => onEdit(job)}
-                                className="btn-secondary flex-1 justify-center group"
-                            >
-                                <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                                <span>Re-edit</span>
+                <div className="mt-auto flex gap-2 items-stretch">
+                    <div className="flex-1">
+                        {isDone ? (
+                            <div className="flex gap-2 w-full">
+                                <a
+                                    href={videoUrl!}
+                                    onClick={handleDownload}
+                                    className="btn-secondary flex-1 justify-center group"
+                                    style={{ opacity: downloading ? 0.6 : 1 }}
+                                >
+                                    <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                                    <span>{downloading ? "Downloading…" : "Download"}</span>
+                                </a>
+                                <button
+                                    onClick={() => onEdit(job)}
+                                    className="btn-secondary flex-1 justify-center group"
+                                >
+                                    <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                    <span>Re-edit</span>
+                                </button>
+                            </div>
+                        ) : job.status === "failed" ? (
+                            <button disabled className="btn-secondary w-full justify-center opacity-50 cursor-not-allowed">
+                                Render Failed
                             </button>
-                        </div>
-                    ) : job.status === "failed" ? (
-                        <button disabled className="btn-secondary w-full justify-center opacity-50 cursor-not-allowed">
-                            Render Failed
-                        </button>
-                    ) : (
-                        <button disabled className="btn-secondary w-full justify-center opacity-50 cursor-wait">
-                            Processing...
-                        </button>
-                    )}
+                        ) : (
+                            <button disabled className="btn-secondary w-full justify-center opacity-50 cursor-wait">
+                                Processing...
+                            </button>
+                        )}
+                    </div>
+                    <button
+                        onClick={handleDelete}
+                        disabled={deleting}
+                        title="Delete reel"
+                        className="btn-secondary px-3 justify-center text-red-400 hover:bg-red-500/10"
+                        style={{ opacity: deleting ? 0.6 : 1 }}
+                    >
+                        <Trash2 className="w-4 h-4" />
+                    </button>
                 </div>
             </div>
 
@@ -353,7 +378,7 @@ export default function Dashboard() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {jobs.map((job) => (
-                            <ReelCard key={job.id} job={job} onEdit={handleEdit} />
+                            <ReelCard key={job.id} job={job} onEdit={handleEdit} onDeleted={(id) => setJobs((prev) => prev.filter((j) => j.id !== id))} />
                         ))}
                     </div>
                 )}

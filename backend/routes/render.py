@@ -296,6 +296,26 @@ async def share_render(
     return job
 
 
+@router.delete("/{job_id}")
+async def delete_render(
+    job_id: str,
+    db: AsyncSession = Depends(get_db),
+    user_id: str | None = Depends(optional_user_id),
+):
+    """Delete one of your own reels."""
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    result = await db.execute(select(RenderJob).where(RenderJob.id == job_id))
+    job = result.scalar_one_or_none()
+    if not job:
+        raise HTTPException(status_code=404, detail="Render job not found.")
+    if job.owner_id != user_id:
+        raise HTTPException(status_code=403, detail="Not your reel.")
+    await db.delete(job)
+    await db.commit()
+    return {"ok": True}
+
+
 @router.get("/frame-data/{job_id}")
 async def get_render_frame_data(job_id: str):
     """
