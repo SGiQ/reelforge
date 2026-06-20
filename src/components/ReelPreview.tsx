@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, CSSProperties } from "react";
 import { THEMES, Theme } from "./ThemeCard";
-import { VideoScene, isVideoScene } from "@/lib/scenes";
+import { VideoScene, ImageScene, isVideoScene, isImageScene } from "@/lib/scenes";
 
 interface Slide {
     text: string;
@@ -132,6 +132,7 @@ export default function ReelPreview({
     const currentSlideData = allSlides[currentSlide];
     const isObjectSlide = typeof currentSlideData === "object" && currentSlideData !== null && "text" in currentSlideData;
     const currentVideo: VideoScene | null = !isLogoSlide && isVideoScene(currentSlideData as any) ? (currentSlideData as any as VideoScene) : null;
+    const currentImage: ImageScene | null = !isLogoSlide && isImageScene(currentSlideData as any) ? (currentSlideData as any as ImageScene) : null;
 
     // Font mapping helper
     const getFontCSS = (file: string) => {
@@ -222,8 +223,14 @@ export default function ReelPreview({
                 />
             )}
 
-            {/* Watermark photo — hidden on the branding slide and on video scenes */}
-            {watermarkUrl && !isLogoSlide && !currentVideo && (
+            {/* Image scene background */}
+            {currentImage && currentImage.imageUrl && (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img src={currentImage.imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            )}
+
+            {/* Watermark photo — hidden on the branding slide and on media scenes */}
+            {watermarkUrl && !isLogoSlide && !currentVideo && !currentImage && (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                     src={watermarkUrl}
@@ -233,8 +240,8 @@ export default function ReelPreview({
                 />
             )}
 
-            {/* Color overlay — on video scenes only when the tint option is on */}
-            <div className="absolute inset-0" style={{ background: theme.overlayColor, opacity: currentVideo ? (videoOverlay ? 0.28 : 0) : 0.7 }} />
+            {/* Color overlay — lighter over media so the photo/clip shows through */}
+            <div className="absolute inset-0" style={{ background: theme.overlayColor, opacity: currentImage ? 0.3 : currentVideo ? (videoOverlay ? 0.28 : 0) : 0.7 }} />
 
             {/* Content */}
             <div

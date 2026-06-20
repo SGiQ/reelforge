@@ -25,7 +25,17 @@ export interface VideoScene {
     fontFamily: string;
 }
 
-export type Scene = TextScene | VideoScene;
+export interface ImageScene {
+    kind: "image";
+    imageUrl: string;
+    // Optional caption rendered over the image (same styling as text scenes).
+    text: string;
+    fontSize: number;
+    textColor: string;
+    fontFamily: string;
+}
+
+export type Scene = TextScene | VideoScene | ImageScene;
 
 export const DEFAULT_SCENE_STYLE = {
     fontSize: 88,
@@ -37,9 +47,23 @@ export function isVideoScene(s: any): s is VideoScene {
     return !!s && typeof s === "object" && s.kind === "video" && typeof s.videoUrl === "string";
 }
 
+export function isImageScene(s: any): s is ImageScene {
+    return !!s && typeof s === "object" && s.kind === "image" && typeof s.imageUrl === "string";
+}
+
 // Normalize any legacy shape (plain string, or text object) into a Scene.
 export function toScene(s: any): Scene {
     if (typeof s === "string") return { kind: "text", text: s, ...DEFAULT_SCENE_STYLE };
+    if (isImageScene(s)) {
+        return {
+            kind: "image",
+            imageUrl: s.imageUrl,
+            text: s.text ?? "",
+            fontSize: s.fontSize ?? DEFAULT_SCENE_STYLE.fontSize,
+            textColor: s.textColor ?? DEFAULT_SCENE_STYLE.textColor,
+            fontFamily: s.fontFamily ?? DEFAULT_SCENE_STYLE.fontFamily,
+        };
+    }
     if (isVideoScene(s)) {
         return {
             kind: "video",
@@ -62,9 +86,10 @@ export function toScene(s: any): Scene {
     };
 }
 
-// A scene is renderable if it has caption text (text scene) or a clip (video scene).
+// A scene is renderable if it has a clip, an image, or caption text.
 export function isRenderableScene(s: Scene): boolean {
     if (isVideoScene(s)) return !!s.videoUrl;
+    if (isImageScene(s)) return !!s.imageUrl;
     return !!(s.text && s.text.trim());
 }
 

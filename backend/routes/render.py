@@ -27,9 +27,10 @@ class Slide(BaseModel):
     text_color: str = Field("", alias="textColor")  # empty = theme default
     font_family: str = Field("DejaVuSans-Bold.ttf", alias="fontFamily")
     transition: str = "fade"
-    # Video scene fields ("kind" == "video"); ignored for text scenes.
+    # Media scene fields ("kind" == "video" | "image"); ignored for text scenes.
     kind: str | None = None
     video_url: str | None = Field(None, alias="videoUrl")
+    image_url: str | None = Field(None, alias="imageUrl")
     trim_start: float = Field(0.0, alias="trimStart")
     trim_end: float = Field(0.0, alias="trimEnd")
 

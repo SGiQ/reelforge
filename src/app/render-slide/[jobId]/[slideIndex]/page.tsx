@@ -15,6 +15,8 @@ interface SlideData {
     font_size: number;
     text_color: string;
     font_family: string;
+    kind?: string | null;
+    image_url?: string | null;
 }
 
 interface RenderJobData {
@@ -223,6 +225,7 @@ export default function RenderSlidePage({
     const fontFamily = FONT_MAP[slide.font_family] || "Inter, sans-serif";
     const rawColor = slide.text_color;
     const textColor = rawColor && rawColor !== "" ? rawColor : theme.textColor;
+    const isImage = slide.kind === "image" && !!slide.image_url;
 
     return (
         <div
@@ -233,8 +236,14 @@ export default function RenderSlidePage({
             }}
             data-ready="true"
         >
-            {/* Watermark */}
-            {data.watermark_url && (
+            {/* Image scene background */}
+            {isImage && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={slide.image_url!} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+            )}
+
+            {/* Watermark — hidden on image scenes (the image is the background) */}
+            {data.watermark_url && !isImage && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                     src={data.watermark_url}
@@ -248,12 +257,12 @@ export default function RenderSlidePage({
                 />
             )}
 
-            {/* Overlay — exact same as ReelPreview */}
+            {/* Overlay — lighter over an image so the photo shows through */}
             <div
                 style={{
                     position: "absolute", inset: 0,
                     background: theme.overlayColor,
-                    opacity: 0.7,
+                    opacity: isImage ? 0.3 : 0.7,
                 }}
             />
 

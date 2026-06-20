@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Settings2, Trash2, Plus, Video, Film, ChevronUp, ChevronDown, Type, Scissors, Search } from "lucide-react";
+import { ArrowRight, Settings2, Trash2, Plus, Video, Film, ChevronUp, ChevronDown, Type, Scissors, Search, Image as ImageIcon } from "lucide-react";
 import { upload } from "@vercel/blob/client";
 import Navbar from "@/components/Navbar";
 import StockSearch, { StockClip } from "@/components/StockSearch";
 import TrimPreview from "@/components/TrimPreview";
-import { Scene, VideoScene, DEFAULT_SCENE_STYLE, isVideoScene, toScene, isRenderableScene } from "@/lib/scenes";
+import { Scene, VideoScene, ImageScene, DEFAULT_SCENE_STYLE, isVideoScene, isImageScene, toScene, isRenderableScene } from "@/lib/scenes";
 
 const FONT_OPTIONS = [
     { label: "Inter (Sans)", value: "DejaVuSans-Bold.ttf" },
@@ -86,6 +86,11 @@ export default function ScriptPickerPage() {
         setScenes((prev) => [...prev, { kind: "video", videoUrl: "", trimStart: 0, trimEnd: 0, text: "", ...DEFAULT_SCENE_STYLE }]);
     };
 
+    const addImageScene = () => {
+        if (scenes.length >= MAX_SCENES) return;
+        setScenes((prev) => [...prev, { kind: "image", imageUrl: "", text: "", ...DEFAULT_SCENE_STYLE }]);
+    };
+
     const removeScene = (index: number) => {
         if (scenes.length <= 1) return;
         setScenes((prev) => prev.filter((_, i) => i !== index));
@@ -115,6 +120,22 @@ export default function ScriptPickerPage() {
             updateScene(index, { videoUrl: blob.url, trimStart: 0, trimEnd: end, durationHint: duration || undefined } as Partial<VideoScene>);
         } catch (e: any) {
             setAiError(`Video upload failed: ${e.message || "unknown error"}`);
+        } finally {
+            setUploading((u) => ({ ...u, [index]: false }));
+        }
+    };
+
+    const handleImageUpload = async (index: number, file: File) => {
+        setUploading((u) => ({ ...u, [index]: true }));
+        try {
+            const blob = await upload(file.name, file, {
+                access: "public",
+                handleUploadUrl: `${window.location.origin}/api/upload`,
+                clientPayload: "image-scene",
+            });
+            updateScene(index, { imageUrl: blob.url } as Partial<ImageScene>);
+        } catch (e: any) {
+            setAiError(`Image upload failed: ${e.message || "unknown error"}`);
         } finally {
             setUploading((u) => ({ ...u, [index]: false }));
         }
@@ -300,20 +321,23 @@ export default function ScriptPickerPage() {
                                 <div className="space-y-4">
                                     {scenes.map((scene, index) => {
                                         const video = isVideoScene(scene);
+                                        const image = isImageScene(scene);
+                                        const accent = video ? "#2dd4bf" : image ? "#38bdf8" : "#a78bfa";
+                                        const kindLabel = video ? "Video" : image ? "Image" : "Text";
                                         return (
                                             <div
                                                 key={index}
                                                 className="p-4 rounded-xl border transition-all"
-                                                style={{ background: "rgba(15,15,26,0.3)", borderColor: video ? "rgba(45,212,191,0.4)" : "rgba(45,45,74,0.6)" }}
+                                                style={{ background: "rgba(15,15,26,0.3)", borderColor: video ? "rgba(45,212,191,0.4)" : image ? "rgba(56,189,248,0.4)" : "rgba(45,45,74,0.6)" }}
                                             >
                                                 <div className="flex items-center justify-between mb-3">
                                                     <div className="flex items-center gap-2">
                                                         <span className="text-xs font-bold px-2 py-0.5 rounded flex items-center gap-1.5"
-                                                            style={{ background: video ? "rgba(13,148,136,0.15)" : "rgba(124,58,237,0.1)", color: video ? "#2dd4bf" : "#a78bfa" }}>
-                                                            {video ? <Film className="w-3 h-3" /> : <Type className="w-3 h-3" />}
+                                                            style={{ background: `${accent}22`, color: accent }}>
+                                                            {video ? <Film className="w-3 h-3" /> : image ? <ImageIcon className="w-3 h-3" /> : <Type className="w-3 h-3" />}
                                                             Scene {index + 1}
                                                         </span>
-                                                        <span className="text-[10px] uppercase tracking-wider" style={{ color: "#64748b" }}>{video ? "Video" : "Text"}</span>
+                                                        <span className="text-[10px] uppercase tracking-wider" style={{ color: "#64748b" }}>{kindLabel}</span>
                                                     </div>
                                                     <div className="flex items-center gap-1">
                                                         <button onClick={() => moveScene(index, -1)} disabled={index === 0}
@@ -426,6 +450,46 @@ export default function ScriptPickerPage() {
                                                             </>
                                                         )}
                                                     </div>
+                                                ) : image ? (
+                                                    <div className="space-y-3">
+                                                        <input
+                                                            ref={(el) => { fileInputs.current[index] = el; }}
+                                                            type="file" accept="image/*" className="hidden"
+                                                            onChange={(e) => { const f = e.target.files?.[0]; if (f) handleImageUpload(index, f); e.currentTarget.value = ""; }}
+                                                        />
+                                                        {!(scene as ImageScene).imageUrl ? (
+                                                            <button
+                                                                onClick={() => fileInputs.current[index]?.click()}
+                                                                disabled={uploading[index]}
+                                                                className="w-full flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed py-8 transition-all hover:bg-white/5 disabled:opacity-60"
+                                                                style={{ borderColor: "rgba(56,189,248,0.4)" }}
+                                                            >
+                                                                <ImageIcon className="w-6 h-6" style={{ color: "#38bdf8" }} />
+                                                                <span className="text-sm font-medium" style={{ color: "#38bdf8" }}>
+                                                                    {uploading[index] ? "Uploading…" : "Upload a background image"}
+                                                                </span>
+                                                                <span className="text-xs" style={{ color: "#64748b" }}>JPG, PNG or WebP</span>
+                                                            </button>
+                                                        ) : (
+                                                            <>
+                                                                <div className="flex gap-4 items-start">
+                                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                                    <img src={(scene as ImageScene).imageUrl} alt="" className="rounded-lg flex-shrink-0 bg-black object-cover" style={{ width: 120, height: 213 }} />
+                                                                    <div className="flex-1 space-y-2">
+                                                                        <p className="text-[11px]" style={{ color: "#64748b" }}>This image fills the scene background. Add an optional caption below.</p>
+                                                                        <button onClick={() => updateScene(index, { imageUrl: "" } as Partial<ImageScene>)} className="text-xs text-red-400 hover:underline">Replace image</button>
+                                                                    </div>
+                                                                </div>
+                                                                <textarea
+                                                                    value={scene.text}
+                                                                    onChange={(e) => updateScene(index, { text: e.target.value })}
+                                                                    placeholder="Optional caption shown over the image…"
+                                                                    className="input-field w-full min-h-[60px] text-sm py-2 leading-relaxed border-none bg-transparent focus:ring-1 focus:ring-brand-purple"
+                                                                />
+                                                                {scene.text.trim() && styleControls(index, scene)}
+                                                            </>
+                                                        )}
+                                                    </div>
                                                 ) : (
                                                     <>
                                                         <textarea
@@ -441,19 +505,27 @@ export default function ScriptPickerPage() {
                                         );
                                     })}
 
-                                    <div className="flex gap-3">
+                                    <div className="flex flex-wrap gap-3">
                                         <button
                                             onClick={addTextScene}
                                             disabled={scenes.length >= MAX_SCENES}
-                                            className="flex-1 py-3 rounded-xl border border-dashed flex items-center justify-center gap-2 text-sm font-medium transition-all hover:bg-white/5 disabled:opacity-50"
+                                            className="flex-1 min-w-[150px] py-3 rounded-xl border border-dashed flex items-center justify-center gap-2 text-sm font-medium transition-all hover:bg-white/5 disabled:opacity-50"
                                             style={{ borderColor: "rgba(124,58,237,0.3)", color: "#a78bfa" }}
                                         >
                                             <Plus className="w-4 h-4" /> Add Text Scene
                                         </button>
                                         <button
+                                            onClick={addImageScene}
+                                            disabled={scenes.length >= MAX_SCENES}
+                                            className="flex-1 min-w-[150px] py-3 rounded-xl border border-dashed flex items-center justify-center gap-2 text-sm font-medium transition-all hover:bg-white/5 disabled:opacity-50"
+                                            style={{ borderColor: "rgba(56,189,248,0.4)", color: "#38bdf8" }}
+                                        >
+                                            <ImageIcon className="w-4 h-4" /> Add Image Scene
+                                        </button>
+                                        <button
                                             onClick={addVideoScene}
                                             disabled={scenes.length >= MAX_SCENES}
-                                            className="flex-1 py-3 rounded-xl border border-dashed flex items-center justify-center gap-2 text-sm font-medium transition-all hover:bg-white/5 disabled:opacity-50"
+                                            className="flex-1 min-w-[150px] py-3 rounded-xl border border-dashed flex items-center justify-center gap-2 text-sm font-medium transition-all hover:bg-white/5 disabled:opacity-50"
                                             style={{ borderColor: "rgba(45,212,191,0.4)", color: "#2dd4bf" }}
                                         >
                                             <Video className="w-4 h-4" /> Add Video Scene
