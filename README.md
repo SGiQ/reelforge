@@ -1,4 +1,4 @@
-# ReelForge
+# ReelSGiQ
 
 Multi-brand AI reel builder SaaS — create stunning 1080×1920 MP4 reels for your brand in minutes.
 
@@ -18,7 +18,7 @@ Multi-brand AI reel builder SaaS — create stunning 1080×1920 MP4 reels for yo
 ## Project Structure
 
 ```
-ReelForge/
+ReelSGiQ/
 ├── src/
 │   ├── app/
 │   │   ├── page.tsx              # Landing page

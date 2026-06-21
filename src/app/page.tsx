@@ -26,7 +26,7 @@ export default function HomePage() {
                             <Zap className="w-4 h-4 text-white" />
                         </div>
                         <span className="font-bold text-lg tracking-tight">
-                            Reel<span style={{ color: "#a78bfa" }}>Forge</span>
+                            Reel<span style={{ color: "#a78bfa" }}>SGiQ</span>
                         </span>
                     </div>
                     <div className="flex items-center gap-3">
@@ -128,9 +128,9 @@ export default function HomePage() {
                 <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
                         <Zap className="w-4 h-4" style={{ color: "#a78bfa" }} />
-                        <span className="font-bold">ReelForge</span>
+                        <span className="font-bold">ReelSGiQ</span>
                     </div>
-                    <p className="text-sm" style={{ color: "#64748b" }}>© 2026 ReelForge. All rights reserved.</p>
+                    <p className="text-sm" style={{ color: "#64748b" }}>© 2026 ReelSGiQ. All rights reserved.</p>
                     <div className="flex gap-6 text-sm" style={{ color: "#64748b" }}>
                         <Link href="/dashboard">Dashboard</Link>
                         <Link href="/brand-setup">Start Building</Link>

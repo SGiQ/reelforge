@@ -132,7 +132,7 @@ def _download_clip(url: str, dest_dir: str) -> str | None:
         suffix = Path(url.split("?")[0]).suffix or ".mp4"
         dest = os.path.join(dest_dir, f"clip_{abs(hash(url))}{suffix}")
         req = urllib.request.Request(url, headers={
-            "User-Agent": "Mozilla/5.0 (compatible; ReelForge/1.0; +https://reelforge.app)",
+            "User-Agent": "Mozilla/5.0 (compatible; ReelSGiQ/1.0; +https://reelsgiq.app)",
             "Accept": "*/*",
         })
         with urllib.request.urlopen(req, timeout=60) as resp, open(dest, "wb") as f:

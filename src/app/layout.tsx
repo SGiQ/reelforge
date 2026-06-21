@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-    title: "ReelForge — AI Reel Builder for Brands",
+    title: "ReelSGiQ — AI Reel Builder for Brands",
     description:
         "Create stunning short-form video reels for your brand in minutes. Upload assets, pick a script, choose a theme, and download your MP4.",
     keywords: "reel builder, AI video, brand reel, short form video, MP4 generator",

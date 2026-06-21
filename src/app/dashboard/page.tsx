@@ -79,7 +79,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
     const handleDownload = async (e: React.MouseEvent) => {
         e.preventDefault();
         if (!videoUrl || downloading) return;
-        const filename = `reelforge-${job.id.substring(0, 6)}.mp4`;
+        const filename = `reelsgiq-${job.id.substring(0, 6)}.mp4`;
         setDownloading(true);
         try {
             const res = await fetch(videoUrl);

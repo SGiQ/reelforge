@@ -8,8 +8,8 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-    title: "How ReelForge Works — Help",
-    description: "Learn how to build branded short-form video reels in ReelForge: scenes, video clips, stock footage, captions, voiceover, and export.",
+    title: "How ReelSGiQ Works — Help",
+    description: "Learn how to build branded short-form video reels in ReelSGiQ: scenes, video clips, stock footage, captions, voiceover, and export.",
 };
 
 const STEPS = [
@@ -48,7 +48,7 @@ export default function HelpPage() {
                         <span className="text-xs mx-1">·</span>
                         <span style={{ color: "#a78bfa" }}>How it works</span>
                     </p>
-                    <h1 className="section-title">How ReelForge works</h1>
+                    <h1 className="section-title">How ReelSGiQ works</h1>
                     <p className="section-subtitle">
                         Build branded 1080×1920 reels in five steps. Mix text, image and video scenes,
                         animate them with motion, icons and emoji, add captions and an AI voiceover,
@@ -148,7 +148,7 @@ export default function HelpPage() {
 
                     {/* Step 5 — Export */}
                     <Section icon={<Download className="w-5 h-5" />} title="5. Export your MP4" accent="#a78bfa">
-                        <p>Hit render and ReelForge stitches everything together into a 1080×1920 H.264 MP4: each scene is fitted to 9:16, captions and your logo are overlaid, the voiceover and music are mixed, and a branded logo + QR slide is added at the end.</p>
+                        <p>Hit render and ReelSGiQ stitches everything together into a 1080×1920 H.264 MP4: each scene is fitted to 9:16, captions and your logo are overlaid, the voiceover and music are mixed, and a branded logo + QR slide is added at the end.</p>
                         <p>Rendering runs in the background — when it’s done you’ll find the reel on your dashboard.</p>
                     </Section>
 

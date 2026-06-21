@@ -33,7 +33,7 @@ export default function Navbar({ currentStep }: NavbarProps) {
                         <Zap className="w-4 h-4 text-white" />
                     </div>
                     <span className="font-bold text-lg tracking-tight" style={{ color: "#f8fafc" }}>
-                        Reel<span style={{ color: "#a78bfa" }}>Forge</span>
+                        Reel<span style={{ color: "#a78bfa" }}>SGiQ</span>
                     </span>
                 </Link>
 

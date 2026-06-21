@@ -61,7 +61,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="ReelForge API",
+    title="ReelSGiQ API",
     description="Multi-brand AI reel builder backend",
     version="1.0.0",
     lifespan=lifespan,
@@ -94,9 +94,9 @@ app.mount("/renders", StaticFiles(directory=settings.RENDER_OUTPUT_DIR), name="r
 
 @app.get("/health")
 async def health():
-    return {"status": "ok", "service": "ReelForge API"}
+    return {"status": "ok", "service": "ReelSGiQ API"}
 
 
 @app.get("/")
 async def root():
-    return {"message": "ReelForge API — visit /docs for interactive docs"}
+    return {"message": "ReelSGiQ API — visit /docs for interactive docs"}

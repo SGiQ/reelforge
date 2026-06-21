@@ -44,7 +44,7 @@ export default function LoginPage() {
                         <Zap className="w-5 h-5 text-white" />
                     </div>
                     <span className="font-bold text-xl tracking-tight" style={{ color: "#f8fafc" }}>
-                        Reel<span style={{ color: "#a78bfa" }}>Forge</span>
+                        Reel<span style={{ color: "#a78bfa" }}>SGiQ</span>
                     </span>
                 </div>
 
