@@ -392,9 +392,9 @@ export default function RenderSlidePage({
             {!bgOnly && renderElements()}
 
             {/* Persistent logo bug for brand recognition (kept on the background layer) */}
-            {data.logo_url && slideBugStyle(data.slide_logo_position) && (
+            {data.logo_url && slideBugStyle(data.slide_logo_position, data.slide_logo_size) && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={data.logo_url} alt="" style={slideBugStyle(data.slide_logo_position)!} />
+                <img src={data.logo_url} alt="" style={slideBugStyle(data.slide_logo_position, data.slide_logo_size)!} />
             )}
         </div>
     );

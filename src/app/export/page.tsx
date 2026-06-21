@@ -229,7 +229,7 @@ export default function ExportPage() {
                             />
                         </div>
                         <a
-                            href={job.outputUrl}
+                            href={`${job.outputUrl}${job.outputUrl.includes("?") ? "&" : "?"}download=1`}
                             download={`${brand?.brandName || "reel"}-reel.mp4`}
                             className="btn-primary w-full justify-center py-4 text-base mb-4 inline-flex text-center"
                         >

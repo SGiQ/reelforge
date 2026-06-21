@@ -74,28 +74,21 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
         if (v) { v.pause(); try { v.currentTime = 0.5; } catch { } }
     };
 
-    // Force a real download (the `download` attr is ignored cross-origin, so the
-    // browser would otherwise just open the Blob URL). Fetch → blob → save.
-    const handleDownload = async (e: React.MouseEvent) => {
+    // Download instantly. Vercel Blob's ?download=1 sets Content-Disposition:
+    // attachment server-side, so the browser saves the file instead of opening
+    // it — reliable cross-origin (no fetch/CORS dependency).
+    const handleDownload = (e: React.MouseEvent) => {
         e.preventDefault();
         if (!videoUrl || downloading) return;
         const filename = `reelsgiq-${job.id.substring(0, 6)}.mp4`;
         setDownloading(true);
         try {
-            const res = await fetch(videoUrl);
-            if (!res.ok) throw new Error("fetch failed");
-            const blob = await res.blob();
-            const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
-            a.href = url;
+            a.href = `${videoUrl}${videoUrl.includes("?") ? "&" : "?"}download=1`;
             a.download = filename;
             document.body.appendChild(a);
             a.click();
             a.remove();
-            setTimeout(() => URL.revokeObjectURL(url), 2000);
-        } catch {
-            // Fallback: Vercel Blob honors ?download to set Content-Disposition.
-            window.location.href = `${videoUrl}${videoUrl!.includes("?") ? "&" : "?"}download=${encodeURIComponent(filename)}`;
         } finally {
             setDownloading(false);
             // After downloading, offer to share to the community (once).
