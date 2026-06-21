@@ -167,9 +167,10 @@ export default function ReelPreview({
 
     const slideText = isObjectSlide ? (currentSlideData as Slide).text : currentSlideData as string;
     const slideFontSize = isObjectSlide ? `${(currentSlideData as Slide).fontSize / 80}rem` : "1.1rem";
-    // Fall back to theme text color when no custom color is set (empty or missing)
+    // Fall back to theme text color when no custom color is set — except over a
+    // video/image clip, where we default to white for readability.
     const rawColor = isObjectSlide ? (currentSlideData as Slide).textColor : "";
-    const slideColor = rawColor && rawColor !== "" ? rawColor : theme.textColor;
+    const slideColor = rawColor && rawColor !== "" ? rawColor : (currentVideo || currentImage ? "#ffffff" : theme.textColor);
     const slideFontFamily = isObjectSlide ? getFontCSS((currentSlideData as Slide).fontFamily) : "inherit";
 
     // Real ElevenLabs preview audio — fires when slide becomes visible
@@ -318,7 +319,9 @@ export default function ReelPreview({
                             color: slideColor,
                             fontSize: slideFontSize,
                             fontFamily: slideFontFamily,
-                            textShadow: "0 2px 12px rgba(0,0,0,0.4)",
+                            textShadow: (currentVideo || currentImage)
+                                ? "0 2px 10px rgba(0,0,0,0.85), 0 0 30px rgba(0,0,0,0.7)"
+                                : "0 2px 12px rgba(0,0,0,0.4)",
                             opacity,
                             transform: `translateY(${translateY}px)`,
                             transition: "opacity 0.4s ease, transform 0.4s ease",

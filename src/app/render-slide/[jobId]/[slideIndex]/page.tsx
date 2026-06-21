@@ -201,7 +201,9 @@ export default function RenderSlidePage({
     // ── Overlay/text layer (transparent) — caption (+ logo unless text-only) ────
     if ((overlay || textOnly) && !isLogoSlide && slide) {
         const ovFont = FONT_MAP[slide.font_family] || "Inter, sans-serif";
-        const ovColor = slide.text_color && slide.text_color !== "" ? slide.text_color : theme.textColor;
+        // Captions sit over video/photo footage, which varies wildly — default to
+        // white (not the theme color) for readability unless the user set a color.
+        const ovColor = slide.text_color && slide.text_color !== "" ? slide.text_color : "#ffffff";
         return (
             <div
                 style={{ width: 270, height: 480, position: "relative", overflow: "hidden", background: "transparent" }}
@@ -219,7 +221,7 @@ export default function RenderSlidePage({
                             fontWeight: "bold",
                             lineHeight: 1.3,
                             textAlign: "center",
-                            textShadow: "0 2px 12px rgba(0,0,0,0.55)",
+                            textShadow: "0 2px 10px rgba(0,0,0,0.85), 0 0 30px rgba(0,0,0,0.7)",
                             wordBreak: "break-word",
                             margin: 0,
                         }}>
