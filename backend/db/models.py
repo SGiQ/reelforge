@@ -66,6 +66,10 @@ class MusicTrack(Base):
     mood: Mapped[str] = mapped_column(String(60), default="upbeat")  # upbeat | calm | emotional | cinematic | corporate
     url: Mapped[str] = mapped_column(Text, nullable=False)
     duration: Mapped[float] = mapped_column(default=0.0)
+    # Provenance / licensing (stored for attribution; e.g. Jamendo CC tracks).
+    artist: Mapped[str | None] = mapped_column(String(200), nullable=True)
+    license_url: Mapped[str | None] = mapped_column(Text, nullable=True)
+    source: Mapped[str] = mapped_column(String(40), default="upload")  # upload | jamendo
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Shield, Trash2, EyeOff, RefreshCw, Film, Users, Music, Upload } from "lucide-react";
+import { Shield, Trash2, EyeOff, RefreshCw, Film, Users, Music, Upload, Search, Plus, Loader2 } from "lucide-react";
 import { upload } from "@vercel/blob/client";
 import Navbar from "@/components/Navbar";
 import { API_BASE, authHeaders, getToken, isAdmin } from "@/lib/auth";
@@ -20,6 +20,11 @@ export default function AdminPage() {
     const [newTitle, setNewTitle] = useState("");
     const [newMood, setNewMood] = useState("upbeat");
     const [uploading, setUploading] = useState(false);
+    const [jq, setJq] = useState("");
+    const [jmood, setJmood] = useState("upbeat");
+    const [jresults, setJresults] = useState<any[]>([]);
+    const [jloading, setJloading] = useState(false);
+    const [importingId, setImportingId] = useState<number | null>(null);
 
     // Gate: must be signed in AND an admin.
     useEffect(() => {
@@ -67,6 +72,30 @@ export default function AdminPage() {
             setNewTitle("");
             load();
         } catch (e: any) { alert(`Upload failed: ${e.message}`); } finally { setUploading(false); }
+    };
+
+    const searchJamendo = async () => {
+        setJloading(true);
+        try {
+            const res = await fetch(`${API_BASE}/music/jamendo?query=${encodeURIComponent(jq)}&mood=${jmood}`, { headers: authHeaders() });
+            const d = await res.json();
+            if (!res.ok) throw new Error(d.detail || "Search failed");
+            setJresults(d.candidates || []);
+        } catch (e: any) { alert(`Jamendo: ${e.message}`); } finally { setJloading(false); }
+    };
+
+    const importTrack = async (c: any) => {
+        setImportingId(c.jamendo_id);
+        try {
+            const res = await fetch(`${API_BASE}/music/import`, {
+                method: "POST",
+                headers: { ...authHeaders(), "Content-Type": "application/json" },
+                body: JSON.stringify({ title: c.title, artist: c.artist, license_url: c.license_url, mood: jmood, duration: c.duration, source_url: c.audio }),
+            });
+            if (!res.ok) throw new Error(await res.text());
+            setJresults((prev) => prev.filter((x) => x.jamendo_id !== c.jamendo_id));
+            load();
+        } catch (e: any) { alert(`Import failed: ${e.message}`); } finally { setImportingId(null); }
     };
 
     useEffect(() => { if (ready) load(); }, [ready, load]);
@@ -157,6 +186,43 @@ export default function AdminPage() {
                                 </label>
                             </div>
                         </div>
+
+                        {/* Import from Jamendo (free CC music API) */}
+                        <div className="glass-card rounded-xl p-4">
+                            <p className="text-sm font-semibold mb-1" style={{ color: "#f8fafc" }}>Import from Jamendo</p>
+                            <p className="text-xs mb-3" style={{ color: "#64748b" }}>
+                                Free Creative-Commons catalog. Non-commercial tracks are filtered out; imports are re-hosted to Blob and the artist/license is saved.
+                            </p>
+                            <div className="flex flex-wrap items-center gap-2">
+                                <select value={jmood} onChange={(e) => setJmood(e.target.value)} className="input-field text-sm py-2 capitalize" style={{ width: 140 }}>
+                                    {MOODS.map((m) => <option key={m} value={m}>{m}</option>)}
+                                </select>
+                                <input value={jq} onChange={(e) => setJq(e.target.value)} placeholder="Optional keyword (e.g. piano, drive)"
+                                    onKeyDown={(e) => { if (e.key === "Enter") searchJamendo(); }}
+                                    className="input-field text-sm py-2 flex-1 min-w-[160px]" />
+                                <button onClick={searchJamendo} disabled={jloading} className="btn-secondary px-4 py-2 text-sm inline-flex items-center gap-1.5">
+                                    {jloading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />} Search
+                                </button>
+                            </div>
+                            {jresults.length > 0 && (
+                                <div className="mt-3 grid sm:grid-cols-2 gap-2">
+                                    {jresults.map((c) => (
+                                        <div key={c.jamendo_id} className="rounded-xl p-3 flex items-center gap-3" style={{ background: "rgba(15,15,26,0.6)" }}>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-medium truncate" style={{ color: "#e2e8f0" }}>{c.title}</p>
+                                                <p className="text-xs truncate" style={{ color: "#94a3b8" }}>{c.artist}{c.duration ? ` · ${Math.round(c.duration)}s` : ""}</p>
+                                                <audio src={c.audio} controls preload="none" className="mt-1.5" style={{ height: 28, width: "100%" }} />
+                                            </div>
+                                            <button onClick={() => importTrack(c)} disabled={importingId === c.jamendo_id} title="Add to library"
+                                                className="btn-primary px-3 py-2 text-xs inline-flex items-center gap-1 whitespace-nowrap">
+                                                {importingId === c.jamendo_id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />} Add
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
                         <div className="space-y-2">
                             {tracks.map((t) => (
                                 <div key={t.id} className="glass-card rounded-xl p-4 flex items-center gap-4">
@@ -165,6 +231,8 @@ export default function AdminPage() {
                                         <p className="font-semibold text-sm truncate" style={{ color: "#f8fafc" }}>{t.title}</p>
                                         <p className="text-xs" style={{ color: "#94a3b8" }}>
                                             <span className="capitalize">{t.mood}</span>{t.duration ? ` · ${Math.round(t.duration)}s` : ""}
+                                            {t.artist ? ` · ${t.artist}` : ""}
+                                            {t.source === "jamendo" && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(45,212,191,0.15)", color: "#2dd4bf" }}>JAMENDO</span>}
                                         </p>
                                     </div>
                                     <audio src={t.url} controls preload="none" style={{ height: 32 }} />

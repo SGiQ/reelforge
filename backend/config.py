@@ -16,6 +16,10 @@ class Settings(BaseSettings):
     QR_DEFAULT_URL: str = "https://checkwellcare.com"
     ELEVENLABS_API_KEY: str = ""
 
+    # Jamendo free music API (https://devportal.jamendo.com) — import royalty-free
+    # Creative Commons tracks into the music library.
+    JAMENDO_CLIENT_ID: str = ""
+
     # Optional shared secret for server-to-server callers (e.g. the Social Media
     # Agent). When set, costly endpoints require a matching X-API-Key header.
     # Leave blank to disable the gate (default — preserves existing behavior).
