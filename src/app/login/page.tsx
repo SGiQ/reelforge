@@ -12,6 +12,7 @@ export default function LoginPage() {
     const [displayName, setDisplayName] = useState("");
     const [error, setError] = useState<string | null>(null);
     const [busy, setBusy] = useState(false);
+    const [showForgot, setShowForgot] = useState(false);
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -73,6 +74,19 @@ export default function LoginPage() {
                             <ArrowRight className="w-4 h-4" />
                         </button>
                     </form>
+
+                    {mode === "login" && (
+                        <>
+                            <button onClick={() => setShowForgot((v) => !v)} className="text-xs mt-3 block mx-auto" style={{ color: "#64748b" }}>
+                                Forgot password?
+                            </button>
+                            {showForgot && (
+                                <p className="text-xs text-center mt-2 leading-relaxed" style={{ color: "#64748b" }}>
+                                    Password resets are issued by an admin. Ask your administrator to generate a reset link for your email — then open it to set a new password.
+                                </p>
+                            )}
+                        </>
+                    )}
 
                     <p className="text-sm text-center mt-6" style={{ color: "#94a3b8" }}>
                         {mode === "login" ? "New here?" : "Already have an account?"}{" "}

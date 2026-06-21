@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Shield, Trash2, EyeOff, RefreshCw, Film, Users, Music, Upload, Search, Plus, Loader2 } from "lucide-react";
+import { Shield, Trash2, EyeOff, RefreshCw, Film, Users, Music, Upload, Search, Plus, Loader2, KeyRound } from "lucide-react";
 import { upload } from "@vercel/blob/client";
 import Navbar from "@/components/Navbar";
 import { API_BASE, authHeaders, getToken, isAdmin } from "@/lib/auth";
@@ -96,6 +96,16 @@ export default function AdminPage() {
             setJresults((prev) => prev.filter((x) => x.jamendo_id !== c.jamendo_id));
             load();
         } catch (e: any) { alert(`Import failed: ${e.message}`); } finally { setImportingId(null); }
+    };
+
+    const resetLink = async (u: any) => {
+        try {
+            const res = await fetch(`${API_BASE}/admin/users/${u.id}/reset-link`, { method: "POST", headers: authHeaders() });
+            const d = await res.json();
+            if (!res.ok) throw new Error(d.detail || "Failed to create link");
+            try { await navigator.clipboard.writeText(d.reset_url); } catch { /* clipboard may be blocked */ }
+            window.prompt(`Reset link for ${u.email} (copied — valid 60 min). Send it to them:`, d.reset_url);
+        } catch (e: any) { alert(`Failed: ${e.message}`); }
     };
 
     useEffect(() => { if (ready) load(); }, [ready, load]);
@@ -276,6 +286,8 @@ export default function AdminPage() {
                                     </p>
                                     <p className="text-xs" style={{ color: "#94a3b8" }}>{u.email} · {u.reel_count} reel(s)</p>
                                 </div>
+                                <button onClick={() => resetLink(u)} title="Generate password reset link"
+                                    className="p-2 rounded-lg hover:bg-white/5" style={{ color: "#a78bfa" }}><KeyRound className="w-4 h-4" /></button>
                                 {!u.is_admin && (
                                     <button onClick={() => act("DELETE", `/admin/users/${u.id}`, `Delete ${u.email}? Their reels stay but leave the community feed.`)} title="Delete user"
                                         className="p-2 rounded-lg hover:bg-red-500/10 text-red-400"><Trash2 className="w-4 h-4" /></button>

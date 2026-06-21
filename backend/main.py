@@ -25,6 +25,8 @@ _COLUMN_MIGRATIONS = [
     "ALTER TABLE music_tracks ADD COLUMN IF NOT EXISTS artist VARCHAR(200)",
     "ALTER TABLE music_tracks ADD COLUMN IF NOT EXISTS license_url TEXT",
     "ALTER TABLE music_tracks ADD COLUMN IF NOT EXISTS source VARCHAR(40) DEFAULT 'upload'",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_token_hash TEXT",
+    "ALTER TABLE users ADD COLUMN IF NOT EXISTS reset_expires_at TIMESTAMPTZ",
 ]
 
 

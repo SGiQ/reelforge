@@ -4,6 +4,7 @@ import base64
 import hashlib
 import hmac
 import os
+import secrets
 from datetime import datetime, timedelta, timezone
 
 from jose import jwt, JWTError
@@ -45,6 +46,16 @@ def decode_token(token: str) -> dict | None:
         return jwt.decode(token, settings.JWT_SECRET, algorithms=[_ALGO])
     except JWTError:
         return None
+
+
+def make_reset_token(hours: int = 1) -> tuple[str, str, datetime]:
+    """Return (raw_token, token_hash, expires_at). Only the hash is stored."""
+    token = secrets.token_urlsafe(32)
+    return token, hash_reset_token(token), datetime.now(timezone.utc) + timedelta(hours=hours)
+
+
+def hash_reset_token(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
 
 
 def is_admin_email(email: str | None) -> bool:

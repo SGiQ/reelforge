@@ -96,6 +96,9 @@ export default function Navbar({ currentStep }: NavbarProps) {
                     <Link href="/dashboard" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
                         Dashboard
                     </Link>
+                    <Link href="/account" title="Account" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
+                        <User className="w-4 h-4" />
+                    </Link>
                     <button onClick={logout} title="Log out" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
                         <LogOut className="w-4 h-4" />
                     </button>

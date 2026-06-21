@@ -12,7 +12,8 @@ from datetime import datetime
 from db.database import get_db
 from db.models import RenderJob, User
 from auth.clerk import _uid_from_auth
-from auth.security import is_admin_email
+from auth.security import is_admin_email, make_reset_token
+from config import settings
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -128,3 +129,16 @@ async def delete_user(user_id: str, db: AsyncSession = Depends(get_db), admin: U
     await db.delete(user)
     await db.commit()
     return {"ok": True}
+
+
+@router.post("/users/{user_id}/reset-link")
+async def user_reset_link(user_id: str, db: AsyncSession = Depends(get_db), _: User = Depends(require_admin)):
+    """Generate a one-time password-reset link for a user (admin shares it with them)."""
+    user = (await db.execute(select(User).where(User.id == user_id))).scalar_one_or_none()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    token, token_hash, expires = make_reset_token()
+    user.reset_token_hash = token_hash
+    user.reset_expires_at = expires
+    await db.commit()
+    return {"reset_url": f"{settings.FRONTEND_URL}/reset?token={token}", "expires_in_minutes": 60}
