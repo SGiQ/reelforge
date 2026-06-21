@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import StockSearch, { StockClip } from "@/components/StockSearch";
 import TrimPreview from "@/components/TrimPreview";
 import SceneElementsEditor from "@/components/SceneElementsEditor";
+import ReelPreview from "@/components/ReelPreview";
 import { Scene, VideoScene, ImageScene, SceneElement, DEFAULT_SCENE_STYLE, isVideoScene, isImageScene, toScene, isRenderableScene } from "@/lib/scenes";
 
 const FONT_OPTIONS = [
@@ -57,6 +58,17 @@ export default function ScriptPickerPage() {
     const [aiSlideCount, setAiSlideCount] = useState(3);
     const [isGenerating, setIsGenerating] = useState(false);
     const [aiError, setAiError] = useState<string | null>(null);
+
+    // Live-preview context (theme/brand/voice from earlier steps).
+    const [pv, setPv] = useState<{ theme: string; brand: any; voiceId: string | null }>({ theme: "dark", brand: {}, voiceId: null });
+    useEffect(() => {
+        try {
+            const theme = localStorage.getItem("reelforge_theme") || "dark";
+            const brand = JSON.parse(localStorage.getItem("reelforge_brand") || "{}");
+            const audio = JSON.parse(localStorage.getItem("reelforge_audio") || "{}");
+            setPv({ theme, brand, voiceId: audio.aiVoice || null });
+        } catch { /* defaults */ }
+    }, []);
 
     useEffect(() => {
         const saved = localStorage.getItem("reelforge_script");
@@ -303,7 +315,9 @@ export default function ScriptPickerPage() {
     return (
         <div className="page-container">
             <Navbar currentStep={1} />
-            <main className="max-w-3xl mx-auto px-6 py-12">
+            <main className="max-w-6xl mx-auto px-6 py-12">
+              <div className="grid lg:grid-cols-[1fr_320px] gap-8 items-start">
+                <div className="min-w-0">
                 <div className="mb-10">
                     <p className="step-indicator mb-3">
                         <span>Step 2 of 5</span>
@@ -634,6 +648,46 @@ export default function ScriptPickerPage() {
                 >
                     Continue to Theme <ArrowRight className="w-5 h-5" />
                 </button>
+                </div>
+
+                {/* Live preview — updates as you edit */}
+                <div className="hidden lg:block">
+                    <div className="sticky top-24">
+                        <p className="text-xs font-semibold mb-2 flex items-center gap-1.5" style={{ color: "#94a3b8" }}>
+                            <span className="w-2 h-2 rounded-full inline-block" style={{ background: "#34d399" }} /> Live preview
+                        </p>
+                        <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgba(45,45,74,0.6)" }}>
+                            {scenes.some(isRenderableScene) ? (
+                                <ReelPreview
+                                    slides={scenes.filter(isRenderableScene) as any}
+                                    themeId={pv.theme}
+                                    brandName={pv.brand?.brandName}
+                                    phone={pv.brand?.phone ?? ""}
+                                    watermarkUrl={pv.brand?.watermarkPreview}
+                                    logoUrl={pv.brand?.logoPreview}
+                                    watermarkOpacity={pv.brand?.watermarkOpacity ?? 18}
+                                    logoSize={pv.brand?.logoSize ?? 120}
+                                    logoPosition={pv.brand?.logoPosition ?? "bottom_center"}
+                                    slideLogoPosition={pv.brand?.slideLogoPosition ?? "none"}
+                                    slideLogoSize={pv.brand?.slideLogoSize ?? 44}
+                                    videoOverlay={pv.brand?.videoOverlay ?? false}
+                                    qrCodeUrl={pv.brand?.qrCodePreview ?? null}
+                                    qrText={pv.brand?.qrCodeText ?? ""}
+                                    autoPlay={true}
+                                    voiceId={null}
+                                />
+                            ) : (
+                                <div className="flex items-center justify-center text-center px-4" style={{ width: 270, height: 480, background: "#0f0f1a", color: "#475569", fontSize: 12 }}>
+                                    Add a scene to see it here
+                                </div>
+                            )}
+                        </div>
+                        <p className="text-[11px] mt-2 leading-relaxed" style={{ color: "#64748b" }}>
+                            Plays silently as you edit. Full preview with voiceover is the next step.
+                        </p>
+                    </div>
+                </div>
+              </div>
             </main>
         </div>
     );

@@ -300,10 +300,34 @@ export default function Dashboard() {
         };
         localStorage.setItem("reelforge_brand", JSON.stringify(brandData));
 
-        // Hydrate Script
+        // Hydrate Script — rebuild FULL scenes (snapshot is stored snake_case),
+        // not just the caption text, so video clips / images / animations survive.
+        const toEditableScene = (s: any) => {
+            if (typeof s === "string") return { kind: "text", text: s, fontSize: 88, textColor: "", fontFamily: "DejaVuSans-Bold.ttf" };
+            const common = {
+                text: s.text ?? "",
+                fontSize: s.font_size ?? s.fontSize ?? 88,
+                textColor: s.text_color ?? s.textColor ?? "",
+                fontFamily: s.font_family ?? s.fontFamily ?? "DejaVuSans-Bold.ttf",
+            };
+            const videoUrl = s.video_url ?? s.videoUrl;
+            const imageUrl = s.image_url ?? s.imageUrl;
+            if (s.kind === "video" || videoUrl) {
+                return { kind: "video", videoUrl, trimStart: s.trim_start ?? s.trimStart ?? 0, trimEnd: s.trim_end ?? s.trimEnd ?? 0, ...common };
+            }
+            const still = {
+                ...common,
+                duration: typeof s.duration === "number" ? s.duration : undefined,
+                animation: s.animation || "none",
+                textAnimation: s.text_animation ?? s.textAnimation ?? "none",
+                elements: Array.isArray(s.elements) ? s.elements : [],
+            };
+            if (s.kind === "image" || imageUrl) return { kind: "image", imageUrl, ...still };
+            return { kind: "text", ...still };
+        };
         const scriptData = {
             title: job.brand_name ? `${job.brand_name} (Edited)` : "Edited Script",
-            slides: job.slides_snapshot ? job.slides_snapshot.map((s: any) => typeof s === "object" ? s.text : s) : [],
+            slides: (job.slides_snapshot || []).map(toEditableScene),
             outroVoiceover: job.outro_voiceover_snapshot || "",
         };
         localStorage.setItem("reelforge_script", JSON.stringify(scriptData));
