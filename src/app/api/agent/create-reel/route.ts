@@ -12,6 +12,17 @@ const MODEL = "claude-sonnet-4-6";
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const PEXELS_URL = "https://api.pexels.com/videos/search";
 const THEME_IDS = ["dark", "light", "sky-blue", "warm-gold", "crimson-red", "forest-green", "amethyst", "monochrome"];
+const FONTS = ["DejaVuSans-Bold.ttf", "Montserrat-Bold.ttf", "Oswald-Bold.ttf", "BebasNeue-Regular.ttf", "PlayfairDisplay-Bold.ttf", "Outfit-Bold.ttf", "SpaceMono-Bold.ttf", "Cinzel-Bold.ttf", "DejaVuSerif.ttf", "DejaVuSansMono.ttf"];
+// Per-scene emphasis → caption font size (px in the 1080-wide frame).
+const EMPHASIS_SIZE: Record<string, number> = { small: 74, medium: 92, large: 116, xl: 142 };
+// Where an accent element sits — kept out of the centered caption zone.
+const POSITION_XY: Record<string, [number, number]> = {
+    top: [0.5, 0.15], top_left: [0.22, 0.17], top_right: [0.78, 0.17],
+    bottom: [0.5, 0.85], bottom_left: [0.22, 0.83], bottom_right: [0.78, 0.83],
+};
+// Curated Lucide icon names the AI may use (must be valid component names).
+const ICON_NAMES = ["Heart", "Star", "Check", "CheckCircle", "ThumbsUp", "Flame", "Zap", "Sparkles", "Bell", "Gift", "Crown", "Award", "Trophy", "Rocket", "Sun", "Moon", "Cloud", "Music", "Camera", "Phone", "Mail", "MapPin", "Calendar", "Clock", "ShoppingCart", "Tag", "Percent", "DollarSign", "TrendingUp", "Target", "Lightbulb", "Smile", "Coffee", "Gem", "Megaphone", "Quote", "ArrowRight", "Play", "Lock", "Shield", "Globe", "Users", "MessageCircle", "AlertCircle", "Info", "Eye", "Home", "Handshake"];
+const HEX_RE = /^#[0-9a-fA-F]{6}$/;
 
 async function claude(body: any) {
     const key = process.env.ANTHROPIC_API_KEY;
@@ -96,18 +107,22 @@ export async function POST(req: NextRequest) {
         }
 
         // 2. Plan the whole reel with Claude (forced structured output).
-        const system = `You are an expert short-form video director for TikTok / Reels / Shorts.
-Plan a vertical (9:16) reel of EXACTLY ${n} scenes for the brand "${brandName || "the brand"}".
-Rules:
+        const system = `You are an expert short-form video ART DIRECTOR for TikTok / Reels / Shorts.
+Plan a vertical (9:16) reel of EXACTLY ${n} scenes for the brand "${brandName || "the brand"}". Make it look designed, not templated.
+Content:
 - Scene 1 is a strong hook; the final scene is a clear call to action.
 - Captions are punchy — under ~16 words each.
-- Choose each scene's "type": "video" when real footage helps (people, places, action, product context) or "text" for bold statements/hooks/CTAs. Aim for a mix.
-- For "video" scenes, give a concise 2-4 word "stock_query" describing the footage to search.
-- Pick a fitting "text_animation" and (for text scenes) a subtle "background_motion".
-- Optionally add a single relevant "emoji" to a scene for emphasis.
+- Choose each scene's "type": "video" when real footage helps (people, places, action) or "text" for bold statements/hooks/CTAs. Aim for a mix.
+- For "video" scenes, give a concise 2-4 word "stock_query".
 - "duration" is seconds on screen (2.5-5).
-- Pick a "theme" that matches the mood.
-- Set "music" to the EXACT title of the best-fitting track from the list below, or "none".
+Design (this is what makes it look good):
+- Pick ONE "font" for the whole reel that fits the brand's tone (e.g. BebasNeue/Oswald = bold punchy, Playfair/Cinzel = elegant, Outfit/Montserrat = modern clean, SpaceMono = techy).
+- Pick a "theme" whose colors match the mood.
+- Per scene set "emphasis": "xl" or "large" for the hook & key lines, "medium" for normal copy, "small" for fine print. Vary it for visual rhythm.
+- Optionally set "text_color" as a #RRGGBB hex when a specific color sharpens the message; otherwise omit it (a readable default is used). Over video, keep text light.
+- Pick a fitting "text_animation"; for text scenes also a subtle "background_motion".
+- Optionally add up to 2 "elements" (an icon or emoji) on a scene to accent it — place them in a corner/top/bottom (NOT over the caption). Use sparingly. For kind "icon", "value" MUST be one of: ${ICON_NAMES.join(", ")}. For kind "emoji", "value" is the emoji character.
+- Set "music" to the EXACT title of the best-fitting track below, or "none".
 - Do NOT fabricate statistics, prices, or medical/clinical claims. Keep claims emotional and truthful.${musicList}${research}`;
 
         const planResp = await claude({
@@ -123,6 +138,7 @@ Rules:
                     properties: {
                         title: { type: "string" },
                         theme: { type: "string", enum: THEME_IDS },
+                        font: { type: "string", enum: FONTS, description: "One font for the whole reel." },
                         music: { type: "string", description: "Exact title of a track from the list, or 'none'." },
                         scenes: {
                             type: "array",
@@ -132,16 +148,31 @@ Rules:
                                     type: { type: "string", enum: ["text", "video"] },
                                     caption: { type: "string" },
                                     stock_query: { type: "string" },
+                                    emphasis: { type: "string", enum: ["small", "medium", "large", "xl"] },
+                                    text_color: { type: "string", description: "#RRGGBB hex, or omit for the default." },
                                     text_animation: { type: "string", enum: ["none", "fade", "fade_up", "slide_left", "slide_right"] },
                                     background_motion: { type: "string", enum: ["none", "zoom_in", "zoom_out", "pan_left", "pan_right"] },
-                                    emoji: { type: "string" },
+                                    elements: {
+                                        type: "array",
+                                        description: "Up to 2 accent graphics, placed away from the caption.",
+                                        items: {
+                                            type: "object",
+                                            properties: {
+                                                kind: { type: "string", enum: ["emoji", "icon"] },
+                                                value: { type: "string", description: "An emoji char, or a Lucide icon name from the allowed set." },
+                                                position: { type: "string", enum: ["top", "top_left", "top_right", "bottom", "bottom_left", "bottom_right"] },
+                                                animation: { type: "string", enum: ["pop", "fade", "bounce"] },
+                                            },
+                                            required: ["kind", "value", "position"],
+                                        },
+                                    },
                                     duration: { type: "number" },
                                 },
-                                required: ["type", "caption", "text_animation", "background_motion", "duration"],
+                                required: ["type", "caption", "emphasis", "text_animation", "background_motion", "duration"],
                             },
                         },
                     },
-                    required: ["title", "theme", "scenes"],
+                    required: ["title", "theme", "font", "scenes"],
                 },
             }],
             tool_choice: { type: "tool", name: "build_reel_plan" },
@@ -205,19 +236,32 @@ Rules:
         }
 
         // 5. Assemble the editable reel spec (scene shapes match src/lib/scenes.ts).
+        const fontFamily = FONTS.includes(plan.font) ? plan.font : "Montserrat-Bold.ttf";
         let elId = 0;
         const slides = scenes.map((s, i) => {
             const cands = candidatesByScene[i];
             const clip = cands?.[chosen[i] ?? 0];
-            const common = { text: s.caption || "", fontSize: 90, textColor: "", fontFamily: "Montserrat-Bold.ttf" };
+            const fontSize = EMPHASIS_SIZE[s.emphasis] || 92;
+            const textColor = typeof s.text_color === "string" && HEX_RE.test(s.text_color) ? s.text_color : "";
+            const common = { text: s.caption || "", fontSize, textColor, fontFamily };
             if (s.type === "video" && clip) {
                 const dur = Math.min(clip.duration || 6, Math.max(3, Number(s.duration) || 5));
                 return { kind: "video", videoUrl: clip.downloadUrl, trimStart: 0, trimEnd: dur, ...common };
             }
             // text scene (also the fallback when stock is unavailable)
-            const elements = s.emoji
-                ? [{ id: `ael_${elId++}`, type: "emoji", value: s.emoji, x: 0.5, y: 0.26, size: 150, animation: "pop" }]
-                : [];
+            const elements = (Array.isArray(s.elements) ? s.elements : []).slice(0, 2).map((el: any) => {
+                const isIcon = el.kind === "icon" && ICON_NAMES.includes(el.value);
+                if (el.kind === "icon" && !isIcon) return null; // drop hallucinated icon names
+                const [x, y] = POSITION_XY[el.position] || POSITION_XY.top;
+                return {
+                    id: `ael_${elId++}`,
+                    type: isIcon ? "icon" : "emoji",
+                    value: el.value,
+                    x, y, size: isIcon ? 120 : 140,
+                    color: isIcon ? (textColor || "#ffffff") : undefined,
+                    animation: ["pop", "fade", "bounce"].includes(el.animation) ? el.animation : "pop",
+                };
+            }).filter(Boolean);
             return {
                 kind: "text",
                 ...common,
