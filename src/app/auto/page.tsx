@@ -46,6 +46,19 @@ export default function AutoPage() {
             localStorage.setItem("reelforge_script", JSON.stringify({ title: data.title, slides: data.slides }));
             localStorage.setItem("reelforge_theme", data.theme || "dark");
 
+            // AI reels show the logo on every scene: if a logo exists but the
+            // per-slide logo is off, default it on (bottom-right). Persist so the
+            // Review flow (preview/export read the brand) shows it too.
+            let b: any = brand || {};
+            const slidePos = b.slideLogoPosition && b.slideLogoPosition !== "none"
+                ? b.slideLogoPosition
+                : (b.logoPreview ? "bottom_right" : "none");
+            if (b.logoPreview && slidePos !== b.slideLogoPosition) {
+                b = { ...b, slideLogoPosition: slidePos };
+                localStorage.setItem("reelforge_brand", JSON.stringify(b));
+                setBrand(b);
+            }
+
             // Merge the agent's music pick into the saved audio settings.
             let audio: any = {};
             try { audio = JSON.parse(localStorage.getItem("reelforge_audio") || "{}"); } catch { /* none */ }
@@ -63,22 +76,22 @@ export default function AutoPage() {
             setStatus("Rendering your reel…");
             const token = await getToken();
             const body = {
-                brand_name: brand?.brandName || data.title || "Brand",
+                brand_name: b.brandName || data.title || "Brand",
                 slides: data.slides,
                 theme: data.theme || "dark",
                 script_title: data.title,
-                watermark_opacity: brand?.watermarkOpacity ?? 18,
-                logo_position: brand?.logoPosition ?? "bottom_center",
-                logo_size: brand?.logoSize ?? 120,
-                slide_logo_position: brand?.slideLogoPosition ?? "none",
-                slide_logo_size: brand?.slideLogoSize ?? 44,
-                video_overlay: brand?.videoOverlay ?? false,
-                qr_code_url: brand?.qrCodePreview,
-                qr_text: brand?.qrCodeText ?? "",
-                logo_url: brand?.logoPreview,
-                watermark_url: brand?.watermarkPreview,
-                website_url: brand?.websiteUrl,
-                phone: brand?.phone,
+                watermark_opacity: b.watermarkOpacity ?? 18,
+                logo_position: b.logoPosition ?? "bottom_center",
+                logo_size: b.logoSize ?? 120,
+                slide_logo_position: slidePos,
+                slide_logo_size: b.slideLogoSize ?? 44,
+                video_overlay: b.videoOverlay ?? false,
+                qr_code_url: b.qrCodePreview,
+                qr_text: b.qrCodeText ?? "",
+                logo_url: b.logoPreview,
+                watermark_url: b.watermarkPreview,
+                website_url: b.websiteUrl,
+                phone: b.phone,
                 music_url: audio.musicPreview,
                 music_volume: audio.musicVolume !== undefined ? audio.musicVolume / 100 : 0.15,
                 music_start_time: audio.musicStartTime || 0,
