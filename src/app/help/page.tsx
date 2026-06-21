@@ -138,7 +138,7 @@ export default function HelpPage() {
                     <Section icon={<Palette className="w-5 h-5" />} title="3. Pick a theme & voice" accent="#a78bfa">
                         <p>Choose a color theme that sets the gradient, text and accent colors across the reel.</p>
                         <p className="flex items-center gap-2"><Mic className="w-4 h-4" style={{ color: "#2dd4bf" }} /> Pick an <strong style={{ color: "#cbd5e1" }}>AI voice</strong> to narrate the reel. The voice speaks each text scene, each video caption, and your final outro line.</p>
-                        <p className="flex items-center gap-2"><Music className="w-4 h-4" style={{ color: "#2dd4bf" }} /> Add <strong style={{ color: "#cbd5e1" }}>background music</strong> and set its volume — it’s mixed quietly under the voiceover.</p>
+                        <p className="flex items-center gap-2"><Music className="w-4 h-4" style={{ color: "#2dd4bf" }} /> Add <strong style={{ color: "#cbd5e1" }}>background music</strong> — pick a royalty-free track from the <strong style={{ color: "#cbd5e1" }}>music library</strong> or upload your own, then set its volume. It’s mixed quietly under the voiceover.</p>
                     </Section>
 
                     {/* Step 4 — Preview */}

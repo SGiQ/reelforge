@@ -59,6 +59,19 @@ export async function POST(req: NextRequest) {
         }
         const n = Math.max(3, Math.min(10, Number(slideCount) || 6));
 
+        // Load the music library so Claude can score the reel by mood.
+        let tracks: any[] = [];
+        try {
+            const api = process.env.NEXT_PUBLIC_API_URL;
+            if (api) {
+                const mr = await fetch(`${api}/music`);
+                if (mr.ok) tracks = await mr.json();
+            }
+        } catch { /* library is optional */ }
+        const musicList = tracks.length
+            ? `\n\nAVAILABLE MUSIC — pick the best fit by mood, or "none":\n${tracks.map((t) => `- "${t.title}" (${t.mood})`).join("\n")}`
+            : "";
+
         // 1. Optional brand research (same pattern as the script generator).
         let research = "";
         if (websiteUrl && process.env.PERPLEXITY_API_KEY) {
@@ -94,7 +107,8 @@ Rules:
 - Optionally add a single relevant "emoji" to a scene for emphasis.
 - "duration" is seconds on screen (2.5-5).
 - Pick a "theme" that matches the mood.
-- Do NOT fabricate statistics, prices, or medical/clinical claims. Keep claims emotional and truthful.${research}`;
+- Set "music" to the EXACT title of the best-fitting track from the list below, or "none".
+- Do NOT fabricate statistics, prices, or medical/clinical claims. Keep claims emotional and truthful.${musicList}${research}`;
 
         const planResp = await claude({
             model: MODEL,
@@ -109,6 +123,7 @@ Rules:
                     properties: {
                         title: { type: "string" },
                         theme: { type: "string", enum: THEME_IDS },
+                        music: { type: "string", description: "Exact title of a track from the list, or 'none'." },
                         scenes: {
                             type: "array",
                             items: {
@@ -213,10 +228,16 @@ Rules:
             };
         });
 
+        const pickedTrack = plan.music && plan.music !== "none"
+            ? tracks.find((t) => t.title === plan.music)
+            : null;
+
         return NextResponse.json({
             title: plan.title || "AI Reel",
             theme: THEME_IDS.includes(plan.theme) ? plan.theme : "dark",
             slides,
+            music_url: pickedTrack?.url || null,
+            music_title: pickedTrack?.title || null,
         });
     } catch (e: any) {
         if (e?.message === "NO_ANTHROPIC_KEY") {

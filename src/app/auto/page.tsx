@@ -46,6 +46,14 @@ export default function AutoPage() {
             localStorage.setItem("reelforge_script", JSON.stringify({ title: data.title, slides: data.slides }));
             localStorage.setItem("reelforge_theme", data.theme || "dark");
 
+            // Merge the agent's music pick into the saved audio settings.
+            let audio: any = {};
+            try { audio = JSON.parse(localStorage.getItem("reelforge_audio") || "{}"); } catch { /* none */ }
+            if (data.music_url) {
+                audio = { ...audio, musicPreview: data.music_url, musicVolume: audio.musicVolume ?? 15, musicStartTime: audio.musicStartTime ?? 0 };
+                localStorage.setItem("reelforge_audio", JSON.stringify(audio));
+            }
+
             if (!autopilot) {
                 router.push("/preview");
                 return;
@@ -54,8 +62,6 @@ export default function AutoPage() {
             // Autopilot — render immediately, then send to the dashboard.
             setStatus("Rendering your reel…");
             const token = await getToken();
-            let audio: any = {};
-            try { audio = JSON.parse(localStorage.getItem("reelforge_audio") || "{}"); } catch { /* none */ }
             const body = {
                 brand_name: brand?.brandName || data.title || "Brand",
                 slides: data.slides,

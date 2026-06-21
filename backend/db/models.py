@@ -55,6 +55,20 @@ class Script(Base):
     render_jobs: Mapped[list["RenderJob"]] = relationship("RenderJob", back_populates="script")
 
 
+class MusicTrack(Base):
+    """A royalty-free background track in the shared music library. Tracks are
+    uploaded by an admin (stored on Vercel Blob) and can be picked manually in
+    the audio step or chosen automatically by the AI Director."""
+    __tablename__ = "music_tracks"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    mood: Mapped[str] = mapped_column(String(60), default="upbeat")  # upbeat | calm | emotional | cinematic | corporate
+    url: Mapped[str] = mapped_column(Text, nullable=False)
+    duration: Mapped[float] = mapped_column(default=0.0)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
 class RenderJob(Base):
     __tablename__ = "render_jobs"
 

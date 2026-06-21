@@ -8,7 +8,7 @@ from sqlalchemy import text
 from config import settings
 from db.database import engine
 from db.models import Base
-from routes import brands, scripts, render, tts, webhooks, auth, community, admin
+from routes import brands, scripts, render, tts, webhooks, auth, community, admin, music
 
 
 # Lightweight, idempotent column adds for tables that already exist.
@@ -81,6 +81,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(community.router)
 app.include_router(admin.router)
+app.include_router(music.router)
 app.include_router(brands.router)
 app.include_router(scripts.router)
 app.include_router(render.router)

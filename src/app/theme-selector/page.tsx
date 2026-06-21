@@ -7,6 +7,9 @@ import ThemeCard, { THEMES } from "@/components/ThemeCard";
 import UploadZone from "@/components/UploadZone";
 import AudioScrubber from "@/components/AudioScrubber";
 import { upload } from '@vercel/blob/client';
+import { API_BASE } from "@/lib/auth";
+
+interface LibTrack { id: string; title: string; mood: string; url: string; duration: number; }
 
 // 6 Female and 6 Male voices from ElevenLabs
 const AI_VOICES = [
@@ -35,6 +38,11 @@ export default function ThemeSelectorPage() {
     const [musicStartTime, setMusicStartTime] = useState<number>(0);
     const [aiVoice, setAiVoice] = useState<string>("");
     const [saving, setSaving] = useState(false);
+    const [library, setLibrary] = useState<LibTrack[]>([]);
+
+    useEffect(() => {
+        fetch(`${API_BASE}/music`).then((r) => r.ok ? r.json() : []).then(setLibrary).catch(() => setLibrary([]));
+    }, []);
 
     useEffect(() => {
         const savedTheme = localStorage.getItem("reelforge_theme");
@@ -119,6 +127,28 @@ export default function ThemeSelectorPage() {
                     </p>
 
                     <div className="space-y-6">
+                        {/* Music library */}
+                        {library.length > 0 && (
+                            <div className="glass-card rounded-2xl p-6">
+                                <label className="block text-sm font-medium mb-1.5" style={{ color: "#a78bfa" }}>Music Library</label>
+                                <p className="text-sm mb-4" style={{ color: "#94a3b8" }}>Pick a royalty-free track — or upload your own below.</p>
+                                <div className="grid sm:grid-cols-2 gap-2">
+                                    {library.map((t) => {
+                                        const active = musicPreview === t.url;
+                                        return (
+                                            <button key={t.id} type="button"
+                                                onClick={() => { setMusicFile(null); setMusicPreview(active ? null : t.url); }}
+                                                className="flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-left transition-colors"
+                                                style={{ background: active ? "rgba(124,58,237,0.16)" : "rgba(26,26,46,0.6)", border: `1px solid ${active ? "rgba(124,58,237,0.5)" : "rgba(45,45,74,0.6)"}` }}>
+                                                <span className="text-sm font-medium truncate" style={{ color: "#e2e8f0" }}>{t.title}</span>
+                                                <span className="text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded" style={{ background: "rgba(45,212,191,0.15)", color: "#2dd4bf" }}>{t.mood}</span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
                         <div className="glass-card rounded-2xl p-6">
                             <UploadZone
                                 label="Background Music"

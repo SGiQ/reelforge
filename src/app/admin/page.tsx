@@ -1,18 +1,25 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Shield, Trash2, EyeOff, RefreshCw, Film, Users } from "lucide-react";
+import { Shield, Trash2, EyeOff, RefreshCw, Film, Users, Music, Upload } from "lucide-react";
+import { upload } from "@vercel/blob/client";
 import Navbar from "@/components/Navbar";
 import { API_BASE, authHeaders, getToken, isAdmin } from "@/lib/auth";
+
+const MOODS = ["upbeat", "calm", "emotional", "cinematic", "corporate"];
 
 export default function AdminPage() {
     const router = useRouter();
     const [ready, setReady] = useState(false);
-    const [tab, setTab] = useState<"reels" | "users">("reels");
+    const [tab, setTab] = useState<"reels" | "users" | "music">("reels");
     const [reels, setReels] = useState<any[]>([]);
     const [users, setUsers] = useState<any[]>([]);
+    const [tracks, setTracks] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [newTitle, setNewTitle] = useState("");
+    const [newMood, setNewMood] = useState("upbeat");
+    const [uploading, setUploading] = useState(false);
 
     // Gate: must be signed in AND an admin.
     useEffect(() => {
@@ -24,16 +31,43 @@ export default function AdminPage() {
     const load = useCallback(async () => {
         setLoading(true); setError(null);
         try {
-            const [r, u] = await Promise.all([
+            const [r, u, m] = await Promise.all([
                 fetch(`${API_BASE}/admin/reels`, { headers: authHeaders() }),
                 fetch(`${API_BASE}/admin/users`, { headers: authHeaders() }),
+                fetch(`${API_BASE}/music`),
             ]);
             if (r.status === 403 || u.status === 403) throw new Error("Admin access required.");
             if (!r.ok || !u.ok) throw new Error("Failed to load admin data.");
             setReels(await r.json());
             setUsers(await u.json());
+            if (m.ok) setTracks(await m.json());
         } catch (e: any) { setError(e.message); } finally { setLoading(false); }
     }, []);
+
+    const addTrack = async (file: File) => {
+        setUploading(true);
+        try {
+            const blob = await upload(file.name, file, {
+                access: "public",
+                handleUploadUrl: `${window.location.origin}/api/upload`,
+                clientPayload: "audio-upload",
+            });
+            const dur = await new Promise<number>((resolve) => {
+                const a = new Audio();
+                a.onloadedmetadata = () => resolve(a.duration || 0);
+                a.onerror = () => resolve(0);
+                a.src = blob.url;
+            });
+            const res = await fetch(`${API_BASE}/music`, {
+                method: "POST",
+                headers: { ...authHeaders(), "Content-Type": "application/json" },
+                body: JSON.stringify({ title: newTitle.trim() || file.name.replace(/\.[^.]+$/, ""), mood: newMood, url: blob.url, duration: dur }),
+            });
+            if (!res.ok) throw new Error(await res.text());
+            setNewTitle("");
+            load();
+        } catch (e: any) { alert(`Upload failed: ${e.message}`); } finally { setUploading(false); }
+    };
 
     useEffect(() => { if (ready) load(); }, [ready, load]);
 
@@ -78,12 +112,12 @@ export default function AdminPage() {
                 </div>
 
                 <div className="flex gap-2 mb-6">
-                    {(["reels", "users"] as const).map((t) => (
+                    {(["reels", "users", "music"] as const).map((t) => (
                         <button key={t} onClick={() => setTab(t)}
                             className="px-4 py-2 rounded-full text-sm font-medium capitalize transition-colors"
                             style={tab === t ? { background: "#7c3aed", color: "#fff" } : { background: "rgba(36,36,56,0.8)", color: "#94a3b8" }}>
-                            {t === "reels" ? <Film className="w-4 h-4 inline mr-1" /> : <Users className="w-4 h-4 inline mr-1" />}
-                            {t} ({t === "reels" ? reels.length : users.length})
+                            {t === "reels" ? <Film className="w-4 h-4 inline mr-1" /> : t === "users" ? <Users className="w-4 h-4 inline mr-1" /> : <Music className="w-4 h-4 inline mr-1" />}
+                            {t} ({t === "reels" ? reels.length : t === "users" ? users.length : tracks.length})
                         </button>
                     ))}
                 </div>
@@ -101,7 +135,47 @@ export default function AdminPage() {
                     </div>
                 )}
 
-                {tab === "reels" ? (
+                {tab === "music" ? (
+                    <div className="space-y-4">
+                        <div className="glass-card rounded-xl p-4">
+                            <p className="text-sm font-semibold mb-1" style={{ color: "#f8fafc" }}>Add a track</p>
+                            <p className="text-xs mb-3" style={{ color: "#64748b" }}>
+                                Upload a royalty-free MP3/WAV you have the rights to (e.g. from the YouTube Audio Library or Pixabay).
+                                It's stored on Blob and becomes available to everyone — and to the AI Director.
+                            </p>
+                            <div className="flex flex-wrap items-center gap-2">
+                                <input value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="Track title (optional)"
+                                    className="input-field text-sm py-2 flex-1 min-w-[160px]" />
+                                <select value={newMood} onChange={(e) => setNewMood(e.target.value)}
+                                    className="input-field text-sm py-2 capitalize" style={{ width: 140 }}>
+                                    {MOODS.map((m) => <option key={m} value={m}>{m}</option>)}
+                                </select>
+                                <label className="btn-primary px-4 py-2 text-sm cursor-pointer inline-flex items-center gap-1.5">
+                                    <Upload className="w-4 h-4" /> {uploading ? "Uploading…" : "Upload"}
+                                    <input type="file" accept="audio/*" className="hidden" disabled={uploading}
+                                        onChange={(e) => { const f = e.target.files?.[0]; if (f) addTrack(f); e.currentTarget.value = ""; }} />
+                                </label>
+                            </div>
+                        </div>
+                        <div className="space-y-2">
+                            {tracks.map((t) => (
+                                <div key={t.id} className="glass-card rounded-xl p-4 flex items-center gap-4">
+                                    <Music className="w-4 h-4 flex-shrink-0" style={{ color: "#a78bfa" }} />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="font-semibold text-sm truncate" style={{ color: "#f8fafc" }}>{t.title}</p>
+                                        <p className="text-xs" style={{ color: "#94a3b8" }}>
+                                            <span className="capitalize">{t.mood}</span>{t.duration ? ` · ${Math.round(t.duration)}s` : ""}
+                                        </p>
+                                    </div>
+                                    <audio src={t.url} controls preload="none" style={{ height: 32 }} />
+                                    <button onClick={() => act("DELETE", `/music/${t.id}`, "Delete this track?")} title="Delete track"
+                                        className="p-2 rounded-lg hover:bg-red-500/10 text-red-400"><Trash2 className="w-4 h-4" /></button>
+                                </div>
+                            ))}
+                            {!loading && tracks.length === 0 && <p className="text-sm" style={{ color: "#64748b" }}>No tracks yet — upload one above.</p>}
+                        </div>
+                    </div>
+                ) : tab === "reels" ? (
                     <div className="space-y-2">
                         {reels.map((r) => (
                             <div key={r.id} className="glass-card rounded-xl p-4 flex items-center gap-4">
