@@ -4,6 +4,7 @@ import {
     Image as ImageIcon, Film, Type, Video, Search, Scissors, ArrowUpDown,
     Palette, Eye, Download, Mic, Music, QrCode, LayoutDashboard, Play,
     Sparkles, ArrowRight, Clapperboard, MessageSquareText,
+    Wand2, Clock, Move, Smile, Shapes, ZoomIn, Blend,
 } from "lucide-react";
 
 export const metadata = {
@@ -13,7 +14,7 @@ export const metadata = {
 
 const STEPS = [
     { n: 1, label: "Brand", color: "#a78bfa", desc: "Logo, watermark & QR" },
-    { n: 2, label: "Scenes", color: "#2dd4bf", desc: "Text + video clips" },
+    { n: 2, label: "Scenes", color: "#2dd4bf", desc: "Text, image & video" },
     { n: 3, label: "Theme", color: "#a78bfa", desc: "Colors & voice" },
     { n: 4, label: "Preview", color: "#2dd4bf", desc: "Watch it animate" },
     { n: 5, label: "Export", color: "#a78bfa", desc: "Render your MP4" },
@@ -49,8 +50,9 @@ export default function HelpPage() {
                     </p>
                     <h1 className="section-title">How ReelForge works</h1>
                     <p className="section-subtitle">
-                        Build branded 1080×1920 reels in five steps. Mix text slides and video clips,
-                        add captions and an AI voiceover, then export a ready-to-post MP4.
+                        Build branded 1080×1920 reels in five steps. Mix text, image and video scenes,
+                        animate them with motion, icons and emoji, add captions and an AI voiceover,
+                        then export a ready-to-post MP4.
                     </p>
                 </div>
 
@@ -83,10 +85,14 @@ export default function HelpPage() {
                     {/* Step 2 — Scenes */}
                     <Section icon={<Clapperboard className="w-5 h-5" />} title="2. Build your scenes" accent="#2dd4bf">
                         <p>A reel is an ordered list of <strong style={{ color: "#cbd5e1" }}>scenes</strong>. You can mix two kinds:</p>
-                        <div className="grid sm:grid-cols-2 gap-3 my-2">
+                        <div className="grid sm:grid-cols-3 gap-3 my-2">
                             <div className="rounded-xl p-3" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}>
                                 <div className="flex items-center gap-2 font-semibold mb-1" style={{ color: "#a78bfa" }}><Type className="w-4 h-4" /> Text scene</div>
                                 <p className="text-xs">A styled text slide — choose the font, size and color. Great for hooks and key messages.</p>
+                            </div>
+                            <div className="rounded-xl p-3" style={{ background: "rgba(56,189,248,0.08)", border: "1px solid rgba(56,189,248,0.25)" }}>
+                                <div className="flex items-center gap-2 font-semibold mb-1" style={{ color: "#38bdf8" }}><ImageIcon className="w-4 h-4" /> Image scene</div>
+                                <p className="text-xs">A still photo background with an optional caption over it. Upload your own image.</p>
                             </div>
                             <div className="rounded-xl p-3" style={{ background: "rgba(13,148,136,0.08)", border: "1px solid rgba(45,212,191,0.25)" }}>
                                 <div className="flex items-center gap-2 font-semibold mb-1" style={{ color: "#2dd4bf" }}><Video className="w-4 h-4" /> Video scene</div>
@@ -102,6 +108,30 @@ export default function HelpPage() {
                         </ul>
                         <p className="flex items-center gap-2 pt-1"><Sparkles className="w-4 h-4" style={{ color: "#a78bfa" }} /> In a hurry? Use <strong style={{ color: "#cbd5e1" }}>Generate Script with AI</strong> to draft your text scenes from a prompt.</p>
                         <p className="flex items-center gap-2"><Mic className="w-4 h-4" style={{ color: "#64748b" }} /> The <strong style={{ color: "#cbd5e1" }}>Final Logo Slide</strong> field lets you set a closing line the voiceover says over your logo (it isn’t shown on screen).</p>
+                    </Section>
+
+                    {/* Motion & animation */}
+                    <Section icon={<Wand2 className="w-5 h-5" />} title="Bring scenes to life — motion & animation" accent="#2dd4bf">
+                        <p>Every <strong style={{ color: "#cbd5e1" }}>text</strong> and <strong style={{ color: "#cbd5e1" }}>image</strong> scene has motion controls right under its caption:</p>
+                        <ul className="list-disc pl-5 space-y-1">
+                            <li className="flex items-start gap-2"><Clock className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "#2dd4bf" }} /><span><strong style={{ color: "#cbd5e1" }}>Hold</strong> — how many seconds the scene stays on screen before the next one. Leave it blank for auto (it matches the voiceover length, and never cuts a longer one off).</span></li>
+                            <li className="flex items-start gap-2"><ZoomIn className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "#2dd4bf" }} /><span><strong style={{ color: "#cbd5e1" }}>Background</strong> — a slow Ken-Burns move on the scene: <em>Zoom in</em>, <em>Zoom out</em>, or <em>Pan</em> left/right.</span></li>
+                            <li className="flex items-start gap-2"><Type className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "#2dd4bf" }} /><span><strong style={{ color: "#cbd5e1" }}>Text in</strong> — how the caption appears: <em>Fade</em>, <em>Fade up</em>, or <em>Slide</em> in from a side.</span></li>
+                        </ul>
+
+                        <p className="font-semibold pt-2" style={{ color: "#cbd5e1" }}>Add icons, emoji & stickers</p>
+                        <p>Each text/image scene has a small <strong style={{ color: "#cbd5e1" }}>9:16 canvas</strong>. Add elements, then <strong style={{ color: "#cbd5e1" }}>drag them anywhere</strong> on the scene:</p>
+                        <ul className="list-disc pl-5 space-y-1">
+                            <li className="flex items-start gap-2"><Shapes className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "#a78bfa" }} /><span><strong style={{ color: "#cbd5e1" }}>Icon</strong> — search a built-in icon set (hearts, stars, arrows, check marks…) and tint it any color.</span></li>
+                            <li className="flex items-start gap-2"><Smile className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "#fbbf24" }} /><span><strong style={{ color: "#cbd5e1" }}>Emoji</strong> — pick from a sticker grid (🔥 ✨ 💯 🎉 …).</span></li>
+                            <li className="flex items-start gap-2"><ImageIcon className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "#2dd4bf" }} /><span><strong style={{ color: "#cbd5e1" }}>Upload</strong> — drop in your own PNG/SVG graphic or sticker.</span></li>
+                            <li className="flex items-start gap-2"><Move className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "#cbd5e1" }} /><span>Tap an element to set its <strong style={{ color: "#cbd5e1" }}>size</strong>, its <strong style={{ color: "#cbd5e1" }}>motion</strong> (<em>Pop</em>, <em>Fade</em>, or <em>Bounce</em> in), and — for icons — its <strong style={{ color: "#cbd5e1" }}>color</strong>.</span></li>
+                        </ul>
+
+                        <p className="flex items-center gap-2 pt-1"><Blend className="w-4 h-4" style={{ color: "#a78bfa" }} /> Scenes <strong style={{ color: "#cbd5e1" }}>crossfade</strong> into each other automatically for a smooth flow.</p>
+                        <p className="rounded-lg px-3 py-2 mt-1 text-xs" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)", color: "#cbd5e1" }}>
+                            <strong>Tip:</strong> per scene, use <em>Background</em> zoom/pan <em>or</em> placed elements — when a scene has icons/emoji on it, its background stays still so the elements animate crisply.
+                        </p>
                     </Section>
 
                     {/* Step 3 — Theme & voice */}
@@ -138,7 +168,7 @@ export default function HelpPage() {
                             <li>Up to <strong style={{ color: "#cbd5e1" }}>15 scenes</strong> per reel; captions are best kept under ~150 characters.</li>
                             <li>A scene with a voiceover longer than its clip automatically extends so nothing gets cut off.</li>
                             <li>Video scenes use the <strong style={{ color: "#cbd5e1" }}>AI voiceover</strong>, not the clip’s original sound.</li>
-                            <li>Video reels take a little longer to render than text-only ones — that’s normal.</li>
+                            <li>Video reels — and scenes with animated icons/emoji — take a little longer to render than plain text-only ones. That’s normal.</li>
                         </ul>
                     </Section>
                 </div>
