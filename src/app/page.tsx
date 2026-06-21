@@ -31,6 +31,7 @@ export default function HomePage() {
                     </div>
                     <div className="flex items-center gap-3">
                         <Link href="/dashboard" className="text-sm font-medium" style={{ color: "#94a3b8" }}>Dashboard</Link>
+                        <Link href="/auto" className="text-sm font-semibold" style={{ color: "#a78bfa" }}>✨ AI Director</Link>
                         <Link href="/brand-setup" className="btn-primary py-2 px-4 text-sm">Create New Reel</Link>
                     </div>
                 </div>

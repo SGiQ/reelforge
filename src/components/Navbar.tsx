@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Zap, User, LogOut, Shield } from "lucide-react";
+import { Zap, User, LogOut, Shield, Wand2 } from "lucide-react";
 import { clearAuth, isAdmin } from "@/lib/auth";
 
 
@@ -84,6 +84,9 @@ export default function Navbar({ currentStep }: NavbarProps) {
                             <Shield className="w-4 h-4" /> Admin
                         </Link>
                     )}
+                    <Link href="/auto" className="hidden sm:flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer" style={{ color: "#a78bfa" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#a78bfa"}>
+                        <Wand2 className="w-4 h-4" /> AI Director
+                    </Link>
                     <Link href="/community" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
                         Community
                     </Link>
