@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Settings2, Trash2, Plus, Video, Film, ChevronUp, ChevronDown, Type, Scissors, Search, Image as ImageIcon, Clock, Sparkles as SparklesIcon } from "lucide-react";
+import { ArrowRight, Settings2, Trash2, Plus, Video, Film, ChevronUp, ChevronDown, Type, Scissors, Search, Image as ImageIcon, Clock, Sparkles as SparklesIcon, Eye, X } from "lucide-react";
 import { upload } from "@vercel/blob/client";
 import Navbar from "@/components/Navbar";
 import StockSearch, { StockClip } from "@/components/StockSearch";
@@ -61,6 +61,7 @@ export default function ScriptPickerPage() {
 
     // Live-preview context (theme/brand/voice from earlier steps).
     const [pv, setPv] = useState<{ theme: string; brand: any; voiceId: string | null }>({ theme: "dark", brand: {}, voiceId: null });
+    const [showMobilePreview, setShowMobilePreview] = useState(false);
     useEffect(() => {
         try {
             const theme = localStorage.getItem("reelforge_theme") || "dark";
@@ -309,6 +310,32 @@ export default function ScriptPickerPage() {
                     {TEXT_ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[#1a1a2e] text-white">{a.label}</option>)}
                 </select>
             </div>
+        </div>
+    );
+
+    // Shared live-preview node (used in the desktop pane and the mobile overlay).
+    const previewNode = scenes.some(isRenderableScene) ? (
+        <ReelPreview
+            slides={scenes.filter(isRenderableScene) as any}
+            themeId={pv.theme}
+            brandName={pv.brand?.brandName}
+            phone={pv.brand?.phone ?? ""}
+            watermarkUrl={pv.brand?.watermarkPreview}
+            logoUrl={pv.brand?.logoPreview}
+            watermarkOpacity={pv.brand?.watermarkOpacity ?? 18}
+            logoSize={pv.brand?.logoSize ?? 120}
+            logoPosition={pv.brand?.logoPosition ?? "bottom_center"}
+            slideLogoPosition={pv.brand?.slideLogoPosition ?? "none"}
+            slideLogoSize={pv.brand?.slideLogoSize ?? 44}
+            videoOverlay={pv.brand?.videoOverlay ?? false}
+            qrCodeUrl={pv.brand?.qrCodePreview ?? null}
+            qrText={pv.brand?.qrCodeText ?? ""}
+            autoPlay={true}
+            voiceId={null}
+        />
+    ) : (
+        <div className="flex items-center justify-center text-center px-4" style={{ width: 270, height: 480, background: "#0f0f1a", color: "#475569", fontSize: 12 }}>
+            Add a scene to see it here
         </div>
     );
 
@@ -657,30 +684,7 @@ export default function ScriptPickerPage() {
                             <span className="w-2 h-2 rounded-full inline-block" style={{ background: "#34d399" }} /> Live preview
                         </p>
                         <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgba(45,45,74,0.6)" }}>
-                            {scenes.some(isRenderableScene) ? (
-                                <ReelPreview
-                                    slides={scenes.filter(isRenderableScene) as any}
-                                    themeId={pv.theme}
-                                    brandName={pv.brand?.brandName}
-                                    phone={pv.brand?.phone ?? ""}
-                                    watermarkUrl={pv.brand?.watermarkPreview}
-                                    logoUrl={pv.brand?.logoPreview}
-                                    watermarkOpacity={pv.brand?.watermarkOpacity ?? 18}
-                                    logoSize={pv.brand?.logoSize ?? 120}
-                                    logoPosition={pv.brand?.logoPosition ?? "bottom_center"}
-                                    slideLogoPosition={pv.brand?.slideLogoPosition ?? "none"}
-                                    slideLogoSize={pv.brand?.slideLogoSize ?? 44}
-                                    videoOverlay={pv.brand?.videoOverlay ?? false}
-                                    qrCodeUrl={pv.brand?.qrCodePreview ?? null}
-                                    qrText={pv.brand?.qrCodeText ?? ""}
-                                    autoPlay={true}
-                                    voiceId={null}
-                                />
-                            ) : (
-                                <div className="flex items-center justify-center text-center px-4" style={{ width: 270, height: 480, background: "#0f0f1a", color: "#475569", fontSize: 12 }}>
-                                    Add a scene to see it here
-                                </div>
-                            )}
+                            {previewNode}
                         </div>
                         <p className="text-[11px] mt-2 leading-relaxed" style={{ color: "#64748b" }}>
                             Plays silently as you edit. Full preview with voiceover is the next step.
@@ -689,6 +693,29 @@ export default function ScriptPickerPage() {
                 </div>
               </div>
             </main>
+
+            {/* Mobile: floating Preview button + overlay */}
+            <button
+                onClick={() => setShowMobilePreview(true)}
+                className="lg:hidden fixed bottom-5 right-5 z-40 btn-primary rounded-full shadow-lg px-5 py-3 text-sm inline-flex items-center gap-2"
+            >
+                <Eye className="w-4 h-4" /> Preview
+            </button>
+            {showMobilePreview && (
+                <div className="lg:hidden fixed inset-0 z-50 flex flex-col items-center justify-center p-4" style={{ background: "rgba(8,8,16,0.92)" }}
+                    onClick={() => setShowMobilePreview(false)}>
+                    <button onClick={() => setShowMobilePreview(false)} className="absolute top-4 right-4 p-2 rounded-full" style={{ background: "rgba(255,255,255,0.08)", color: "#f8fafc" }}>
+                        <X className="w-5 h-5" />
+                    </button>
+                    <p className="text-xs font-semibold mb-3 flex items-center gap-1.5" style={{ color: "#94a3b8" }}>
+                        <span className="w-2 h-2 rounded-full inline-block" style={{ background: "#34d399" }} /> Live preview
+                    </p>
+                    <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgba(45,45,74,0.6)" }} onClick={(e) => e.stopPropagation()}>
+                        {previewNode}
+                    </div>
+                    <p className="text-[11px] mt-3 text-center" style={{ color: "#64748b" }}>Tap outside to close · plays silently</p>
+                </div>
+            )}
         </div>
     );
 }
