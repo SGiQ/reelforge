@@ -695,6 +695,40 @@ def _build_text_anim_segment(ffmpeg_bin: str, bg_png: str, text_png: str, text_a
     _ff_run(cmd)
 
 
+def _build_capture_segment(ffmpeg_bin: str, frame_paths: list[str], fps: int, intro_sec: float,
+                           duration: float, tts_path: str | None, out_path: str, tmpdir: str) -> None:
+    """Assemble a captured animation: the intro frames play at `fps`, then the
+    final frame holds for the rest of `duration`. With TTS or silent audio."""
+    has_tts = bool(tts_path and os.path.exists(tts_path))
+    per = 1.0 / fps
+    hold = max(0.1, duration - intro_sec)
+    list_path = os.path.join(tmpdir, f"cap_{os.path.basename(out_path)}.txt")
+    lines = []
+    for fp in frame_paths[:-1]:
+        lines.append(f"file '{fp}'")
+        lines.append(f"duration {per:.5f}")
+    last = frame_paths[-1]
+    lines.append(f"file '{last}'")
+    lines.append(f"duration {hold:.5f}")
+    lines.append(f"file '{last}'")  # concat demuxer needs the last file repeated
+    with open(list_path, "w") as f:
+        f.write("\n".join(lines) + "\n")
+
+    cmd = [ffmpeg_bin, "-y", "-f", "concat", "-safe", "0", "-i", list_path]
+    if has_tts:
+        cmd += ["-i", tts_path]
+        fc = f"[0:v]fps={fps},{_VPAD},format=yuv420p[v];[1:a]apad[a]"
+        amap = "[a]"
+    else:
+        cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo"]
+        fc = f"[0:v]fps={fps},{_VPAD},format=yuv420p[v]"
+        amap = "1:a"
+    cmd += ["-filter_complex", fc, "-map", "[v]", "-map", amap, "-t", str(duration),
+            "-c:v", "libx264", "-preset", "fast", "-crf", "23", "-pix_fmt", "yuv420p", "-r", str(fps),
+            "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-ac", "2", out_path]
+    _ff_run(cmd)
+
+
 def _concat_with_xfade(ffmpeg_bin: str, segment_paths: list[str], durations: list[float],
                        out_path: str, d: float = 0.4) -> None:
     """Concatenate scene segments with a crossfade (video xfade + audio acrossfade)
@@ -855,6 +889,22 @@ class RenderEngine:
                     page.wait_for_selector("[data-ready='true']", timeout=10000)
                     page.screenshot(path=out_png, omit_background=transparent)
 
+                def _capture_anim(url: str, out_dir: str, intro_sec: float, fps: int) -> list[str]:
+                    """Load the scene once, then step the paused animation timeline and
+                    screenshot each intro frame (fast — one navigation, many shots)."""
+                    page.goto(url, wait_until="networkidle", timeout=30000)
+                    page.wait_for_selector("[data-ready='true']", timeout=10000)
+                    n = max(1, int(round(intro_sec * fps)))
+                    intro_ms = int(intro_sec * 1000)
+                    paths = []
+                    for k in range(n + 1):
+                        t_ms = min(intro_ms, int(round(k * 1000.0 / fps)))
+                        page.evaluate("(t) => window.__setAnimTime && window.__setAnimTime(t)", t_ms)
+                        fp = os.path.join(out_dir, f"af_{k:05d}.png")
+                        page.screenshot(path=fp)
+                        paths.append(fp)
+                    return paths
+
                 def _tts(text: str, idx: int):
                     if not (ai_voice_id and settings.ELEVENLABS_API_KEY and text and text.strip()):
                         return None, 0.0
@@ -903,8 +953,24 @@ class RenderEngine:
 
                         text_anim = slide.get("text_animation") or "none"
                         caption = (slide.get("text") or "").strip()
+                        elements = slide.get("elements") or []
+                        has_elem = isinstance(elements, list) and len(elements) > 0
                         built = False
-                        if text_anim != "none" and caption:
+
+                        # Scenes with placed elements (icons/emoji/uploads) animate via
+                        # frame-by-frame capture, which also covers the text animation.
+                        if has_elem:
+                            try:
+                                intro = 0.9
+                                framedir = os.path.join(tmpdir, f"capframes_{i:04d}")
+                                os.makedirs(framedir, exist_ok=True)
+                                frames = _capture_anim(f"{FRONTEND}/render-slide/{job_id}/{i}?anim=capture", framedir, intro, FPS)
+                                _build_capture_segment(ffmpeg_bin, frames, FPS, intro, duration, tts_path, seg_path, tmpdir)
+                                built = True
+                            except Exception as e:
+                                print(f"Element capture failed for scene {i} ({e}); falling back.")
+
+                        if not built and text_anim != "none" and caption:
                             try:
                                 bg_png = os.path.join(tmpdir, f"bg_{i:04d}.png")
                                 txt_png = os.path.join(tmpdir, f"txt_{i:04d}.png")

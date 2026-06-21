@@ -6,7 +6,8 @@ import { upload } from "@vercel/blob/client";
 import Navbar from "@/components/Navbar";
 import StockSearch, { StockClip } from "@/components/StockSearch";
 import TrimPreview from "@/components/TrimPreview";
-import { Scene, VideoScene, ImageScene, DEFAULT_SCENE_STYLE, isVideoScene, isImageScene, toScene, isRenderableScene } from "@/lib/scenes";
+import SceneElementsEditor from "@/components/SceneElementsEditor";
+import { Scene, VideoScene, ImageScene, SceneElement, DEFAULT_SCENE_STYLE, isVideoScene, isImageScene, toScene, isRenderableScene } from "@/lib/scenes";
 
 const FONT_OPTIONS = [
     { label: "Inter (Sans)", value: "DejaVuSans-Bold.ttf" },
@@ -535,6 +536,11 @@ export default function ScriptPickerPage() {
                                                                 />
                                                                 {scene.text.trim() && styleControls(index, scene)}
                                                                 {motionControls(index, scene)}
+                                                                <SceneElementsEditor
+                                                                    elements={((scene as any).elements as SceneElement[]) || []}
+                                                                    onChange={(els) => updateScene(index, { elements: els } as any)}
+                                                                    bgImage={(scene as any).imageUrl}
+                                                                />
                                                             </>
                                                         )}
                                                     </div>
@@ -548,6 +554,10 @@ export default function ScriptPickerPage() {
                                                         />
                                                         {styleControls(index, scene)}
                                                         {motionControls(index, scene)}
+                                                        <SceneElementsEditor
+                                                            elements={((scene as any).elements as SceneElement[]) || []}
+                                                            onChange={(els) => updateScene(index, { elements: els } as any)}
+                                                        />
                                                     </>
                                                 )}
                                             </div>

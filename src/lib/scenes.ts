@@ -8,6 +8,36 @@ export type SceneAnimation = "none" | "zoom_in" | "zoom_out" | "pan_right" | "pa
 // How the caption text animates onto the scene.
 export type TextAnimation = "none" | "fade" | "fade_up" | "slide_left" | "slide_right";
 
+// A placed graphic element (icon / emoji / uploaded image) on a still scene.
+export type ElementType = "icon" | "emoji" | "image";
+export type ElementAnimation = "none" | "pop" | "fade" | "bounce";
+export interface SceneElement {
+    id: string;
+    type: ElementType;
+    value: string;          // lucide icon name | emoji char | image URL
+    x: number;              // 0..1 normalized center position
+    y: number;              // 0..1 normalized center position
+    size: number;           // px in the 1080-wide frame
+    color?: string;         // icon tint (icon type only)
+    animation: ElementAnimation;
+}
+
+export function sanitizeElements(raw: any): SceneElement[] {
+    if (!Array.isArray(raw)) return [];
+    return raw
+        .filter((e) => e && typeof e === "object" && e.value)
+        .map((e, i) => ({
+            id: typeof e.id === "string" ? e.id : `el_${i}_${e.value}`,
+            type: (["icon", "emoji", "image"].includes(e.type) ? e.type : "emoji") as ElementType,
+            value: String(e.value),
+            x: typeof e.x === "number" ? Math.min(1, Math.max(0, e.x)) : 0.5,
+            y: typeof e.y === "number" ? Math.min(1, Math.max(0, e.y)) : 0.5,
+            size: typeof e.size === "number" ? Math.max(24, Math.min(600, e.size)) : 140,
+            color: typeof e.color === "string" ? e.color : undefined,
+            animation: (["none", "pop", "fade", "bounce"].includes(e.animation) ? e.animation : "none") as ElementAnimation,
+        }));
+}
+
 export interface TextScene {
     kind?: "text";
     text: string;
@@ -18,6 +48,7 @@ export interface TextScene {
     duration?: number;
     animation?: SceneAnimation;
     textAnimation?: TextAnimation;
+    elements?: SceneElement[];
 }
 
 export interface VideoScene {
@@ -46,6 +77,7 @@ export interface ImageScene {
     duration?: number;
     animation?: SceneAnimation;
     textAnimation?: TextAnimation;
+    elements?: SceneElement[];
 }
 
 export type Scene = TextScene | VideoScene | ImageScene;
@@ -78,6 +110,7 @@ export function toScene(s: any): Scene {
             duration: typeof s.duration === "number" ? s.duration : undefined,
             animation: s.animation || "none",
             textAnimation: s.textAnimation || "none",
+            elements: sanitizeElements(s.elements),
         };
     }
     if (isVideoScene(s)) {
@@ -102,6 +135,7 @@ export function toScene(s: any): Scene {
         duration: typeof s?.duration === "number" ? s.duration : undefined,
         animation: s?.animation || "none",
         textAnimation: s?.textAnimation || "none",
+        elements: sanitizeElements(s?.elements),
     };
 }
 

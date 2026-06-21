@@ -21,6 +21,20 @@ router = APIRouter(prefix="/render", tags=["render"])
 
 # ── Pydantic models ─────────────────────────────────────────────────────────
 
+class SlideElement(BaseModel):
+    id: str = ""
+    type: str = "emoji"          # icon | emoji | image
+    value: str = ""              # lucide icon name | emoji char | image URL
+    x: float = 0.5               # normalized center
+    y: float = 0.5
+    size: float = 140.0          # px in the 1080-wide frame
+    color: str | None = None
+    animation: str = "none"      # none | pop | fade | bounce
+
+    class Config:
+        populate_by_name = True
+
+
 class Slide(BaseModel):
     text: str = ""  # optional caption for video scenes
     font_size: int = Field(88, alias="fontSize")
@@ -37,6 +51,8 @@ class Slide(BaseModel):
     duration: float = 0.0
     animation: str = "none"
     text_animation: str = Field("none", alias="textAnimation")
+    # Placed graphic elements (icons / emoji / uploads).
+    elements: list[SlideElement] = []
 
     class Config:
         populate_by_name = True

@@ -9,6 +9,17 @@
  */
 import { useEffect, useState, CSSProperties } from "react";
 import { THEMES } from "@/components/ThemeCard";
+import * as LucideIcons from "lucide-react";
+
+interface ElementData {
+    type?: string;
+    value?: string;
+    x?: number;
+    y?: number;
+    size?: number;
+    color?: string | null;
+    animation?: string;
+}
 
 interface SlideData {
     text: string;
@@ -17,6 +28,43 @@ interface SlideData {
     font_family: string;
     kind?: string | null;
     image_url?: string | null;
+    text_animation?: string;
+    elements?: ElementData[];
+}
+
+// Animation keyframes for capture mode. The renderer steps a single timeline
+// variable (--at) across these to screenshot the intro frame-by-frame.
+const ANIM_KEYFRAMES = `
+@keyframes rf-fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes rf-fade_up { from { opacity: 0; transform: translateY(40px) } to { opacity: 1; transform: none } }
+@keyframes rf-slide_left { from { opacity: 0; transform: translateX(80px) } to { opacity: 1; transform: none } }
+@keyframes rf-slide_right { from { opacity: 0; transform: translateX(-80px) } to { opacity: 1; transform: none } }
+@keyframes rf-el-pop { 0% { opacity: 0; transform: scale(0.2) } 70% { opacity: 1; transform: scale(1.12) } 100% { opacity: 1; transform: scale(1) } }
+@keyframes rf-el-fade { from { opacity: 0 } to { opacity: 1 } }
+@keyframes rf-el-bounce { 0% { opacity: 0; transform: translateY(-90px) } 60% { opacity: 1; transform: translateY(10px) } 80% { transform: translateY(-5px) } 100% { opacity: 1; transform: translateY(0) } }
+`;
+
+const TEXT_ANIM: Record<string, [string, string, string]> = {
+    fade: ["rf-fade", "0.55s", "ease-out"],
+    fade_up: ["rf-fade_up", "0.6s", "cubic-bezier(.2,.7,.2,1)"],
+    slide_left: ["rf-slide_left", "0.6s", "cubic-bezier(.2,.7,.2,1)"],
+    slide_right: ["rf-slide_right", "0.6s", "cubic-bezier(.2,.7,.2,1)"],
+};
+const ELEM_ANIM: Record<string, [string, string, string]> = {
+    pop: ["rf-el-pop", "0.55s", "cubic-bezier(.2,1.3,.4,1)"],
+    fade: ["rf-el-fade", "0.5s", "ease-out"],
+    bounce: ["rf-el-bounce", "0.8s", "cubic-bezier(.2,.8,.3,1)"],
+};
+
+// A paused, timeline-driven animation style (capture mode only).
+function animStyle(capture: boolean, table: Record<string, [string, string, string]>, key?: string): CSSProperties {
+    if (!capture || !key || key === "none") return {};
+    const m = table[key];
+    if (!m) return {};
+    return {
+        animationName: m[0], animationDuration: m[1], animationTimingFunction: m[2],
+        animationFillMode: "both", animationPlayState: "paused", animationDelay: "var(--at, 0ms)",
+    };
 }
 
 interface RenderJobData {
@@ -86,6 +134,20 @@ export default function RenderSlidePage({
     const [overlay, setOverlay] = useState(false);
     const [textOnly, setTextOnly] = useState(false);
     const [bgOnly, setBgOnly] = useState(false);
+    const [capture, setCapture] = useState(false);
+
+    // Capture mode (?anim=capture): animations are paused and seeked by the
+    // renderer via window.__setAnimTime(ms), which drives the --at timeline var.
+    useEffect(() => {
+        const isCapture = new URLSearchParams(window.location.search).get("anim") === "capture";
+        setCapture(isCapture);
+        if (isCapture) {
+            (window as any).__setAnimTime = (ms: number) => {
+                document.documentElement.style.setProperty("--at", `${-ms}ms`);
+            };
+            document.documentElement.style.setProperty("--at", "0ms");
+        }
+    }, []);
 
     // layer=overlay → caption + logo, transparent (composited over a clip).
     // layer=text   → caption only, transparent (animated text layer over a still).
@@ -234,6 +296,28 @@ export default function RenderSlidePage({
     const textColor = rawColor && rawColor !== "" ? rawColor : theme.textColor;
     const isImage = slide.kind === "image" && !!slide.image_url;
 
+    // Placed graphic elements (icons / emoji / uploads). Centering lives on the
+    // outer div so the inner animation transform doesn't clobber it.
+    const renderElements = () =>
+        (slide.elements || []).map((el, idx) => {
+            const cssSize = (el.size || 140) / 4;
+            let content: React.ReactNode = null;
+            if (el.type === "emoji") {
+                content = <span style={{ fontSize: cssSize, lineHeight: 1 }}>{el.value}</span>;
+            } else if (el.type === "image") {
+                // eslint-disable-next-line @next/next/no-img-element
+                content = <img src={el.value} alt="" style={{ width: cssSize, height: cssSize, objectFit: "contain", display: "block" }} />;
+            } else {
+                const Cmp = (LucideIcons as any)[el.value || ""];
+                content = Cmp ? <Cmp size={cssSize} color={el.color || "#ffffff"} strokeWidth={2.2} /> : null;
+            }
+            return (
+                <div key={idx} style={{ position: "absolute", left: `${(el.x ?? 0.5) * 100}%`, top: `${(el.y ?? 0.5) * 100}%`, transform: "translate(-50%,-50%)", zIndex: 5 }}>
+                    <div style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.4))", ...animStyle(capture, ELEM_ANIM, el.animation) }}>{content}</div>
+                </div>
+            );
+        });
+
     return (
         <div
             style={{
@@ -243,6 +327,7 @@ export default function RenderSlidePage({
             }}
             data-ready="true"
         >
+            <style dangerouslySetInnerHTML={{ __html: ANIM_KEYFRAMES }} />
             {/* Image scene background */}
             {isImage && (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -293,12 +378,16 @@ export default function RenderSlidePage({
                             textShadow: "0 2px 12px rgba(0,0,0,0.4)",
                             wordBreak: "break-word",
                             margin: 0,
+                            ...animStyle(capture, TEXT_ANIM, slide.text_animation),
                         }}
                     >
                         {slide.text}
                     </p>
                 </div>
             )}
+
+            {/* Placed graphic elements (icons / emoji / uploads) */}
+            {!bgOnly && renderElements()}
 
             {/* Persistent logo bug for brand recognition (kept on the background layer) */}
             {data.logo_url && slideBugStyle(data.slide_logo_position) && (

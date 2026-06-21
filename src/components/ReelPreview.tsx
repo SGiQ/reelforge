@@ -1,7 +1,18 @@
 "use client";
 import { useState, useEffect, useRef, CSSProperties } from "react";
 import { THEMES, Theme } from "./ThemeCard";
-import { VideoScene, ImageScene, isVideoScene, isImageScene } from "@/lib/scenes";
+import { VideoScene, ImageScene, SceneElement, isVideoScene, isImageScene } from "@/lib/scenes";
+import * as LucideIcons from "lucide-react";
+
+function PreviewGlyph({ el }: { el: SceneElement }) {
+    const px = Math.max(10, el.size / 4);
+    if (el.type === "emoji") return <span style={{ fontSize: px, lineHeight: 1 }}>{el.value}</span>;
+    if (el.type === "image")
+        // eslint-disable-next-line @next/next/no-img-element
+        return <img src={el.value} alt="" style={{ width: px, height: px, objectFit: "contain", display: "block" }} />;
+    const Cmp = (LucideIcons as any)[el.value];
+    return Cmp ? <Cmp size={px} color={el.color || "#ffffff"} strokeWidth={2.2} /> : null;
+}
 
 interface Slide {
     text: string;
@@ -317,6 +328,22 @@ export default function ReelPreview({
                     </p>
                 )}
             </div>
+
+            {/* Placed graphic elements (icons / emoji / uploads) */}
+            {!isLogoSlide && currentSlideData && typeof currentSlideData === "object" &&
+                (((currentSlideData as any).elements as SceneElement[]) || []).map((el, i) => (
+                    <div
+                        key={el.id || i}
+                        style={{
+                            position: "absolute", left: `${el.x * 100}%`, top: `${el.y * 100}%`,
+                            transform: "translate(-50%,-50%)", zIndex: 5,
+                            opacity, transition: "opacity 0.4s ease",
+                            filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.4))",
+                        }}
+                    >
+                        <PreviewGlyph el={el} />
+                    </div>
+                ))}
 
             {/* Persistent logo bug on text slides (brand recognition) */}
             {!isLogoSlide && logoUrl && slideBugStyle(slideLogoPosition, slideLogoSize) && (
