@@ -343,7 +343,7 @@ export default function ScriptPickerPage() {
         <div className="page-container">
             <Navbar currentStep={1} />
             <main className="max-w-6xl mx-auto px-6 py-12">
-              <div className="grid lg:grid-cols-[1fr_320px] gap-8 items-start">
+              <div className="grid lg:grid-cols-[1fr_320px] gap-8">
                 <div className="min-w-0">
                 <div className="mb-10">
                     <p className="step-indicator mb-3">
