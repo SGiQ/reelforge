@@ -2,8 +2,11 @@
 // Scenes are stored in localStorage (reelforge_script.slides) and sent to the
 // backend as `slides` — kept backward compatible with the old text-only shape.
 
-// Motion preset applied to still (text/image) scenes during render.
+// Background motion preset applied to still (text/image) scenes during render.
 export type SceneAnimation = "none" | "zoom_in" | "zoom_out" | "pan_right" | "pan_left";
+
+// How the caption text animates onto the scene.
+export type TextAnimation = "none" | "fade" | "fade_up" | "slide_left" | "slide_right";
 
 export interface TextScene {
     kind?: "text";
@@ -14,6 +17,7 @@ export interface TextScene {
     // Seconds the scene holds (0/undefined = auto from voiceover or default).
     duration?: number;
     animation?: SceneAnimation;
+    textAnimation?: TextAnimation;
 }
 
 export interface VideoScene {
@@ -41,6 +45,7 @@ export interface ImageScene {
     fontFamily: string;
     duration?: number;
     animation?: SceneAnimation;
+    textAnimation?: TextAnimation;
 }
 
 export type Scene = TextScene | VideoScene | ImageScene;
@@ -72,6 +77,7 @@ export function toScene(s: any): Scene {
             fontFamily: s.fontFamily ?? DEFAULT_SCENE_STYLE.fontFamily,
             duration: typeof s.duration === "number" ? s.duration : undefined,
             animation: s.animation || "none",
+            textAnimation: s.textAnimation || "none",
         };
     }
     if (isVideoScene(s)) {
@@ -95,6 +101,7 @@ export function toScene(s: any): Scene {
         fontFamily: s?.fontFamily ?? DEFAULT_SCENE_STYLE.fontFamily,
         duration: typeof s?.duration === "number" ? s.duration : undefined,
         animation: s?.animation || "none",
+        textAnimation: s?.textAnimation || "none",
     };
 }
 

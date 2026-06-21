@@ -657,6 +657,44 @@ def _concat_segments(ffmpeg_bin: str, segment_paths: list[str], out_path: str) -
     _ff_run(cmd)
 
 
+def _build_text_anim_segment(ffmpeg_bin: str, bg_png: str, text_png: str, text_anim: str,
+                             duration: float, tts_path: str | None, out_path: str) -> None:
+    """Composite the caption (transparent PNG) animating in over a static background.
+    bg_png = scene background incl. logo (no caption); text_png = caption only."""
+    has_tts = bool(tts_path and os.path.exists(tts_path))
+    d = 0.6  # animate-in duration
+    if text_anim == "fade_up":
+        x, y = "0", f"if(lt(t,{d}),(1-t/{d})*60,0)"
+    elif text_anim == "slide_left":
+        x, y = f"if(lt(t,{d}),(1-t/{d})*140,0)", "0"
+    elif text_anim == "slide_right":
+        x, y = f"if(lt(t,{d}),-(1-t/{d})*140,0)", "0"
+    else:  # plain fade
+        x, y = "0", "0"
+
+    cmd = [ffmpeg_bin, "-y", "-loop", "1", "-i", bg_png]
+    if has_tts:
+        cmd += ["-i", tts_path]
+    else:
+        cmd += ["-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo"]
+    cmd += ["-loop", "1", "-i", text_png]  # index 2
+
+    fc = (
+        f"[0:v]{_VPAD},format=yuv420p[bg];"
+        f"[2:v]scale={FRAME_W}:{FRAME_H},format=yuva420p,fade=t=in:st=0:d={d}:alpha=1[txt];"
+        f"[bg][txt]overlay=x='{x}':y='{y}':format=auto,format=yuv420p[v]"
+    )
+    if has_tts:
+        fc += ";[1:a]apad[a]"
+        amap = "[a]"
+    else:
+        amap = "1:a"
+    cmd += ["-filter_complex", fc, "-map", "[v]", "-map", amap, "-t", str(duration),
+            "-c:v", "libx264", "-preset", "fast", "-crf", "23", "-pix_fmt", "yuv420p", "-r", str(FPS),
+            "-c:a", "aac", "-b:a", "192k", "-ar", "44100", "-ac", "2", out_path]
+    _ff_run(cmd)
+
+
 def _concat_with_xfade(ffmpeg_bin: str, segment_paths: list[str], durations: list[float],
                        out_path: str, d: float = 0.4) -> None:
     """Concatenate scene segments with a crossfade (video xfade + audio acrossfade)
@@ -855,8 +893,6 @@ class RenderEngine:
                         _build_video_segment(ffmpeg_bin, clip_path, trim_start, duration, overlay_png, tts_path, seg_path)
                     else:
                         tts_path, tts_dur = _tts(slide.get("text", ""), i)
-                        frame_png = os.path.join(tmpdir, f"frame_{i:04d}.png")
-                        _shoot(f"{FRONTEND}/render-slide/{job_id}/{i}", frame_png)
                         # Use the scene's chosen hold time; never cut a longer voiceover.
                         auto = (tts_dur + 1.7) if tts_path else DEFAULT_SLIDE_DURATION
                         try:
@@ -864,8 +900,25 @@ class RenderEngine:
                         except Exception:
                             chosen = 0.0
                         duration = max(chosen, auto) if chosen > 0 else auto
-                        _build_still_segment(ffmpeg_bin, frame_png, duration, tts_path, seg_path,
-                                             animation=slide.get("animation") or "none")
+
+                        text_anim = slide.get("text_animation") or "none"
+                        caption = (slide.get("text") or "").strip()
+                        built = False
+                        if text_anim != "none" and caption:
+                            try:
+                                bg_png = os.path.join(tmpdir, f"bg_{i:04d}.png")
+                                txt_png = os.path.join(tmpdir, f"txt_{i:04d}.png")
+                                _shoot(f"{FRONTEND}/render-slide/{job_id}/{i}?layer=bg", bg_png)
+                                _shoot(f"{FRONTEND}/render-slide/{job_id}/{i}?layer=text", txt_png, transparent=True)
+                                _build_text_anim_segment(ffmpeg_bin, bg_png, txt_png, text_anim, duration, tts_path, seg_path)
+                                built = True
+                            except Exception as e:
+                                print(f"Text animation '{text_anim}' failed ({e}); using static.")
+                        if not built:
+                            frame_png = os.path.join(tmpdir, f"frame_{i:04d}.png")
+                            _shoot(f"{FRONTEND}/render-slide/{job_id}/{i}", frame_png)
+                            _build_still_segment(ffmpeg_bin, frame_png, duration, tts_path, seg_path,
+                                                 animation=slide.get("animation") or "none")
 
                     segment_paths.append(seg_path)
                     segment_durations.append(duration)

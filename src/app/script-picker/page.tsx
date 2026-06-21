@@ -260,6 +260,14 @@ export default function ScriptPickerPage() {
         { value: "pan_right", label: "Pan →" },
         { value: "pan_left", label: "Pan ←" },
     ];
+    const TEXT_ANIMATIONS = [
+        { value: "none", label: "None" },
+        { value: "fade", label: "Fade in" },
+        { value: "fade_up", label: "Fade up" },
+        { value: "slide_left", label: "Slide ←" },
+        { value: "slide_right", label: "Slide →" },
+    ];
+    const selectCls = "bg-transparent text-[11px] border border-white/10 rounded px-1 outline-none focus:ring-1 focus:ring-brand-purple";
     const motionControls = (index: number, scene: any) => (
         <div className="flex flex-wrap items-center gap-4 pt-3 border-t" style={{ borderColor: "rgba(45,45,74,0.4)" }}>
             <div className="flex items-center gap-2">
@@ -274,10 +282,18 @@ export default function ScriptPickerPage() {
             </div>
             <div className="flex items-center gap-2">
                 <SparklesIcon className="w-3.5 h-3.5" style={{ color: "#64748b" }} />
-                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Animation</span>
+                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Background</span>
                 <select value={scene.animation || "none"} onChange={(e) => updateScene(index, { animation: e.target.value })}
-                    className="bg-transparent text-[11px] border border-white/10 rounded px-1 outline-none focus:ring-1 focus:ring-brand-purple" style={{ color: "#a78bfa" }}>
+                    className={selectCls} style={{ color: "#a78bfa" }}>
                     {ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[#1a1a2e] text-white">{a.label}</option>)}
+                </select>
+            </div>
+            <div className="flex items-center gap-2">
+                <Type className="w-3.5 h-3.5" style={{ color: "#64748b" }} />
+                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Text in</span>
+                <select value={scene.textAnimation || "none"} onChange={(e) => updateScene(index, { textAnimation: e.target.value })}
+                    className={selectCls} style={{ color: "#2dd4bf" }}>
+                    {TEXT_ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[#1a1a2e] text-white">{a.label}</option>)}
                 </select>
             </div>
         </div>

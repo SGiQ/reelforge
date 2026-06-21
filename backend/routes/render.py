@@ -36,6 +36,7 @@ class Slide(BaseModel):
     # Still-scene timing/motion (text & image scenes).
     duration: float = 0.0
     animation: str = "none"
+    text_animation: str = Field("none", alias="textAnimation")
 
     class Config:
         populate_by_name = True

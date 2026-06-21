@@ -84,13 +84,20 @@ export default function RenderSlidePage({
     const [data, setData] = useState<RenderJobData | null>(null);
     const [ready, setReady] = useState(false);
     const [overlay, setOverlay] = useState(false);
+    const [textOnly, setTextOnly] = useState(false);
+    const [bgOnly, setBgOnly] = useState(false);
 
-    // Overlay mode (?layer=overlay): render only the caption + logo on a
-    // transparent background, so the renderer can composite it over a video clip.
+    // layer=overlay → caption + logo, transparent (composited over a clip).
+    // layer=text   → caption only, transparent (animated text layer over a still).
+    // layer=bg     → the scene background incl. logo, WITHOUT the caption.
     useEffect(() => {
-        const isOverlay = new URLSearchParams(window.location.search).get("layer") === "overlay";
+        const layer = new URLSearchParams(window.location.search).get("layer");
+        const isOverlay = layer === "overlay";
+        const isText = layer === "text";
         setOverlay(isOverlay);
-        if (isOverlay) {
+        setTextOnly(isText);
+        setBgOnly(layer === "bg");
+        if (isOverlay || isText) {
             document.documentElement.style.background = "transparent";
             document.body.style.background = "transparent";
         }
@@ -129,8 +136,8 @@ export default function RenderSlidePage({
     const isLogoSlide = slideIndex >= data.slides.length;
     const slide = data.slides[slideIndex];
 
-    // ── Overlay mode (caption + logo only, transparent) for video scenes ────────
-    if (overlay && !isLogoSlide && slide) {
+    // ── Overlay/text layer (transparent) — caption (+ logo unless text-only) ────
+    if ((overlay || textOnly) && !isLogoSlide && slide) {
         const ovFont = FONT_MAP[slide.font_family] || "Inter, sans-serif";
         const ovColor = slide.text_color && slide.text_color !== "" ? slide.text_color : theme.textColor;
         return (
@@ -138,7 +145,7 @@ export default function RenderSlidePage({
                 style={{ width: 270, height: 480, position: "relative", overflow: "hidden", background: "transparent" }}
                 data-ready="true"
             >
-                {data.video_overlay && (
+                {overlay && data.video_overlay && (
                     <div style={{ position: "absolute", inset: 0, background: theme.overlayColor, opacity: 0.4 }} />
                 )}
                 {slide.text && slide.text.trim() && (
@@ -158,7 +165,7 @@ export default function RenderSlidePage({
                         </p>
                     </div>
                 )}
-                {data.logo_url && slideBugStyle(data.slide_logo_position, data.slide_logo_size) && (
+                {!textOnly && data.logo_url && slideBugStyle(data.slide_logo_position, data.slide_logo_size) && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={data.logo_url} alt="" style={slideBugStyle(data.slide_logo_position, data.slide_logo_size)!} />
                 )}
@@ -267,31 +274,33 @@ export default function RenderSlidePage({
             />
 
             {/* Text — IDENTICAL styling to ReelPreview */}
-            <div
-                style={{
-                    position: "absolute", inset: 0,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    padding: "0 32px",
-                }}
-            >
-                <p
+            {!bgOnly && (
+                <div
                     style={{
-                        color: textColor,
-                        fontSize: `${slide.font_size / 80}rem`,
-                        fontFamily,
-                        fontWeight: "bold",
-                        lineHeight: 1.3,
-                        textAlign: "center",
-                        textShadow: "0 2px 12px rgba(0,0,0,0.4)",
-                        wordBreak: "break-word",
-                        margin: 0,
+                        position: "absolute", inset: 0,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        padding: "0 32px",
                     }}
                 >
-                    {slide.text}
-                </p>
-            </div>
+                    <p
+                        style={{
+                            color: textColor,
+                            fontSize: `${slide.font_size / 80}rem`,
+                            fontFamily,
+                            fontWeight: "bold",
+                            lineHeight: 1.3,
+                            textAlign: "center",
+                            textShadow: "0 2px 12px rgba(0,0,0,0.4)",
+                            wordBreak: "break-word",
+                            margin: 0,
+                        }}
+                    >
+                        {slide.text}
+                    </p>
+                </div>
+            )}
 
-            {/* Persistent logo bug for brand recognition */}
+            {/* Persistent logo bug for brand recognition (kept on the background layer) */}
             {data.logo_url && slideBugStyle(data.slide_logo_position) && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={data.logo_url} alt="" style={slideBugStyle(data.slide_logo_position)!} />
