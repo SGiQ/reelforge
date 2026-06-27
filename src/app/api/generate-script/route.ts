@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
+import { track, record } from "@sgiq/apitracker";
 
 export async function POST(req: NextRequest) {
     try {
@@ -44,6 +45,17 @@ export async function POST(req: NextRequest) {
 
                 if (perplexityRes.ok) {
                     const perplexityData = await perplexityRes.json();
+                    if (perplexityData?.usage) {
+                        record({
+                            provider: 'perplexity',
+                            model: 'sonar-pro',
+                            usage: {
+                                inputTokens: perplexityData.usage.prompt_tokens ?? 0,
+                                outputTokens: perplexityData.usage.completion_tokens ?? 0,
+                            },
+                            requestId: perplexityData.id ?? null,
+                        });
+                    }
                     if (perplexityData.choices && perplexityData.choices[0]?.message?.content) {
                         researchContext = `\n\n### BACKGROUND RESEARCH (from the user's website):\n${perplexityData.choices[0].message.content}\nUse this background research to deeply personalize the script to their actual business.`;
                     }
@@ -55,7 +67,7 @@ export async function POST(req: NextRequest) {
             }
         }
 
-        const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+        const openai = track(new OpenAI({ apiKey: process.env.OPENAI_API_KEY }), { app: 'reelforge' });
 
         const systemInstruction = `You are an expert short-form video script writer for TikTok, Instagram Reels, and YouTube Shorts.
 The user will give you a topic or prompt.

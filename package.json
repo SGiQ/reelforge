@@ -15,6 +15,7 @@
   "type": "commonjs",
   "dependencies": {
     "@clerk/nextjs": "^6.38.0",
+    "@sgiq/apitracker": "git+https://github.com/SGiQ/apitracker-node.git#v0.3.0",
     "@stripe/stripe-js": "^8.7.0",
     "@types/node": "^25.3.0",
     "@types/qrcode": "^1.5.6",
