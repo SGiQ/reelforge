@@ -78,29 +78,30 @@ export default function Navbar({ currentStep }: NavbarProps) {
                     </div>
                 )}
 
-                {/* User button */}
-                <div className="flex items-center gap-4">
+                {/* Nav links — muted mono-uppercase, lime on hover (lime is reserved
+                    for actions/active state, not resting labels). */}
+                <div className="flex items-center gap-5">
                     {admin && (
-                        <Link href="/admin" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-accent)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-accent)"}>
-                            <Shield className="w-4 h-4" /> Admin
+                        <Link href="/admin" className="hidden sm:flex items-center gap-1.5 meta-caps text-[11px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
+                            <Shield className="w-3.5 h-3.5" /> Admin
                         </Link>
                     )}
-                    <Link href="/auto" className="hidden sm:flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer" style={{ color: "var(--color-accent)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-accent)"}>
-                        <Wand2 className="w-4 h-4" /> AI Director
+                    <Link href="/auto" className="hidden sm:flex items-center gap-1.5 meta-caps text-[11px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
+                        <Wand2 className="w-3.5 h-3.5" /> AI Director
                     </Link>
-                    <Link href="/community" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
+                    <Link href="/community" className="hidden sm:flex meta-caps text-[11px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
                         Community
                     </Link>
-                    <Link href="/help" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
+                    <Link href="/help" className="hidden sm:flex meta-caps text-[11px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
                         Help
                     </Link>
-                    <Link href="/dashboard" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
+                    <Link href="/dashboard" className="hidden sm:flex meta-caps text-[11px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
                         Dashboard
                     </Link>
-                    <Link href="/account" title="Account" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
+                    <Link href="/account" title="Account" className="hidden sm:flex items-center meta-caps transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
                         <User className="w-4 h-4" />
                     </Link>
-                    <button onClick={logout} title="Log out" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
+                    <button onClick={logout} title="Log out" className="hidden sm:flex items-center meta-caps transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
                         <LogOut className="w-4 h-4" />
                     </button>
 

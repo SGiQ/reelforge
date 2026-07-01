@@ -151,6 +151,27 @@ html, body {
     @apply text-base mt-2;
     color: var(--color-text-secondary);
   }
+  /* Technical metadata — Geist Mono, muted, letter-spaced. Cinematic labels,
+     counters, and timestamps use this instead of the lime accent. */
+  .meta {
+    font-family: 'Geist Mono', 'Space Mono', ui-monospace, monospace;
+    letter-spacing: 0.02em;
+    color: var(--color-text-muted);
+  }
+  .meta-caps {
+    font-family: 'Geist Mono', 'Space Mono', ui-monospace, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-secondary);
+  }
+  /* Film-frame corner ticks for featured media (via ::before/::after L-shapes). */
+  .film-ticks { position: relative; }
+  .film-ticks::before, .film-ticks::after {
+    content: ""; position: absolute; width: 14px; height: 14px; pointer-events: none; z-index: 2;
+    border-color: rgba(198, 241, 53, 0.5);
+  }
+  .film-ticks::before { top: 8px; left: 8px; border-top: 1px solid; border-left: 1px solid; }
+  .film-ticks::after { bottom: 8px; right: 8px; border-bottom: 1px solid; border-right: 1px solid; }
 }
 
 /* Glow effects */

@@ -110,11 +110,11 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
     };
 
     return (
-        <div className="glass-card-hover rounded-2xl overflow-hidden flex flex-col">
+        <div className="glass-card-hover rounded-lg overflow-hidden flex flex-col">
             {/* Thumbnail (9:16 reel, first frame as poster, plays on hover, click to open player) */}
             <div
-                className={`group relative w-full ${isDone ? "cursor-pointer" : ""}`}
-                style={{ aspectRatio: "4 / 5", background: "#0d0d18" }}
+                className={`group relative w-full film-ticks ${isDone ? "cursor-pointer" : ""}`}
+                style={{ aspectRatio: "4 / 5", background: "var(--color-surface)" }}
                 onMouseEnter={handleEnter}
                 onMouseLeave={handleLeave}
                 onClick={() => { if (isDone) setDetailsOpen(true); }}
@@ -132,27 +132,34 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                             className="absolute inset-0 w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 opacity-100 group-hover:opacity-0">
-                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgb(var(--rgb-surface) / 0.65)", border: "1px solid rgba(255,255,255,0.25)" }}>
-                                <Play className="w-5 h-5 text-white ml-0.5" />
+                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgba(10,10,15,0.55)", border: "1px solid rgba(198,241,53,0.4)" }}>
+                                <Play className="w-5 h-5 ml-0.5" style={{ color: "var(--color-accent)" }} />
                             </div>
                         </div>
                     </>
                 ) : (
-                    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg, rgba(198,241,53,0.25), rgba(198,241,53,0.25))" }}>
-                        <Video className="w-10 h-10" style={{ color: "rgba(255,255,255,0.35)" }} />
+                    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "rgb(var(--rgb-surface-elevated) / 0.6)" }}>
+                        <Video className="w-10 h-10" style={{ color: "rgba(255,255,255,0.25)" }} />
                     </div>
                 )}
 
-                {/* Status badge */}
+                {/* Status chip (mono) */}
                 <div
-                    className="absolute top-3 left-3 px-2 py-1 rounded text-xs font-bold uppercase tracking-wider"
+                    className="absolute top-3 left-3 meta-caps text-[10px] px-2 py-1 rounded"
                     style={{
-                        background: job.status === "done" ? "rgba(52,211,153,0.25)" : job.status === "failed" ? "rgba(248,113,113,0.25)" : "rgba(198,241,53,0.25)",
-                        color: job.status === "done" ? "#34d399" : job.status === "failed" ? "#f87171" : "var(--color-accent)",
-                        backdropFilter: "blur(4px)",
+                        background: "rgba(10,10,15,0.82)",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        color: job.status === "done" ? "var(--color-accent)" : job.status === "failed" ? "#ff8a80" : "var(--color-text-secondary)",
                     }}
                 >
                     {job.status}
+                </div>
+                {/* Aspect/format badge (mono) */}
+                <div
+                    className="absolute top-3 right-3 meta text-[10px] px-2 py-1 rounded"
+                    style={{ background: "rgba(10,10,15,0.82)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--color-text-secondary)" }}
+                >
+                    9:16
                 </div>
             </div>
 
@@ -161,11 +168,11 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                 <h3 className="font-bold text-base mb-1 line-clamp-2" style={{ color: "var(--color-text-primary)" }}>
                     {title}
                 </h3>
-                <div className="flex items-center gap-2 text-xs mb-4" style={{ color: "var(--color-text-secondary)" }}>
+                <div className="meta flex items-center gap-2 text-[11px] mb-4">
                     <span className="truncate max-w-[55%]">{job.brand_name || "Brand Video"}</span>
-                    <span>•</span>
-                    <span className="capitalize">{job.theme.replace("-", " ")}</span>
-                    <span>•</span>
+                    <span>·</span>
+                    <span className="uppercase">{job.theme.replace("-", " ")}</span>
+                    <span>·</span>
                     <span>{new Date(job.created_at).toLocaleDateString()}</span>
                 </div>
 
@@ -222,7 +229,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                     onClick={() => setDetailsOpen(false)}
                 >
                     <div
-                        className="glass-card rounded-2xl w-full max-w-3xl max-h-[92vh] overflow-hidden flex flex-col md:flex-row relative"
+                        className="glass-card rounded-lg w-full max-w-3xl max-h-[92vh] overflow-hidden flex flex-col md:flex-row relative"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button
@@ -250,17 +257,17 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                         {/* Details + actions */}
                         <div className="md:w-1/2 p-6 flex flex-col overflow-y-auto">
                             <span
-                                className="self-start px-2 py-1 rounded text-xs font-bold uppercase tracking-wider mb-3"
-                                style={{ background: "rgba(52,211,153,0.2)", color: "#34d399" }}
+                                className="self-start meta-caps text-[10px] px-2 py-1 rounded mb-3"
+                                style={{ background: "rgba(10,10,15,0.82)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--color-accent)" }}
                             >
                                 {job.status}
                             </span>
-                            <h3 className="font-bold text-lg mb-2 pr-8" style={{ color: "var(--color-text-primary)" }}>{title}</h3>
-                            <div className="flex flex-wrap items-center gap-2 text-xs mb-6" style={{ color: "var(--color-text-secondary)" }}>
+                            <h3 className="font-bold text-lg mb-2 pr-8" style={{ color: "var(--color-text-primary)", fontFamily: "'Space Grotesk', 'Inter', sans-serif", letterSpacing: "-0.02em" }}>{title}</h3>
+                            <div className="meta flex flex-wrap items-center gap-2 text-[11px] mb-6">
                                 <span>{job.brand_name || "Brand Video"}</span>
-                                <span>•</span>
-                                <span className="capitalize">{job.theme.replace("-", " ")}</span>
-                                <span>•</span>
+                                <span>·</span>
+                                <span className="uppercase">{job.theme.replace("-", " ")}</span>
+                                <span>·</span>
                                 <span>{new Date(job.created_at).toLocaleDateString()}</span>
                             </div>
 
