@@ -76,7 +76,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[settings.FRONTEND_URL, "http://localhost:3000"],
-    allow_origin_regex=r"https://.*\.vercel\.app",
+    # Allow the prod frontend on any sgiq.ai host (apex or subdomain) plus Vercel
+    # preview/prod URLs, so a custom domain never silently breaks CORS again.
+    allow_origin_regex=r"https://([a-z0-9-]+\.)*(vercel\.app|sgiq\.ai)$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
