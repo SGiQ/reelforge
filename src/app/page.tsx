@@ -141,10 +141,10 @@ export default function HomePage() {
                         </div>
                     </div>
 
-                    {/* Hero mockup */}
-                    <div className="relative">
-                        <Ticks />
-                        <div className="max-w-[340px] mx-auto" style={{ boxShadow: "0 0 100px rgba(198,241,53,0.05)" }}>
+                    {/* Hero mockup — ticks anchored to the frame so they hug it */}
+                    <div className="flex justify-center">
+                        <div className="relative w-full max-w-[300px]" style={{ boxShadow: "0 0 100px rgba(198,241,53,0.05)" }}>
+                            <Ticks />
                             <ReelFrame hero tone="linear-gradient(155deg,#1a1d24,#0a0a0f)" label="" meta="" />
                         </div>
                     </div>
