@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Zap, User, LogOut, Shield, Wand2 } from "lucide-react";
 import { clearAuth, isAdmin } from "@/lib/auth";
+import ThemeToggle from "@/components/ThemeToggle";
 
 
 
@@ -25,14 +26,14 @@ export default function Navbar({ currentStep }: NavbarProps) {
     useEffect(() => { setAdmin(isAdmin()); }, []);
     const logout = () => { clearAuth(); router.replace("/login"); };
     return (
-        <nav className="sticky top-0 z-50 w-full" style={{ borderBottom: "1px solid rgba(45,45,74,0.6)", background: "rgba(15,15,26,0.9)", backdropFilter: "blur(12px)" }}>
+        <nav className="sticky top-0 z-50 w-full" style={{ borderBottom: "1px solid rgb(var(--rgb-surface-border) / 0.6)", background: "rgb(var(--rgb-surface) / 0.9)", backdropFilter: "blur(12px)" }}>
             <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #7c3aed, #0d9488)" }}>
                         <Zap className="w-4 h-4 text-white" />
                     </div>
-                    <span className="font-bold text-lg tracking-tight" style={{ color: "#f8fafc" }}>
+                    <span className="font-bold text-lg tracking-tight" style={{ color: "var(--color-text-primary)" }}>
                         Reel<span style={{ color: "#a78bfa" }}>SGiQ</span>
                     </span>
                 </Link>
@@ -50,7 +51,7 @@ export default function Navbar({ currentStep }: NavbarProps) {
                                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200"
                                         style={{
                                             background: isActive ? "rgba(124,58,237,0.2)" : "transparent",
-                                            color: isActive ? "#a78bfa" : isDone ? "#2dd4bf" : "#64748b",
+                                            color: isActive ? "#a78bfa" : isDone ? "#2dd4bf" : "var(--color-text-muted)",
                                         }}
                                     >
                                         <span
@@ -60,8 +61,8 @@ export default function Navbar({ currentStep }: NavbarProps) {
                                                     ? "rgba(124,58,237,0.4)"
                                                     : isDone
                                                         ? "rgba(13,148,136,0.3)"
-                                                        : "rgba(45,45,74,0.6)",
-                                                color: isActive ? "#a78bfa" : isDone ? "#2dd4bf" : "#64748b",
+                                                        : "rgb(var(--rgb-surface-border) / 0.6)",
+                                                color: isActive ? "#a78bfa" : isDone ? "#2dd4bf" : "var(--color-text-muted)",
                                             }}
                                         >
                                             {isDone ? "✓" : i + 1}
@@ -69,7 +70,7 @@ export default function Navbar({ currentStep }: NavbarProps) {
                                         {step.label}
                                     </Link>
                                     {i < steps.length - 1 && (
-                                        <div className="w-4 h-px" style={{ background: isDone ? "rgba(13,148,136,0.4)" : "rgba(45,45,74,0.6)" }} />
+                                        <div className="w-4 h-px" style={{ background: isDone ? "rgba(13,148,136,0.4)" : "rgb(var(--rgb-surface-border) / 0.6)" }} />
                                     )}
                                 </div>
                             );
@@ -80,29 +81,30 @@ export default function Navbar({ currentStep }: NavbarProps) {
                 {/* User button */}
                 <div className="flex items-center gap-4">
                     {admin && (
-                        <Link href="/admin" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "#a78bfa" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#a78bfa"}>
+                        <Link href="/admin" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "#a78bfa" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "#a78bfa"}>
                             <Shield className="w-4 h-4" /> Admin
                         </Link>
                     )}
-                    <Link href="/auto" className="hidden sm:flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer" style={{ color: "#a78bfa" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#a78bfa"}>
+                    <Link href="/auto" className="hidden sm:flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer" style={{ color: "#a78bfa" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "#a78bfa"}>
                         <Wand2 className="w-4 h-4" /> AI Director
                     </Link>
-                    <Link href="/community" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
+                    <Link href="/community" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
                         Community
                     </Link>
-                    <Link href="/help" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
+                    <Link href="/help" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
                         Help
                     </Link>
-                    <Link href="/dashboard" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
+                    <Link href="/dashboard" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
                         Dashboard
                     </Link>
-                    <Link href="/account" title="Account" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
+                    <Link href="/account" title="Account" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
                         <User className="w-4 h-4" />
                     </Link>
-                    <button onClick={logout} title="Log out" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "#94a3b8" }} onMouseOver={(e) => e.currentTarget.style.color = "#f8fafc"} onMouseOut={(e) => e.currentTarget.style.color = "#94a3b8"}>
+                    <button onClick={logout} title="Log out" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
                         <LogOut className="w-4 h-4" />
                     </button>
 
+                    <ThemeToggle />
                 </div>
             </div>
         </nav>

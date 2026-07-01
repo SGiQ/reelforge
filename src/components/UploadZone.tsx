@@ -36,15 +36,15 @@ export default function UploadZone({
 
     return (
         <div className="space-y-2">
-            <label className="block text-sm font-medium" style={{ color: "#94a3b8" }}>{label}</label>
+            <label className="block text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>{label}</label>
             {preview ? (
-                <div className="relative rounded-xl overflow-hidden" style={{ height: 160, background: "#1a1a2e", border: "1px solid rgba(45,45,74,0.6)" }}>
+                <div className="relative rounded-xl overflow-hidden" style={{ height: 160, background: "var(--color-surface-card)", border: "1px solid rgb(var(--rgb-surface-border) / 0.6)" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={preview} alt={label} className="w-full h-full object-cover" />
                     <button
                         onClick={onClear}
                         className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center transition-all"
-                        style={{ background: "rgba(15,15,26,0.9)", border: "1px solid rgba(45,45,74,0.8)" }}
+                        style={{ background: "rgb(var(--rgb-surface) / 0.9)", border: "1px solid rgb(var(--rgb-surface-border) / 0.8)" }}
                     >
                         <X className="w-3.5 h-3.5 text-red-400" />
                     </button>
@@ -59,8 +59,8 @@ export default function UploadZone({
                     className="w-full flex flex-col items-center justify-center gap-3 rounded-xl transition-all duration-200 cursor-pointer"
                     style={{
                         height: 160,
-                        background: dragging ? "rgba(124,58,237,0.1)" : "rgba(26,26,46,0.4)",
-                        border: `2px dashed ${dragging ? "rgba(124,58,237,0.6)" : "rgba(45,45,74,0.8)"}`,
+                        background: dragging ? "rgba(124,58,237,0.1)" : "rgb(var(--rgb-surface-card) / 0.4)",
+                        border: `2px dashed ${dragging ? "rgba(124,58,237,0.6)" : "rgb(var(--rgb-surface-border) / 0.8)"}`,
                     }}
                 >
                     <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(124,58,237,0.15)" }}>
@@ -68,7 +68,7 @@ export default function UploadZone({
                     </div>
                     <div className="text-center">
                         <p className="text-sm font-medium" style={{ color: "#a78bfa" }}>Click to upload</p>
-                        {hint && <p className="text-xs mt-0.5" style={{ color: "#64748b" }}>{hint}</p>}
+                        {hint && <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>{hint}</p>}
                     </div>
                 </button>
             )}

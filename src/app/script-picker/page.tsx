@@ -24,7 +24,7 @@ const FONT_OPTIONS = [
 ];
 
 const COLOR_OPTIONS = [
-    "#ffffff", "#a78bfa", "#2dd4bf", "#facc15", "#f87171", "#38bdf8", "#fb923c", "#4ade80", "#e879f9", "#94a3b8", "#1e293b"
+    "#ffffff", "#a78bfa", "#2dd4bf", "#facc15", "#f87171", "#38bdf8", "#fb923c", "#4ade80", "#e879f9", "var(--color-text-secondary)", "#1e293b"
 ];
 
 const MAX_SCENES = 15;
@@ -217,13 +217,13 @@ export default function ScriptPickerPage() {
     // Compact style controls shared by text scenes and video captions.
     // Defined as a render function (not a nested component) so inputs keep focus.
     const styleControls = (index: number, scene: Scene) => (
-        <div className="flex flex-wrap items-center gap-4 pt-3 border-t" style={{ borderColor: "rgba(45,45,74,0.4)" }}>
+        <div className="flex flex-wrap items-center gap-4 pt-3 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
             <div className="flex items-center gap-2">
-                <Settings2 className="w-3.5 h-3.5" style={{ color: "#64748b" }} />
-                <span className="text-[10px] uppercase tracking-wider font-bold" style={{ color: "#64748b" }}>Styles</span>
+                <Settings2 className="w-3.5 h-3.5" style={{ color: "var(--color-text-muted)" }} />
+                <span className="text-[10px] uppercase tracking-wider font-bold" style={{ color: "var(--color-text-muted)" }}>Styles</span>
             </div>
             <div className="flex items-center gap-2">
-                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Font:</span>
+                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Font:</span>
                 <select
                     value={scene.fontFamily}
                     onChange={(e) => updateScene(index, { fontFamily: e.target.value })}
@@ -231,12 +231,12 @@ export default function ScriptPickerPage() {
                     style={{ color: "#a78bfa" }}
                 >
                     {FONT_OPTIONS.map((f) => (
-                        <option key={f.value} value={f.value} className="bg-[#1a1a2e] text-white">{f.label}</option>
+                        <option key={f.value} value={f.value} className="bg-[var(--color-surface-card)] text-white">{f.label}</option>
                     ))}
                 </select>
             </div>
             <div className="flex items-center gap-2">
-                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Size:</span>
+                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Size:</span>
                 <input
                     type="range" min="40" max="300"
                     value={scene.fontSize}
@@ -246,7 +246,7 @@ export default function ScriptPickerPage() {
                 <span className="text-[11px] font-mono" style={{ color: "#a78bfa" }}>{scene.fontSize}</span>
             </div>
             <div className="flex items-center gap-2">
-                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Color:</span>
+                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Color:</span>
                 <div className="flex flex-wrap gap-1.5 max-w-[150px]">
                     {COLOR_OPTIONS.map((color) => (
                         <button
@@ -283,31 +283,31 @@ export default function ScriptPickerPage() {
     ];
     const selectCls = "bg-transparent text-[11px] border border-white/10 rounded px-1 outline-none focus:ring-1 focus:ring-brand-purple";
     const motionControls = (index: number, scene: any) => (
-        <div className="flex flex-wrap items-center gap-4 pt-3 border-t" style={{ borderColor: "rgba(45,45,74,0.4)" }}>
+        <div className="flex flex-wrap items-center gap-4 pt-3 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
             <div className="flex items-center gap-2">
-                <Clock className="w-3.5 h-3.5" style={{ color: "#64748b" }} />
-                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Hold</span>
+                <Clock className="w-3.5 h-3.5" style={{ color: "var(--color-text-muted)" }} />
+                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Hold</span>
                 <input type="number" min={1} max={30} step={0.5}
                     value={scene.duration ?? ""}
                     placeholder="auto"
                     onChange={(e) => updateScene(index, { duration: e.target.value ? Math.max(0, parseFloat(e.target.value)) : undefined })}
                     className="input-field w-16 py-1 text-sm" />
-                <span className="text-[11px]" style={{ color: "#64748b" }}>sec</span>
+                <span className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>sec</span>
             </div>
             <div className="flex items-center gap-2">
-                <SparklesIcon className="w-3.5 h-3.5" style={{ color: "#64748b" }} />
-                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Background</span>
+                <SparklesIcon className="w-3.5 h-3.5" style={{ color: "var(--color-text-muted)" }} />
+                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Background</span>
                 <select value={scene.animation || "none"} onChange={(e) => updateScene(index, { animation: e.target.value })}
                     className={selectCls} style={{ color: "#a78bfa" }}>
-                    {ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[#1a1a2e] text-white">{a.label}</option>)}
+                    {ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[var(--color-surface-card)] text-white">{a.label}</option>)}
                 </select>
             </div>
             <div className="flex items-center gap-2">
-                <Type className="w-3.5 h-3.5" style={{ color: "#64748b" }} />
-                <span className="text-[11px]" style={{ color: "#94a3b8" }}>Text in</span>
+                <Type className="w-3.5 h-3.5" style={{ color: "var(--color-text-muted)" }} />
+                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Text in</span>
                 <select value={scene.textAnimation || "none"} onChange={(e) => updateScene(index, { textAnimation: e.target.value })}
                     className={selectCls} style={{ color: "#2dd4bf" }}>
-                    {TEXT_ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[#1a1a2e] text-white">{a.label}</option>)}
+                    {TEXT_ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[var(--color-surface-card)] text-white">{a.label}</option>)}
                 </select>
             </div>
         </div>
@@ -334,7 +334,7 @@ export default function ScriptPickerPage() {
             voiceId={null}
         />
     ) : (
-        <div className="flex items-center justify-center text-center px-4" style={{ width: 270, height: 480, background: "#0f0f1a", color: "#475569", fontSize: 12 }}>
+        <div className="flex items-center justify-center text-center px-4" style={{ width: 270, height: 480, background: "var(--color-surface)", color: "#475569", fontSize: 12 }}>
             Add a scene to see it here
         </div>
     );
@@ -360,13 +360,13 @@ export default function ScriptPickerPage() {
                 <div className="space-y-4 mb-10">
                     <div className="glass-card rounded-2xl p-6" style={{ border: "2px solid #7c3aed", boxShadow: "0 0 30px rgba(124,58,237,0.15)" }}>
                         <div className="flex items-center gap-3 mb-2">
-                            <h3 className="text-xl font-bold" style={{ color: "#f8fafc" }}>Write Your Own (or use AI ✨)</h3>
+                            <h3 className="text-xl font-bold" style={{ color: "var(--color-text-primary)" }}>Write Your Own (or use AI ✨)</h3>
                         </div>
-                        <p className="text-sm mb-4" style={{ color: "#94a3b8" }}>
+                        <p className="text-sm mb-4" style={{ color: "var(--color-text-secondary)" }}>
                             Type your message line by line, drop in video clips, or let AI write the script for you.
                         </p>
 
-                        <div className="space-y-6 mt-6 pt-6 border-t" style={{ borderColor: "rgba(45,45,74,0.6)" }}>
+                        <div className="space-y-6 mt-6 pt-6 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)" }}>
                             {/* AI Generator Box */}
                             <div className="p-4 rounded-xl border" style={{ background: "rgba(124,58,237,0.05)", borderColor: "rgba(124,58,237,0.2)" }}>
                                 <label className="block text-sm font-medium mb-2 flex items-center gap-2" style={{ color: "#a78bfa" }}>
@@ -404,7 +404,7 @@ export default function ScriptPickerPage() {
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between pb-2">
                                     <label className="block text-sm font-medium" style={{ color: "#a78bfa" }}>Scenes</label>
-                                    <span className="text-xs" style={{ color: "#64748b" }}>{scenes.length}/{MAX_SCENES}</span>
+                                    <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>{scenes.length}/{MAX_SCENES}</span>
                                 </div>
 
                                 <div className="space-y-4">
@@ -417,7 +417,7 @@ export default function ScriptPickerPage() {
                                             <div
                                                 key={index}
                                                 className="p-4 rounded-xl border transition-all"
-                                                style={{ background: "rgba(15,15,26,0.3)", borderColor: video ? "rgba(45,212,191,0.4)" : image ? "rgba(56,189,248,0.4)" : "rgba(45,45,74,0.6)" }}
+                                                style={{ background: "rgb(var(--rgb-surface) / 0.3)", borderColor: video ? "rgba(45,212,191,0.4)" : image ? "rgba(56,189,248,0.4)" : "rgb(var(--rgb-surface-border) / 0.6)" }}
                                             >
                                                 <div className="flex items-center justify-between mb-3">
                                                     <div className="flex items-center gap-2">
@@ -426,15 +426,15 @@ export default function ScriptPickerPage() {
                                                             {video ? <Film className="w-3 h-3" /> : image ? <ImageIcon className="w-3 h-3" /> : <Type className="w-3 h-3" />}
                                                             Scene {index + 1}
                                                         </span>
-                                                        <span className="text-[10px] uppercase tracking-wider" style={{ color: "#64748b" }}>{kindLabel}</span>
+                                                        <span className="text-[10px] uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>{kindLabel}</span>
                                                     </div>
                                                     <div className="flex items-center gap-1">
                                                         <button onClick={() => moveScene(index, -1)} disabled={index === 0}
-                                                            className="p-1.5 rounded-lg hover:bg-white/5 disabled:opacity-30" style={{ color: "#94a3b8" }}>
+                                                            className="p-1.5 rounded-lg hover:bg-white/5 disabled:opacity-30" style={{ color: "var(--color-text-secondary)" }}>
                                                             <ChevronUp className="w-4 h-4" />
                                                         </button>
                                                         <button onClick={() => moveScene(index, 1)} disabled={index === scenes.length - 1}
-                                                            className="p-1.5 rounded-lg hover:bg-white/5 disabled:opacity-30" style={{ color: "#94a3b8" }}>
+                                                            className="p-1.5 rounded-lg hover:bg-white/5 disabled:opacity-30" style={{ color: "var(--color-text-secondary)" }}>
                                                             <ChevronDown className="w-4 h-4" />
                                                         </button>
                                                         <button onClick={(e) => { e.stopPropagation(); removeScene(index); }} disabled={scenes.length <= 1}
@@ -463,12 +463,12 @@ export default function ScriptPickerPage() {
                                                                     <span className="text-sm font-medium" style={{ color: "#2dd4bf" }}>
                                                                         {uploading[index] ? "Uploading…" : "Upload a video clip"}
                                                                     </span>
-                                                                    <span className="text-xs" style={{ color: "#64748b" }}>MP4, MOV or WebM</span>
+                                                                    <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>MP4, MOV or WebM</span>
                                                                 </button>
                                                                 <button
                                                                     onClick={() => setShowStock((s) => ({ ...s, [index]: !s[index] }))}
                                                                     className="w-full flex items-center justify-center gap-2 rounded-xl border py-2.5 text-sm font-medium transition-all hover:bg-white/5"
-                                                                    style={{ borderColor: "rgba(45,45,74,0.6)", color: "#2dd4bf" }}
+                                                                    style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)", color: "#2dd4bf" }}
                                                                 >
                                                                     <Search className="w-4 h-4" /> {showStock[index] ? "Hide stock search" : "Search stock footage"}
                                                                 </button>
@@ -498,13 +498,13 @@ export default function ScriptPickerPage() {
                                                                                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider" style={{ color: "#2dd4bf" }}>
                                                                                         <Scissors className="w-3.5 h-3.5" /> Trim
                                                                                     </div>
-                                                                                    <span className="text-[11px]" style={{ color: "#64748b" }}>
+                                                                                    <span className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>
                                                                                         {trimLen > 0 ? `${trimLen.toFixed(1)}s used` : "set a range"}{dur ? ` · clip ${dur.toFixed(1)}s` : ""}
                                                                                     </span>
                                                                                 </div>
-                                                                                <p className="text-[11px]" style={{ color: "#64748b" }}>Preview shows only the trimmed section, looping.</p>
+                                                                                <p className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>Preview shows only the trimmed section, looping.</p>
                                                                                 <div className="flex items-center gap-3">
-                                                                                    <label className="text-[11px]" style={{ color: "#94a3b8" }}>Start (s)</label>
+                                                                                    <label className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Start (s)</label>
                                                                                     <input type="number" min={0} max={dur || undefined} step={0.1}
                                                                                         value={vs.trimStart}
                                                                                         onChange={(e) => {
@@ -513,7 +513,7 @@ export default function ScriptPickerPage() {
                                                                                             updateScene(index, { trimStart: s } as Partial<VideoScene>);
                                                                                         }}
                                                                                         className="input-field w-20 py-1 text-sm" />
-                                                                                    <label className="text-[11px]" style={{ color: "#94a3b8" }}>End (s)</label>
+                                                                                    <label className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>End (s)</label>
                                                                                     <input type="number" min={0} max={dur || undefined} step={0.1}
                                                                                         value={vs.trimEnd}
                                                                                         onChange={(e) => {
@@ -557,7 +557,7 @@ export default function ScriptPickerPage() {
                                                                 <span className="text-sm font-medium" style={{ color: "#38bdf8" }}>
                                                                     {uploading[index] ? "Uploading…" : "Upload a background image"}
                                                                 </span>
-                                                                <span className="text-xs" style={{ color: "#64748b" }}>JPG, PNG or WebP</span>
+                                                                <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>JPG, PNG or WebP</span>
                                                             </button>
                                                         ) : (
                                                             <>
@@ -565,7 +565,7 @@ export default function ScriptPickerPage() {
                                                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                                                     <img src={(scene as ImageScene).imageUrl} alt="" className="rounded-lg flex-shrink-0 bg-black object-cover" style={{ width: 120, height: 213 }} />
                                                                     <div className="flex-1 space-y-2">
-                                                                        <p className="text-[11px]" style={{ color: "#64748b" }}>This image fills the scene background. Add an optional caption below.</p>
+                                                                        <p className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>This image fills the scene background. Add an optional caption below.</p>
                                                                         <button onClick={() => updateScene(index, { imageUrl: "" } as Partial<ImageScene>)} className="text-xs text-red-400 hover:underline">Replace image</button>
                                                                     </div>
                                                                 </div>
@@ -635,15 +635,15 @@ export default function ScriptPickerPage() {
                             </div>
 
                             {/* Final Logo Slide Outro Input */}
-                            <div className="mt-8 pt-6 border-t" style={{ borderColor: "rgba(45,45,74,0.6)" }}>
+                            <div className="mt-8 pt-6 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)" }}>
                                 <div className="space-y-2">
                                     <label className="block text-sm font-medium flex items-center gap-2" style={{ color: "#a78bfa" }}>
                                         <span>🎙️ Final Logo Slide (Voiceover Only)</span>
                                     </label>
-                                    <p className="text-xs mb-3" style={{ color: "#94a3b8" }}>
+                                    <p className="text-xs mb-3" style={{ color: "var(--color-text-secondary)" }}>
                                         This text will not appear on screen. It will only be spoken by the AI voiceover during the final logo slide (e.g., &quot;Visit our website today.&quot;)
                                     </p>
-                                    <div className="p-4 rounded-xl border transition-all" style={{ background: "rgba(15,15,26,0.5)", border: "1px dashed rgba(124,58,237,0.4)" }}>
+                                    <div className="p-4 rounded-xl border transition-all" style={{ background: "rgb(var(--rgb-surface) / 0.5)", border: "1px dashed rgba(124,58,237,0.4)" }}>
                                         <textarea
                                             value={outroVoiceover}
                                             onChange={(e) => setOutroVoiceover(e.target.value)}
@@ -660,7 +660,7 @@ export default function ScriptPickerPage() {
                 {hasContent && (
                     <div className="rounded-xl px-4 py-3 flex gap-3 mb-8" style={{ background: "rgba(13,148,136,0.08)", border: "1px solid rgba(13,148,136,0.2)" }}>
                         <span>✨</span>
-                        <p className="text-sm" style={{ color: "#94a3b8" }}>
+                        <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
                             <strong style={{ color: "#2dd4bf" }}>&quot;{customTitle || "Custom Script"}&quot;</strong>{" "}
                             — {scenes.filter(isRenderableScene).length} scenes will be rendered.
                         </p>
@@ -680,13 +680,13 @@ export default function ScriptPickerPage() {
                 {/* Live preview — updates as you edit */}
                 <div className="hidden lg:block">
                     <div className="sticky top-24">
-                        <p className="text-xs font-semibold mb-2 flex items-center gap-1.5" style={{ color: "#94a3b8" }}>
+                        <p className="text-xs font-semibold mb-2 flex items-center gap-1.5" style={{ color: "var(--color-text-secondary)" }}>
                             <span className="w-2 h-2 rounded-full inline-block" style={{ background: "#34d399" }} /> Live preview
                         </p>
-                        <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgba(45,45,74,0.6)" }}>
+                        <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgb(var(--rgb-surface-border) / 0.6)" }}>
                             {previewNode}
                         </div>
-                        <p className="text-[11px] mt-2 leading-relaxed" style={{ color: "#64748b" }}>
+                        <p className="text-[11px] mt-2 leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
                             Plays silently as you edit. Full preview with voiceover is the next step.
                         </p>
                     </div>
@@ -704,16 +704,16 @@ export default function ScriptPickerPage() {
             {showMobilePreview && (
                 <div className="lg:hidden fixed inset-0 z-50 flex flex-col items-center justify-center p-4" style={{ background: "rgba(8,8,16,0.92)" }}
                     onClick={() => setShowMobilePreview(false)}>
-                    <button onClick={() => setShowMobilePreview(false)} className="absolute top-4 right-4 p-2 rounded-full" style={{ background: "rgba(255,255,255,0.08)", color: "#f8fafc" }}>
+                    <button onClick={() => setShowMobilePreview(false)} className="absolute top-4 right-4 p-2 rounded-full" style={{ background: "rgba(255,255,255,0.08)", color: "var(--color-text-primary)" }}>
                         <X className="w-5 h-5" />
                     </button>
-                    <p className="text-xs font-semibold mb-3 flex items-center gap-1.5" style={{ color: "#94a3b8" }}>
+                    <p className="text-xs font-semibold mb-3 flex items-center gap-1.5" style={{ color: "var(--color-text-secondary)" }}>
                         <span className="w-2 h-2 rounded-full inline-block" style={{ background: "#34d399" }} /> Live preview
                     </p>
-                    <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgba(45,45,74,0.6)" }} onClick={(e) => e.stopPropagation()}>
+                    <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgb(var(--rgb-surface-border) / 0.6)" }} onClick={(e) => e.stopPropagation()}>
                         {previewNode}
                     </div>
-                    <p className="text-[11px] mt-3 text-center" style={{ color: "#64748b" }}>Tap outside to close · plays silently</p>
+                    <p className="text-[11px] mt-3 text-center" style={{ color: "var(--color-text-muted)" }}>Tap outside to close · plays silently</p>
                 </div>
             )}
         </div>

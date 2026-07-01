@@ -36,7 +36,7 @@ const COLOR_OPTIONS = [
     "#fb923c", // Orange
     "#4ade80", // Green
     "#e879f9", // Fuchsia
-    "#94a3b8", // Slate
+    "var(--color-text-secondary)", // Slate
     "#1e293b", // Navy
 ];
 
@@ -68,7 +68,7 @@ export default function PreviewPage() {
             <div className="page-container">
                 <Navbar currentStep={3} />
                 <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-                    <p style={{ color: "#64748b" }}>No reel configured yet.</p>
+                    <p style={{ color: "var(--color-text-muted)" }}>No reel configured yet.</p>
                     <button className="btn-primary" onClick={() => router.push("/brand-setup")}>
                         Start from Brand Setup
                     </button>
@@ -95,9 +95,9 @@ export default function PreviewPage() {
                     {/* Preview phone */}
                     <div className="flex flex-col items-center gap-5 flex-shrink-0">
                         {/* Phone frame */}
-                        <div className="relative p-3 rounded-[42px]" style={{ background: "linear-gradient(145deg, #2d2d4a, #1a1a2e)", boxShadow: "0 0 0 2px #2d2d4a, 0 20px 60px rgba(0,0,0,0.6)", border: "1px solid rgba(45,45,74,0.8)" }}>
+                        <div className="relative p-3 rounded-[42px]" style={{ background: "linear-gradient(145deg, var(--color-surface-border), var(--color-surface-card))", boxShadow: "0 0 0 2px var(--color-surface-border), 0 20px 60px rgba(0,0,0,0.6)", border: "1px solid rgb(var(--rgb-surface-border) / 0.8)" }}>
                             {/* Camera notch */}
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 rounded-b-2xl z-10" style={{ background: "#1a1a2e" }} />
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-5 rounded-b-2xl z-10" style={{ background: "var(--color-surface-card)" }} />
                             <ReelPreview
                                 slides={script.slides}
                                 themeId={theme}
@@ -124,7 +124,7 @@ export default function PreviewPage() {
                             <button
                                 onClick={() => setPlaying((p) => !p)}
                                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
-                                style={{ background: "rgba(36,36,56,0.8)", border: "1px solid rgba(45,45,74,0.6)", color: "#a78bfa" }}
+                                style={{ background: "rgb(var(--rgb-surface-elevated) / 0.8)", border: "1px solid rgb(var(--rgb-surface-border) / 0.6)", color: "#a78bfa" }}
                             >
                                 {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                                 {playing ? "Pause" : "Play"}
@@ -132,7 +132,7 @@ export default function PreviewPage() {
                             <button
                                 onClick={() => { setPlaying(false); setTimeout(() => setPlaying(true), 50); }}
                                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
-                                style={{ background: "rgba(36,36,56,0.8)", border: "1px solid rgba(45,45,74,0.6)", color: "#94a3b8" }}
+                                style={{ background: "rgb(var(--rgb-surface-elevated) / 0.8)", border: "1px solid rgb(var(--rgb-surface-border) / 0.6)", color: "var(--color-text-secondary)" }}
                             >
                                 <RefreshCw className="w-4 h-4" />
                                 Restart
@@ -145,28 +145,28 @@ export default function PreviewPage() {
                         <div className="glass-card rounded-2xl p-6 space-y-4">
                             <h2 className="text-lg font-bold">Reel Summary</h2>
                             <div className="space-y-3">
-                                <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgba(45,45,74,0.4)" }}>
-                                    <span className="text-sm" style={{ color: "#94a3b8" }}>Brand</span>
+                                <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
+                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Brand</span>
                                     <span className="text-sm font-semibold">{brand.brandName}</span>
                                 </div>
-                                <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgba(45,45,74,0.4)" }}>
-                                    <span className="text-sm" style={{ color: "#94a3b8" }}>Script</span>
+                                <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
+                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Script</span>
                                     <span className="text-sm font-semibold">{script.title}</span>
                                 </div>
-                                <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgba(45,45,74,0.4)" }}>
-                                    <span className="text-sm" style={{ color: "#94a3b8" }}>Slides</span>
+                                <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
+                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Slides</span>
                                     <span className="text-sm font-semibold">{script.slides.length + 1} (incl. logo)</span>
                                 </div>
-                                <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgba(45,45,74,0.4)" }}>
-                                    <span className="text-sm" style={{ color: "#94a3b8" }}>Theme</span>
+                                <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
+                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Theme</span>
                                     <span className="text-sm font-semibold capitalize">{theme.replace("-", " ")}</span>
                                 </div>
-                                <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgba(45,45,74,0.4)" }}>
-                                    <span className="text-sm" style={{ color: "#94a3b8" }}>Format</span>
+                                <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
+                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Format</span>
                                     <span className="text-sm font-semibold">1080 × 1920 · MP4</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2">
-                                    <span className="text-sm" style={{ color: "#94a3b8" }}>Watermark</span>
+                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Watermark</span>
                                     <span className="text-sm font-semibold">{brand.watermarkPreview ? "✓ Uploaded" : "None"}</span>
                                 </div>
                             </div>
@@ -190,10 +190,10 @@ export default function PreviewPage() {
                                     };
 
                                     return (
-                                        <div key={i} className="flex flex-col gap-2 rounded-xl p-3 transition-all" style={{ background: isEditing ? "rgba(124,58,237,0.08)" : "rgba(15,15,26,0.5)", border: `1px solid ${isEditing ? "rgba(124,58,237,0.3)" : "transparent"}` }}>
+                                        <div key={i} className="flex flex-col gap-2 rounded-xl p-3 transition-all" style={{ background: isEditing ? "rgba(124,58,237,0.08)" : "rgb(var(--rgb-surface) / 0.5)", border: `1px solid ${isEditing ? "rgba(124,58,237,0.3)" : "transparent"}` }}>
                                             <div className="flex gap-3 items-center">
                                                 <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "rgba(124,58,237,0.25)", color: "#a78bfa" }}>{i + 1}</span>
-                                                <p className="text-sm flex-1 truncate" style={{ color: isEditing ? "#fff" : "#94a3b8" }}>
+                                                <p className="text-sm flex-1 truncate" style={{ color: isEditing ? "#fff" : "var(--color-text-secondary)" }}>
                                                     {slideObj.text}
                                                 </p>
                                                 <button
@@ -203,7 +203,7 @@ export default function PreviewPage() {
                                                         if (targetIndex !== null) setPlaying(false);
                                                     }}
                                                     className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-                                                    style={{ color: isEditing ? "#7c3aed" : "#64748b" }}
+                                                    style={{ color: isEditing ? "#7c3aed" : "var(--color-text-muted)" }}
                                                 >
                                                     <Settings2 className="w-4 h-4" />
                                                 </button>
@@ -213,7 +213,7 @@ export default function PreviewPage() {
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 pt-3 border-t border-white/5 animate-in fade-in slide-in-from-top-1 duration-200">
                                                     <div className="space-y-3">
                                                         <div className="flex items-center justify-between">
-                                                            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "#64748b" }}>Font Style</span>
+                                                            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>Font Style</span>
                                                             <div className="flex flex-wrap gap-1 max-w-[120px]">
                                                                 {COLOR_OPTIONS.map(c => (
                                                                     <button
@@ -237,13 +237,13 @@ export default function PreviewPage() {
                                                             className="w-full bg-black/40 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-white outline-none focus:ring-1 focus:ring-brand-purple"
                                                         >
                                                             {FONT_OPTIONS.map(f => (
-                                                                <option key={f.value} value={f.value} className="bg-[#1a1a2e]">{f.label}</option>
+                                                                <option key={f.value} value={f.value} className="bg-[var(--color-surface-card)]">{f.label}</option>
                                                             ))}
                                                         </select>
                                                     </div>
                                                     <div className="space-y-3">
                                                         <div className="flex justify-between items-center">
-                                                            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "#64748b" }}>Size</span>
+                                                            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>Size</span>
                                                             <span className="text-[11px] font-mono text-brand-purple">{slideObj.fontSize}px</span>
                                                         </div>
                                                         <input

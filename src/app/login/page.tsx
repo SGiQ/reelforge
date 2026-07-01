@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Zap, ArrowRight } from "lucide-react";
 import { API_BASE, setAuth } from "@/lib/auth";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -39,21 +40,22 @@ export default function LoginPage() {
 
     return (
         <div className="page-container flex items-center justify-center min-h-screen px-6">
+            <ThemeToggle floating />
             <div className="w-full max-w-md">
                 <div className="flex items-center justify-center gap-2 mb-8">
                     <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #7c3aed, #0d9488)" }}>
                         <Zap className="w-5 h-5 text-white" />
                     </div>
-                    <span className="font-bold text-xl tracking-tight" style={{ color: "#f8fafc" }}>
+                    <span className="font-bold text-xl tracking-tight" style={{ color: "var(--color-text-primary)" }}>
                         Reel<span style={{ color: "#a78bfa" }}>SGiQ</span>
                     </span>
                 </div>
 
                 <div className="glass-card rounded-2xl p-8">
-                    <h1 className="text-xl font-bold mb-1" style={{ color: "#f8fafc" }}>
+                    <h1 className="text-xl font-bold mb-1" style={{ color: "var(--color-text-primary)" }}>
                         {mode === "login" ? "Welcome back" : "Create your account"}
                     </h1>
-                    <p className="text-sm mb-6" style={{ color: "#94a3b8" }}>
+                    <p className="text-sm mb-6" style={{ color: "var(--color-text-secondary)" }}>
                         {mode === "login" ? "Sign in to your reels and the community." : "Start building branded reels."}
                     </p>
 
@@ -77,18 +79,18 @@ export default function LoginPage() {
 
                     {mode === "login" && (
                         <>
-                            <button onClick={() => setShowForgot((v) => !v)} className="text-xs mt-3 block mx-auto" style={{ color: "#64748b" }}>
+                            <button onClick={() => setShowForgot((v) => !v)} className="text-xs mt-3 block mx-auto" style={{ color: "var(--color-text-muted)" }}>
                                 Forgot password?
                             </button>
                             {showForgot && (
-                                <p className="text-xs text-center mt-2 leading-relaxed" style={{ color: "#64748b" }}>
+                                <p className="text-xs text-center mt-2 leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
                                     Password resets are issued by an admin. Ask your administrator to generate a reset link for your email — then open it to set a new password.
                                 </p>
                             )}
                         </>
                     )}
 
-                    <p className="text-sm text-center mt-6" style={{ color: "#94a3b8" }}>
+                    <p className="text-sm text-center mt-6" style={{ color: "var(--color-text-secondary)" }}>
                         {mode === "login" ? "New here?" : "Already have an account?"}{" "}
                         <button onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(null); }}
                             className="font-semibold" style={{ color: "#a78bfa" }}>

@@ -27,9 +27,9 @@ function Section({ icon, title, accent, children }: { icon: React.ReactNode; tit
                 <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: `${accent}22`, color: accent }}>
                     {icon}
                 </div>
-                <h3 className="text-lg font-bold" style={{ color: "#f8fafc" }}>{title}</h3>
+                <h3 className="text-lg font-bold" style={{ color: "var(--color-text-primary)" }}>{title}</h3>
             </div>
-            <div className="text-sm leading-relaxed space-y-2" style={{ color: "#94a3b8" }}>
+            <div className="text-sm leading-relaxed space-y-2" style={{ color: "var(--color-text-secondary)" }}>
                 {children}
             </div>
         </div>
@@ -64,8 +64,8 @@ export default function HelpPage() {
                                 style={{ background: `${s.color}33`, color: s.color }}>
                                 {s.n}
                             </div>
-                            <div className="font-bold text-sm" style={{ color: "#f8fafc" }}>{s.label}</div>
-                            <div className="text-xs mt-0.5" style={{ color: "#64748b" }}>{s.desc}</div>
+                            <div className="font-bold text-sm" style={{ color: "var(--color-text-primary)" }}>{s.label}</div>
+                            <div className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>{s.desc}</div>
                         </div>
                     ))}
                 </div>
@@ -79,7 +79,7 @@ export default function HelpPage() {
                             <li><strong style={{ color: "#cbd5e1" }}>Watermark photo</strong> — a faint background image behind text slides; adjust its opacity. It’s automatically hidden on video scenes and the final branding slide.</li>
                             <li><strong style={{ color: "#cbd5e1" }}>QR code</strong> — upload your own or we generate one from your website URL for the final slide.</li>
                         </ul>
-                        <p className="flex items-center gap-2 pt-1"><QrCode className="w-4 h-4" style={{ color: "#64748b" }} /> Your brand is remembered, so you don’t re-upload it every time.</p>
+                        <p className="flex items-center gap-2 pt-1"><QrCode className="w-4 h-4" style={{ color: "var(--color-text-muted)" }} /> Your brand is remembered, so you don’t re-upload it every time.</p>
                     </Section>
 
                     {/* Step 2 — Scenes */}
@@ -107,7 +107,7 @@ export default function HelpPage() {
                             <li className="flex items-start gap-2"><ArrowUpDown className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "#2dd4bf" }} /><span><strong style={{ color: "#cbd5e1" }}>Reorder</strong> scenes with the up/down arrows.</span></li>
                         </ul>
                         <p className="flex items-center gap-2 pt-1"><Sparkles className="w-4 h-4" style={{ color: "#a78bfa" }} /> In a hurry? Use <strong style={{ color: "#cbd5e1" }}>Generate Script with AI</strong> to draft your text scenes from a prompt.</p>
-                        <p className="flex items-center gap-2"><Mic className="w-4 h-4" style={{ color: "#64748b" }} /> The <strong style={{ color: "#cbd5e1" }}>Final Logo Slide</strong> field lets you set a closing line the voiceover says over your logo (it isn’t shown on screen).</p>
+                        <p className="flex items-center gap-2"><Mic className="w-4 h-4" style={{ color: "var(--color-text-muted)" }} /> The <strong style={{ color: "#cbd5e1" }}>Final Logo Slide</strong> field lets you set a closing line the voiceover says over your logo (it isn’t shown on screen).</p>
                     </Section>
 
                     {/* Motion & animation */}

@@ -138,15 +138,15 @@ export default function AutoPage() {
                             disabled={loading}
                         />
                         {brand?.brandName && (
-                            <p className="text-xs mt-1.5" style={{ color: "#64748b" }}>
-                                Using your brand <strong style={{ color: "#94a3b8" }}>{brand.brandName}</strong>
+                            <p className="text-xs mt-1.5" style={{ color: "var(--color-text-muted)" }}>
+                                Using your brand <strong style={{ color: "var(--color-text-secondary)" }}>{brand.brandName}</strong>
                                 {brand.websiteUrl ? " (+ website research)" : ""}.
                             </p>
                         )}
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <label className="text-sm" style={{ color: "#94a3b8" }}>Scenes</label>
+                        <label className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Scenes</label>
                         <input type="range" min={3} max={10} value={slideCount}
                             onChange={(e) => setSlideCount(parseInt(e.target.value, 10))}
                             className="flex-1 accent-brand-purple" disabled={loading} />
@@ -157,15 +157,15 @@ export default function AutoPage() {
                     <div className="grid grid-cols-2 gap-2">
                         <button type="button" onClick={() => setAutopilot(false)} disabled={loading}
                             className="rounded-xl p-3 text-left transition-colors"
-                            style={{ background: !autopilot ? "rgba(45,212,191,0.12)" : "rgba(26,26,46,0.6)", border: `1px solid ${!autopilot ? "rgba(45,212,191,0.5)" : "rgba(45,45,74,0.6)"}` }}>
+                            style={{ background: !autopilot ? "rgba(45,212,191,0.12)" : "rgb(var(--rgb-surface-card) / 0.6)", border: `1px solid ${!autopilot ? "rgba(45,212,191,0.5)" : "rgb(var(--rgb-surface-border) / 0.6)"}` }}>
                             <div className="flex items-center gap-2 font-semibold text-sm" style={{ color: "#2dd4bf" }}><Eye className="w-4 h-4" /> Review first</div>
-                            <p className="text-xs mt-1" style={{ color: "#64748b" }}>Open the finished reel in Preview to tweak before rendering.</p>
+                            <p className="text-xs mt-1" style={{ color: "var(--color-text-muted)" }}>Open the finished reel in Preview to tweak before rendering.</p>
                         </button>
                         <button type="button" onClick={() => setAutopilot(true)} disabled={loading}
                             className="rounded-xl p-3 text-left transition-colors"
-                            style={{ background: autopilot ? "rgba(124,58,237,0.14)" : "rgba(26,26,46,0.6)", border: `1px solid ${autopilot ? "rgba(124,58,237,0.5)" : "rgba(45,45,74,0.6)"}` }}>
+                            style={{ background: autopilot ? "rgba(124,58,237,0.14)" : "rgb(var(--rgb-surface-card) / 0.6)", border: `1px solid ${autopilot ? "rgba(124,58,237,0.5)" : "rgb(var(--rgb-surface-border) / 0.6)"}` }}>
                             <div className="flex items-center gap-2 font-semibold text-sm" style={{ color: "#a78bfa" }}><Rocket className="w-4 h-4" /> Autopilot</div>
-                            <p className="text-xs mt-1" style={{ color: "#64748b" }}>Render it straight to your dashboard — no review step.</p>
+                            <p className="text-xs mt-1" style={{ color: "var(--color-text-muted)" }}>Render it straight to your dashboard — no review step.</p>
                         </button>
                     </div>
 
@@ -178,7 +178,7 @@ export default function AutoPage() {
                             : <><Sparkles className="w-5 h-5" /> {autopilot ? "Generate & render" : "Generate reel"}</>}
                     </button>
                     {!brand?.brandName && (
-                        <p className="text-xs text-center" style={{ color: "#64748b" }}>
+                        <p className="text-xs text-center" style={{ color: "var(--color-text-muted)" }}>
                             Tip: set up your brand first so the reel uses your logo and colors.
                         </p>
                     )}

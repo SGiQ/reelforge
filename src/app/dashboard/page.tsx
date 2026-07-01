@@ -119,7 +119,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                             className="absolute inset-0 w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 opacity-100 group-hover:opacity-0">
-                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgba(15,15,26,0.65)", border: "1px solid rgba(255,255,255,0.25)" }}>
+                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgb(var(--rgb-surface) / 0.65)", border: "1px solid rgba(255,255,255,0.25)" }}>
                                 <Play className="w-5 h-5 text-white ml-0.5" />
                             </div>
                         </div>
@@ -145,10 +145,10 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
 
             {/* Body */}
             <div className="p-5 flex flex-col flex-1">
-                <h3 className="font-bold text-base mb-1 line-clamp-2" style={{ color: "#f8fafc" }}>
+                <h3 className="font-bold text-base mb-1 line-clamp-2" style={{ color: "var(--color-text-primary)" }}>
                     {title}
                 </h3>
-                <div className="flex items-center gap-2 text-xs mb-4" style={{ color: "#94a3b8" }}>
+                <div className="flex items-center gap-2 text-xs mb-4" style={{ color: "var(--color-text-secondary)" }}>
                     <span className="truncate max-w-[55%]">{job.brand_name || "Brand Video"}</span>
                     <span>•</span>
                     <span className="capitalize">{job.theme.replace("-", " ")}</span>
@@ -219,7 +219,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                         <button
                             onClick={() => setPlayerOpen(false)}
                             className="absolute -top-3 -right-3 w-9 h-9 rounded-full flex items-center justify-center"
-                            style={{ background: "#1a1a2e", border: "1px solid rgba(255,255,255,0.25)" }}
+                            style={{ background: "var(--color-surface-card)", border: "1px solid rgba(255,255,255,0.25)" }}
                             aria-label="Close"
                         >
                             <X className="w-5 h-5 text-white" />
@@ -235,8 +235,8 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                         <div className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ background: "rgba(124,58,237,0.2)" }}>
                             <Share2 className="w-6 h-6" style={{ color: "#a78bfa" }} />
                         </div>
-                        <h3 className="text-lg font-bold mb-1" style={{ color: "#f8fafc" }}>Share to the community?</h3>
-                        <p className="text-sm mb-5" style={{ color: "#94a3b8" }}>
+                        <h3 className="text-lg font-bold mb-1" style={{ color: "var(--color-text-primary)" }}>Share to the community?</h3>
+                        <p className="text-sm mb-5" style={{ color: "var(--color-text-secondary)" }}>
                             Your reel downloaded. Add it to the community dashboard so other members can see it.
                         </p>
                         <div className="flex gap-2">
@@ -354,13 +354,13 @@ export default function Dashboard() {
                 <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-6">
                     <div>
                         <h1 className="section-title text-3xl mb-2">My Dashboard</h1>
-                        <p className="text-sm" style={{ color: "#94a3b8" }}>Manage and download all your generated reels.</p>
+                        <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Manage and download all your generated reels.</p>
                     </div>
                     <div className="flex gap-4">
                         <button
                             onClick={fetchHistory}
                             className="flex items-center justify-center w-12 h-12 rounded-xl border transition-colors hover:bg-white/5"
-                            style={{ borderColor: "rgba(45,45,74,0.6)", color: "#94a3b8" }}
+                            style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)", color: "var(--color-text-secondary)" }}
                         >
                             <RefreshCw className={`w-5 h-5 ${isLoading ? "animate-spin" : ""}`} />
                         </button>
@@ -382,12 +382,12 @@ export default function Dashboard() {
                         <div className="w-8 h-8 rounded-full border-2 border-brand-purple border-t-transparent animate-spin" />
                     </div>
                 ) : jobs.length === 0 ? (
-                    <div className="text-center py-24 rounded-3xl border border-dashed" style={{ borderColor: "rgba(45,45,74,0.6)", background: "rgba(26,26,46,0.5)" }}>
+                    <div className="text-center py-24 rounded-3xl border border-dashed" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)", background: "rgb(var(--rgb-surface-card) / 0.5)" }}>
                         <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ background: "rgba(124,58,237,0.1)" }}>
                             <Video className="w-8 h-8" style={{ color: "#a78bfa" }} />
                         </div>
                         <h3 className="text-lg font-bold mb-2">No reels yet</h3>
-                        <p className="text-sm mb-6 max-w-sm mx-auto" style={{ color: "#94a3b8" }}>
+                        <p className="text-sm mb-6 max-w-sm mx-auto" style={{ color: "var(--color-text-secondary)" }}>
                             You haven't generated any MP4s yet. Create your first brand Reel now!
                         </p>
                         <Link href="/brand-setup" className="btn-primary">Get Started</Link>

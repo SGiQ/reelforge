@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Zap, Loader2, CheckCircle } from "lucide-react";
 import { API_BASE, setAuth } from "@/lib/auth";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function ResetPage() {
     const router = useRouter();
@@ -45,18 +46,19 @@ export default function ResetPage() {
 
     return (
         <div className="page-container min-h-screen flex items-center justify-center px-6">
+            <ThemeToggle floating />
             <div className="w-full max-w-sm">
                 <div className="flex items-center gap-2 justify-center mb-8">
                     <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #7c3aed, #0d9488)" }}>
                         <Zap className="w-5 h-5 text-white" />
                     </div>
-                    <span className="font-bold text-xl tracking-tight" style={{ color: "#f8fafc" }}>
+                    <span className="font-bold text-xl tracking-tight" style={{ color: "var(--color-text-primary)" }}>
                         Reel<span style={{ color: "#a78bfa" }}>SGiQ</span>
                     </span>
                 </div>
 
                 <div className="glass-card rounded-2xl p-6">
-                    <h1 className="text-lg font-bold mb-1" style={{ color: "#f8fafc" }}>Set a new password</h1>
+                    <h1 className="text-lg font-bold mb-1" style={{ color: "var(--color-text-primary)" }}>Set a new password</h1>
                     {!token ? (
                         <p className="text-sm" style={{ color: "#f87171" }}>
                             This reset link is missing its token. Use the full link you were given, or request a new one.
@@ -79,7 +81,7 @@ export default function ResetPage() {
                             </button>
                         </form>
                     )}
-                    <p className="text-xs text-center mt-4" style={{ color: "#64748b" }}>
+                    <p className="text-xs text-center mt-4" style={{ color: "var(--color-text-muted)" }}>
                         <Link href="/login" style={{ color: "#a78bfa" }}>Back to login</Link>
                     </p>
                 </div>

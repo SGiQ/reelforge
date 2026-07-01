@@ -29,14 +29,14 @@ function CommunityCard({ reel }: { reel: any }) {
                     onLoadedMetadata={(e) => { try { e.currentTarget.currentTime = 0.5; } catch { } }}
                     className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 opacity-100 group-hover:opacity-0">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgba(15,15,26,0.65)", border: "1px solid rgba(255,255,255,0.25)" }}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgb(var(--rgb-surface) / 0.65)", border: "1px solid rgba(255,255,255,0.25)" }}>
                         <Play className="w-5 h-5 text-white ml-0.5" />
                     </div>
                 </div>
             </div>
             <div className="p-4">
-                <h3 className="font-bold text-sm truncate" style={{ color: "#f8fafc" }}>{reel.brand_name || "Untitled Reel"}</h3>
-                <p className="text-xs mt-0.5" style={{ color: "#94a3b8" }}>
+                <h3 className="font-bold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>{reel.brand_name || "Untitled Reel"}</h3>
+                <p className="text-xs mt-0.5" style={{ color: "var(--color-text-secondary)" }}>
                     Shared by <span style={{ color: "#a78bfa" }}>{reel.shared_by || "Someone"}</span>
                 </p>
             </div>
@@ -47,7 +47,7 @@ function CommunityCard({ reel }: { reel: any }) {
                         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                         <video src={url} controls autoPlay playsInline className="rounded-xl" style={{ maxHeight: "88vh", maxWidth: "92vw", background: "#000" }} />
                         <button onClick={() => setOpen(false)} className="absolute -top-3 -right-3 w-9 h-9 rounded-full flex items-center justify-center"
-                            style={{ background: "#1a1a2e", border: "1px solid rgba(255,255,255,0.25)" }} aria-label="Close">
+                            style={{ background: "var(--color-surface-card)", border: "1px solid rgba(255,255,255,0.25)" }} aria-label="Close">
                             <X className="w-5 h-5 text-white" />
                         </button>
                     </div>
@@ -90,10 +90,10 @@ export default function CommunityPage() {
                         <h1 className="section-title text-3xl mb-2 flex items-center gap-2">
                             <Users className="w-7 h-7" style={{ color: "#a78bfa" }} /> Community
                         </h1>
-                        <p className="text-sm" style={{ color: "#94a3b8" }}>Reels shared by members. Download yours and share to add it here.</p>
+                        <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Reels shared by members. Download yours and share to add it here.</p>
                     </div>
                     <button onClick={fetchFeed} className="flex items-center justify-center w-12 h-12 rounded-xl border transition-colors hover:bg-white/5"
-                        style={{ borderColor: "rgba(45,45,74,0.6)", color: "#94a3b8" }}>
+                        style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)", color: "var(--color-text-secondary)" }}>
                         <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
                     </button>
                 </div>
@@ -105,12 +105,12 @@ export default function CommunityPage() {
                         <div className="w-8 h-8 rounded-full border-2 border-brand-purple border-t-transparent animate-spin" />
                     </div>
                 ) : reels.length === 0 ? (
-                    <div className="text-center py-24 rounded-3xl border border-dashed" style={{ borderColor: "rgba(45,45,74,0.6)", background: "rgba(26,26,46,0.5)" }}>
+                    <div className="text-center py-24 rounded-3xl border border-dashed" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)", background: "rgb(var(--rgb-surface-card) / 0.5)" }}>
                         <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ background: "rgba(124,58,237,0.1)" }}>
                             <Users className="w-8 h-8" style={{ color: "#a78bfa" }} />
                         </div>
                         <h3 className="text-lg font-bold mb-2">No shared reels yet</h3>
-                        <p className="text-sm max-w-sm mx-auto" style={{ color: "#94a3b8" }}>
+                        <p className="text-sm max-w-sm mx-auto" style={{ color: "var(--color-text-secondary)" }}>
                             Be the first — download a reel from your dashboard and choose “Share” to feature it here.
                         </p>
                     </div>
