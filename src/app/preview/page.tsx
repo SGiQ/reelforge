@@ -28,8 +28,8 @@ const FONT_OPTIONS = [
 
 const COLOR_OPTIONS = [
     "#ffffff", // White
-    "#a78bfa", // Purple
-    "#2dd4bf", // Teal
+    "var(--color-accent)", // Purple
+    "var(--color-accent)", // Teal
     "#facc15", // Yellow
     "#f87171", // Red
     "#38bdf8", // Sky Blue
@@ -85,7 +85,7 @@ export default function PreviewPage() {
                     <p className="step-indicator mb-3">
                         <span>Step 4 of 5</span>
                         <span className="text-xs mx-1">·</span>
-                        <span style={{ color: "#a78bfa" }}>Live Preview</span>
+                        <span style={{ color: "var(--color-accent)" }}>Live Preview</span>
                     </p>
                     <h1 className="section-title">Preview your reel</h1>
                     <p className="section-subtitle">This is exactly what your MP4 will look like — slides animate in sequence.</p>
@@ -124,7 +124,7 @@ export default function PreviewPage() {
                             <button
                                 onClick={() => setPlaying((p) => !p)}
                                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
-                                style={{ background: "rgb(var(--rgb-surface-elevated) / 0.8)", border: "1px solid rgb(var(--rgb-surface-border) / 0.6)", color: "#a78bfa" }}
+                                style={{ background: "rgb(var(--rgb-surface-elevated) / 0.8)", border: "1px solid rgb(var(--rgb-surface-border) / 0.6)", color: "var(--color-accent)" }}
                             >
                                 {playing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
                                 {playing ? "Pause" : "Play"}
@@ -190,9 +190,9 @@ export default function PreviewPage() {
                                     };
 
                                     return (
-                                        <div key={i} className="flex flex-col gap-2 rounded-xl p-3 transition-all" style={{ background: isEditing ? "rgba(124,58,237,0.08)" : "rgb(var(--rgb-surface) / 0.5)", border: `1px solid ${isEditing ? "rgba(124,58,237,0.3)" : "transparent"}` }}>
+                                        <div key={i} className="flex flex-col gap-2 rounded-xl p-3 transition-all" style={{ background: isEditing ? "rgba(198,241,53,0.08)" : "rgb(var(--rgb-surface) / 0.5)", border: `1px solid ${isEditing ? "rgba(198,241,53,0.3)" : "transparent"}` }}>
                                             <div className="flex gap-3 items-center">
-                                                <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "rgba(124,58,237,0.25)", color: "#a78bfa" }}>{i + 1}</span>
+                                                <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "rgba(198,241,53,0.25)", color: "var(--color-accent)" }}>{i + 1}</span>
                                                 <p className="text-sm flex-1 truncate" style={{ color: isEditing ? "#fff" : "var(--color-text-secondary)" }}>
                                                     {slideObj.text}
                                                 </p>
@@ -203,7 +203,7 @@ export default function PreviewPage() {
                                                         if (targetIndex !== null) setPlaying(false);
                                                     }}
                                                     className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-                                                    style={{ color: isEditing ? "#7c3aed" : "var(--color-text-muted)" }}
+                                                    style={{ color: isEditing ? "var(--color-accent)" : "var(--color-text-muted)" }}
                                                 >
                                                     <Settings2 className="w-4 h-4" />
                                                 </button>
@@ -259,11 +259,11 @@ export default function PreviewPage() {
                                         </div>
                                     );
                                 })}
-                                <div className="flex gap-3 items-center rounded-lg px-3 py-2.5 opacity-60" style={{ background: "rgba(13,148,136,0.08)" }}>
-                                    <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "rgba(13,148,136,0.25)", color: "#2dd4bf" }}>
+                                <div className="flex gap-3 items-center rounded-lg px-3 py-2.5 opacity-60" style={{ background: "rgba(198,241,53,0.08)" }}>
+                                    <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "rgba(198,241,53,0.25)", color: "var(--color-accent)" }}>
                                         {script.slides.length + 1}
                                     </span>
-                                    <p className="text-sm" style={{ color: "#2dd4bf" }}>Logo + QR code (final slide)</p>
+                                    <p className="text-sm" style={{ color: "var(--color-accent)" }}>Logo + QR code (final slide)</p>
                                 </div>
                             </div>
                         </div>

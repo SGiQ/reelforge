@@ -49,11 +49,11 @@ export default function ResetPage() {
             <ThemeToggle floating />
             <div className="w-full max-w-sm">
                 <div className="flex items-center gap-2 justify-center mb-8">
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #7c3aed, #0d9488)" }}>
-                        <Zap className="w-5 h-5 text-white" />
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "var(--color-accent)" }}>
+                        <Zap className="w-5 h-5" style={{ color: "var(--color-accent-ink)" }} />
                     </div>
                     <span className="font-bold text-xl tracking-tight" style={{ color: "var(--color-text-primary)" }}>
-                        Reel<span style={{ color: "#a78bfa" }}>SGiQ</span>
+                        Reel<span style={{ color: "var(--color-accent)" }}>SGiQ</span>
                     </span>
                 </div>
 
@@ -82,7 +82,7 @@ export default function ResetPage() {
                         </form>
                     )}
                     <p className="text-xs text-center mt-4" style={{ color: "var(--color-text-muted)" }}>
-                        <Link href="/login" style={{ color: "#a78bfa" }}>Back to login</Link>
+                        <Link href="/login" style={{ color: "var(--color-accent)" }}>Back to login</Link>
                     </p>
                 </div>
             </div>

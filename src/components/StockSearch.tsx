@@ -47,7 +47,7 @@ export default function StockSearch({ onSelect }: { onSelect: (clip: StockClip) 
                     onClick={search}
                     disabled={loading || !q.trim()}
                     className="px-4 py-2 rounded-lg text-sm font-medium text-white disabled:opacity-50"
-                    style={{ background: "#0d9488" }}
+                    style={{ background: "var(--color-accent)" }}
                 >
                     {loading ? "Searching…" : "Search"}
                 </button>

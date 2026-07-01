@@ -8,29 +8,37 @@ module.exports = {
     theme: {
         extend: {
             colors: {
+                // Cinematic Studio — single lime accent. Brand names kept so
+                // existing `brand-*` utility classes flip to lime automatically.
                 brand: {
-                    purple: "#7c3aed",
-                    "purple-light": "#a78bfa",
-                    "purple-dark": "#5b21b6",
-                    teal: "#0d9488",
-                    "teal-light": "#2dd4bf",
-                    "teal-dark": "#0f766e",
+                    purple: "#c6f135",
+                    "purple-light": "#d4f96a",
+                    "purple-dark": "#acd60e",
+                    teal: "#c6f135",
+                    "teal-light": "#d4f96a",
+                    "teal-dark": "#acd60e",
+                },
+                accent: {
+                    DEFAULT: "#c6f135",
+                    dim: "#acd60e",
+                    ink: "#0a0a0f",
                 },
                 surface: {
-                    DEFAULT: "#0f0f1a",
-                    card: "#1a1a2e",
-                    elevated: "#242438",
-                    border: "#2d2d4a",
+                    DEFAULT: "#0a0a0f",
+                    card: "#101018",
+                    elevated: "#16161f",
+                    border: "#26262e",
                 },
             },
             fontFamily: {
                 sans: ["Inter", "system-ui", "sans-serif"],
-                display: ["Inter", "system-ui", "sans-serif"],
+                display: ["Space Grotesk", "Inter", "system-ui", "sans-serif"],
+                mono: ["Geist Mono", "Space Mono", "ui-monospace", "monospace"],
             },
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-                "gradient-brand": "linear-gradient(135deg, #7c3aed 0%, #0d9488 100%)",
-                "gradient-dark": "linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%)",
+                "gradient-brand": "linear-gradient(135deg, #c6f135 0%, #acd60e 100%)",
+                "gradient-dark": "linear-gradient(180deg, #0a0a0f 0%, #101018 100%)",
             },
             animation: {
                 "fade-in": "fadeIn 0.5s ease-in-out",

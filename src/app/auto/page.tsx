@@ -118,9 +118,9 @@ export default function AutoPage() {
                 <div className="mb-8">
                     <p className="step-indicator mb-3">
                         <span>New</span><span className="text-xs mx-1">·</span>
-                        <span style={{ color: "#a78bfa" }}>AI Director</span>
+                        <span style={{ color: "var(--color-accent)" }}>AI Director</span>
                     </p>
-                    <h1 className="section-title flex items-center gap-2"><Wand2 className="w-7 h-7" style={{ color: "#a78bfa" }} /> Make a reel for me</h1>
+                    <h1 className="section-title flex items-center gap-2"><Wand2 className="w-7 h-7" style={{ color: "var(--color-accent)" }} /> Make a reel for me</h1>
                     <p className="section-subtitle">
                         Describe what you want. The AI writes the script, picks stock footage, sets motion, and assembles a full reel —
                         ready to review or render on its own.
@@ -150,21 +150,21 @@ export default function AutoPage() {
                         <input type="range" min={3} max={10} value={slideCount}
                             onChange={(e) => setSlideCount(parseInt(e.target.value, 10))}
                             className="flex-1 accent-brand-purple" disabled={loading} />
-                        <span className="text-sm font-semibold w-6 text-center" style={{ color: "#a78bfa" }}>{slideCount}</span>
+                        <span className="text-sm font-semibold w-6 text-center" style={{ color: "var(--color-accent)" }}>{slideCount}</span>
                     </div>
 
                     {/* Mode toggle */}
                     <div className="grid grid-cols-2 gap-2">
                         <button type="button" onClick={() => setAutopilot(false)} disabled={loading}
                             className="rounded-xl p-3 text-left transition-colors"
-                            style={{ background: !autopilot ? "rgba(45,212,191,0.12)" : "rgb(var(--rgb-surface-card) / 0.6)", border: `1px solid ${!autopilot ? "rgba(45,212,191,0.5)" : "rgb(var(--rgb-surface-border) / 0.6)"}` }}>
-                            <div className="flex items-center gap-2 font-semibold text-sm" style={{ color: "#2dd4bf" }}><Eye className="w-4 h-4" /> Review first</div>
+                            style={{ background: !autopilot ? "rgba(198,241,53,0.12)" : "rgb(var(--rgb-surface-card) / 0.6)", border: `1px solid ${!autopilot ? "rgba(198,241,53,0.5)" : "rgb(var(--rgb-surface-border) / 0.6)"}` }}>
+                            <div className="flex items-center gap-2 font-semibold text-sm" style={{ color: "var(--color-accent)" }}><Eye className="w-4 h-4" /> Review first</div>
                             <p className="text-xs mt-1" style={{ color: "var(--color-text-muted)" }}>Open the finished reel in Preview to tweak before rendering.</p>
                         </button>
                         <button type="button" onClick={() => setAutopilot(true)} disabled={loading}
                             className="rounded-xl p-3 text-left transition-colors"
-                            style={{ background: autopilot ? "rgba(124,58,237,0.14)" : "rgb(var(--rgb-surface-card) / 0.6)", border: `1px solid ${autopilot ? "rgba(124,58,237,0.5)" : "rgb(var(--rgb-surface-border) / 0.6)"}` }}>
-                            <div className="flex items-center gap-2 font-semibold text-sm" style={{ color: "#a78bfa" }}><Rocket className="w-4 h-4" /> Autopilot</div>
+                            style={{ background: autopilot ? "rgba(198,241,53,0.14)" : "rgb(var(--rgb-surface-card) / 0.6)", border: `1px solid ${autopilot ? "rgba(198,241,53,0.5)" : "rgb(var(--rgb-surface-border) / 0.6)"}` }}>
+                            <div className="flex items-center gap-2 font-semibold text-sm" style={{ color: "var(--color-accent)" }}><Rocket className="w-4 h-4" /> Autopilot</div>
                             <p className="text-xs mt-1" style={{ color: "var(--color-text-muted)" }}>Render it straight to your dashboard — no review step.</p>
                         </button>
                     </div>

@@ -40,7 +40,7 @@ export default function AccountPage() {
         <div className="page-container">
             <Navbar />
             <main className="max-w-md mx-auto px-6 py-12">
-                <h1 className="section-title flex items-center gap-2"><KeyRound className="w-6 h-6" style={{ color: "#a78bfa" }} /> Account</h1>
+                <h1 className="section-title flex items-center gap-2"><KeyRound className="w-6 h-6" style={{ color: "var(--color-accent)" }} /> Account</h1>
                 {user?.email && <p className="section-subtitle">Signed in as {user.email}</p>}
 
                 <div className="glass-card rounded-2xl p-6 mt-6">

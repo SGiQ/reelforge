@@ -140,7 +140,7 @@ export default function AdminPage() {
                 <div className="flex items-end justify-between mb-8 gap-6">
                     <div>
                         <h1 className="section-title text-3xl mb-2 flex items-center gap-2">
-                            <Shield className="w-7 h-7" style={{ color: "#a78bfa" }} /> Admin
+                            <Shield className="w-7 h-7" style={{ color: "var(--color-accent)" }} /> Admin
                         </h1>
                         <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Moderate the community and manage reels & users.</p>
                     </div>
@@ -154,7 +154,7 @@ export default function AdminPage() {
                     {(["reels", "users", "music"] as const).map((t) => (
                         <button key={t} onClick={() => setTab(t)}
                             className="px-4 py-2 rounded-full text-sm font-medium capitalize transition-colors"
-                            style={tab === t ? { background: "#7c3aed", color: "#fff" } : { background: "rgb(var(--rgb-surface-elevated) / 0.8)", color: "var(--color-text-secondary)" }}>
+                            style={tab === t ? { background: "var(--color-accent)", color: "#fff" } : { background: "rgb(var(--rgb-surface-elevated) / 0.8)", color: "var(--color-text-secondary)" }}>
                             {t === "reels" ? <Film className="w-4 h-4 inline mr-1" /> : t === "users" ? <Users className="w-4 h-4 inline mr-1" /> : <Music className="w-4 h-4 inline mr-1" />}
                             {t} ({t === "reels" ? reels.length : t === "users" ? users.length : tracks.length})
                         </button>
@@ -164,9 +164,9 @@ export default function AdminPage() {
                 {error && <p className="text-sm mb-6" style={{ color: "#f87171" }}>{error}</p>}
 
                 {tab === "reels" && orphanCount > 0 && (
-                    <div className="rounded-xl px-4 py-3 mb-5 flex items-center justify-between gap-4" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.25)" }}>
+                    <div className="rounded-xl px-4 py-3 mb-5 flex items-center justify-between gap-4" style={{ background: "rgba(198,241,53,0.08)", border: "1px solid rgba(198,241,53,0.25)" }}>
                         <p className="text-sm" style={{ color: "#cbd5e1" }}>
-                            <strong style={{ color: "#a78bfa" }}>{orphanCount}</strong> reel(s) were created before login and have no owner.
+                            <strong style={{ color: "var(--color-accent)" }}>{orphanCount}</strong> reel(s) were created before login and have no owner.
                         </p>
                         <button onClick={claimOrphans} className="btn-primary px-4 py-2 text-sm whitespace-nowrap">
                             Claim to my account
@@ -236,13 +236,13 @@ export default function AdminPage() {
                         <div className="space-y-2">
                             {tracks.map((t) => (
                                 <div key={t.id} className="glass-card rounded-xl p-4 flex items-center gap-4">
-                                    <Music className="w-4 h-4 flex-shrink-0" style={{ color: "#a78bfa" }} />
+                                    <Music className="w-4 h-4 flex-shrink-0" style={{ color: "var(--color-accent)" }} />
                                     <div className="flex-1 min-w-0">
                                         <p className="font-semibold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>{t.title}</p>
                                         <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
                                             <span className="capitalize">{t.mood}</span>{t.duration ? ` · ${Math.round(t.duration)}s` : ""}
                                             {t.artist ? ` · ${t.artist}` : ""}
-                                            {t.source === "jamendo" && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(45,212,191,0.15)", color: "#2dd4bf" }}>JAMENDO</span>}
+                                            {t.source === "jamendo" && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(198,241,53,0.15)", color: "var(--color-accent)" }}>JAMENDO</span>}
                                         </p>
                                     </div>
                                     <audio src={t.url} controls preload="none" style={{ height: 32 }} />
@@ -264,7 +264,7 @@ export default function AdminPage() {
                                         {r.shared && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(52,211,153,0.2)", color: "#34d399" }}>SHARED</span>}
                                     </p>
                                 </div>
-                                {r.output_url && <a href={r.output_url} target="_blank" rel="noreferrer" className="text-xs" style={{ color: "#a78bfa" }}>view</a>}
+                                {r.output_url && <a href={r.output_url} target="_blank" rel="noreferrer" className="text-xs" style={{ color: "var(--color-accent)" }}>view</a>}
                                 {r.shared && (
                                     <button onClick={() => act("POST", `/admin/reels/${r.id}/unshare`)} title="Remove from community"
                                         className="p-2 rounded-lg hover:bg-white/5" style={{ color: "#facc15" }}><EyeOff className="w-4 h-4" /></button>
@@ -282,12 +282,12 @@ export default function AdminPage() {
                                 <div className="flex-1 min-w-0">
                                     <p className="font-semibold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>
                                         {u.display_name || u.email}
-                                        {u.is_admin && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(124,58,237,0.25)", color: "#a78bfa" }}>ADMIN</span>}
+                                        {u.is_admin && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(198,241,53,0.25)", color: "var(--color-accent)" }}>ADMIN</span>}
                                     </p>
                                     <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>{u.email} · {u.reel_count} reel(s)</p>
                                 </div>
                                 <button onClick={() => resetLink(u)} title="Generate password reset link"
-                                    className="p-2 rounded-lg hover:bg-white/5" style={{ color: "#a78bfa" }}><KeyRound className="w-4 h-4" /></button>
+                                    className="p-2 rounded-lg hover:bg-white/5" style={{ color: "var(--color-accent)" }}><KeyRound className="w-4 h-4" /></button>
                                 {!u.is_admin && (
                                     <button onClick={() => act("DELETE", `/admin/users/${u.id}`, `Delete ${u.email}? Their reels stay but leave the community feed.`)} title="Delete user"
                                         className="p-2 rounded-lg hover:bg-red-500/10 text-red-400"><Trash2 className="w-4 h-4" /></button>

@@ -142,7 +142,7 @@ export default function SceneElementsEditor({
                             style={{
                                 position: "absolute", left: `${el.x * 100}%`, top: `${el.y * 100}%`,
                                 transform: "translate(-50%,-50%)", cursor: "grab",
-                                outline: selectedId === el.id ? "2px solid #2dd4bf" : "none",
+                                outline: selectedId === el.id ? "2px solid var(--color-accent)" : "none",
                                 outlineOffset: 3, borderRadius: 6, touchAction: "none",
                             }}
                         >
@@ -163,7 +163,7 @@ export default function SceneElementsEditor({
                     <div className="flex items-center gap-2">
                         <button type="button" onClick={() => setTab(tab === "icon" ? "" : "icon")}
                             className="flex items-center gap-1 text-[11px] px-2 py-1 rounded-md border border-white/10 hover:border-white/30"
-                            style={{ color: "#a78bfa" }}>
+                            style={{ color: "var(--color-accent)" }}>
                             <Shapes className="w-3.5 h-3.5" /> Icon
                         </button>
                         <button type="button" onClick={() => setTab(tab === "emoji" ? "" : "emoji")}
@@ -172,7 +172,7 @@ export default function SceneElementsEditor({
                             <Smile className="w-3.5 h-3.5" /> Emoji
                         </button>
                         <label className="flex items-center gap-1 text-[11px] px-2 py-1 rounded-md border border-white/10 hover:border-white/30 cursor-pointer"
-                            style={{ color: "#2dd4bf" }}>
+                            style={{ color: "var(--color-accent)" }}>
                             <Upload className="w-3.5 h-3.5" /> {uploading ? "Uploading…" : "Upload"}
                             <input type="file" accept="image/*" className="hidden" disabled={uploading}
                                 onChange={(e) => { const f = e.target.files?.[0]; if (f) handleUpload(f); e.currentTarget.value = ""; }} />
@@ -230,7 +230,7 @@ export default function SceneElementsEditor({
                             <div className="flex items-center gap-2">
                                 <span className="text-[11px] w-12" style={{ color: "var(--color-text-muted)" }}>Motion</span>
                                 <select value={selected.animation} onChange={(e) => updateEl(selected.id, { animation: e.target.value as any })}
-                                    className="bg-transparent text-[11px] border border-white/10 rounded px-1 py-0.5 outline-none flex-1" style={{ color: "#2dd4bf" }}>
+                                    className="bg-transparent text-[11px] border border-white/10 rounded px-1 py-0.5 outline-none flex-1" style={{ color: "var(--color-accent)" }}>
                                     {ELEMENT_ANIMS.map((a) => <option key={a.value} value={a.value} className="bg-[#1a1a2e] text-white">{a.label}</option>)}
                                 </select>
                             </div>

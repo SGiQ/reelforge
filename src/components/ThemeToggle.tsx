@@ -21,7 +21,7 @@ export default function ThemeToggle({ floating = false }: { floating?: boolean }
                 background: "rgb(var(--rgb-surface-border) / 0.4)",
                 color: "var(--color-text-secondary)",
             }}
-            onMouseOver={(e) => { e.currentTarget.style.color = "var(--color-text-primary)"; e.currentTarget.style.background = "rgba(124,58,237,0.15)"; }}
+            onMouseOver={(e) => { e.currentTarget.style.color = "var(--color-text-primary)"; e.currentTarget.style.background = "rgba(198,241,53,0.15)"; }}
             onMouseOut={(e) => { e.currentTarget.style.color = "var(--color-text-secondary)"; e.currentTarget.style.background = "rgb(var(--rgb-surface-border) / 0.4)"; }}
         >
             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}

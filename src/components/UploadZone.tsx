@@ -59,15 +59,15 @@ export default function UploadZone({
                     className="w-full flex flex-col items-center justify-center gap-3 rounded-xl transition-all duration-200 cursor-pointer"
                     style={{
                         height: 160,
-                        background: dragging ? "rgba(124,58,237,0.1)" : "rgb(var(--rgb-surface-card) / 0.4)",
-                        border: `2px dashed ${dragging ? "rgba(124,58,237,0.6)" : "rgb(var(--rgb-surface-border) / 0.8)"}`,
+                        background: dragging ? "rgba(198,241,53,0.1)" : "rgb(var(--rgb-surface-card) / 0.4)",
+                        border: `2px dashed ${dragging ? "rgba(198,241,53,0.6)" : "rgb(var(--rgb-surface-border) / 0.8)"}`,
                     }}
                 >
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(124,58,237,0.15)" }}>
-                        <Upload className="w-5 h-5" style={{ color: "#a78bfa" }} />
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgba(198,241,53,0.15)" }}>
+                        <Upload className="w-5 h-5" style={{ color: "var(--color-accent)" }} />
                     </div>
                     <div className="text-center">
-                        <p className="text-sm font-medium" style={{ color: "#a78bfa" }}>Click to upload</p>
+                        <p className="text-sm font-medium" style={{ color: "var(--color-accent)" }}>Click to upload</p>
                         {hint && <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>{hint}</p>}
                     </div>
                 </button>

@@ -195,7 +195,7 @@ export default function BrandSetupPage() {
                     <p className="step-indicator mb-3">
                         <span>Step 1 of 5</span>
                         <span className="text-xs mx-1">·</span>
-                        <span style={{ color: "#a78bfa" }}>Brand Setup</span>
+                        <span style={{ color: "var(--color-accent)" }}>Brand Setup</span>
                     </p>
                     <h1 className="section-title">Set up your brand</h1>
                     <p className="section-subtitle">
@@ -208,7 +208,7 @@ export default function BrandSetupPage() {
                     {/* Brand name */}
                     <div className="space-y-2">
                         <label className="block text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
-                            Brand Name {!hasLogo && <span style={{ color: "#7c3aed" }}>*</span>}
+                            Brand Name {!hasLogo && <span style={{ color: "var(--color-accent)" }}>*</span>}
                             {hasLogo && <span className="text-xs ml-1" style={{ color: "var(--color-text-muted)" }}>(optional — your logo is used instead)</span>}
                         </label>
                         <input
@@ -264,7 +264,7 @@ export default function BrandSetupPage() {
                         {/* Logo Position */}
                         <div className="space-y-4 pt-2">
                             <div className="space-y-2">
-                                <label className="block text-sm font-medium" style={{ color: "#a78bfa" }}>
+                                <label className="block text-sm font-medium" style={{ color: "var(--color-accent)" }}>
                                     Logo Position on Final Slide
                                 </label>
                                 <select
@@ -284,7 +284,7 @@ export default function BrandSetupPage() {
                             {/* Logo Size */}
                             <div className="space-y-2">
                                 <div className="flex justify-between items-center text-sm font-medium">
-                                    <span style={{ color: "#a78bfa" }}>Logo Size</span>
+                                    <span style={{ color: "var(--color-accent)" }}>Logo Size</span>
                                     <span style={{ color: "var(--color-text-secondary)" }}>{logoSize}px</span>
                                 </div>
                                 <input
@@ -295,13 +295,13 @@ export default function BrandSetupPage() {
                                     value={logoSize}
                                     onChange={(e) => setLogoSize(Number(e.target.value))}
                                     className="w-full accent-brand-purple"
-                                    style={{ accentColor: "#7c3aed" }}
+                                    style={{ accentColor: "var(--color-accent)" }}
                                 />
                             </div>
 
                             {/* Logo on every slide (brand recognition) */}
                             <div className="space-y-2">
-                                <label className="block text-sm font-medium" style={{ color: "#a78bfa" }}>
+                                <label className="block text-sm font-medium" style={{ color: "var(--color-accent)" }}>
                                     Brand Logo on Every Slide
                                 </label>
                                 <select
@@ -323,7 +323,7 @@ export default function BrandSetupPage() {
                                 {slideLogoPosition !== "none" && (
                                     <div className="space-y-2 pt-1">
                                         <div className="flex justify-between items-center text-sm font-medium">
-                                            <span style={{ color: "#a78bfa" }}>Logo Size on Slides</span>
+                                            <span style={{ color: "var(--color-accent)" }}>Logo Size on Slides</span>
                                             <span style={{ color: "var(--color-text-secondary)" }}>{slideLogoSize}px</span>
                                         </div>
                                         <input
@@ -331,7 +331,7 @@ export default function BrandSetupPage() {
                                             value={slideLogoSize}
                                             onChange={(e) => setSlideLogoSize(Number(e.target.value))}
                                             className="w-full accent-brand-purple"
-                                            style={{ accentColor: "#7c3aed" }}
+                                            style={{ accentColor: "var(--color-accent)" }}
                                         />
                                     </div>
                                 )}
@@ -352,7 +352,7 @@ export default function BrandSetupPage() {
                         {/* Watermark Opacity Slider */}
                         <div className="space-y-2 pt-2">
                             <div className="flex justify-between items-center text-sm font-medium">
-                                <span style={{ color: "#a78bfa" }}>Watermark Opacity</span>
+                                <span style={{ color: "var(--color-accent)" }}>Watermark Opacity</span>
                                 <span style={{ color: "var(--color-text-secondary)" }}>{watermarkOpacity}%</span>
                             </div>
                             <input
@@ -362,7 +362,7 @@ export default function BrandSetupPage() {
                                 value={watermarkOpacity}
                                 onChange={(e) => setWatermarkOpacity(Number(e.target.value))}
                                 className="w-full accent-brand-purple"
-                                style={{ accentColor: "#7c3aed" }}
+                                style={{ accentColor: "var(--color-accent)" }}
                             />
                             {/* Live CSS Preview */}
                             {watermarkPreview && (
@@ -394,10 +394,10 @@ export default function BrandSetupPage() {
                                 checked={videoOverlay}
                                 onChange={(e) => setVideoOverlay(e.target.checked)}
                                 className="mt-1 w-4 h-4 cursor-pointer"
-                                style={{ accentColor: "#7c3aed" }}
+                                style={{ accentColor: "var(--color-accent)" }}
                             />
                             <span>
-                                <span className="block text-sm font-medium" style={{ color: "#a78bfa" }}>
+                                <span className="block text-sm font-medium" style={{ color: "var(--color-accent)" }}>
                                     Tint video scenes with theme color
                                 </span>
                                 <span className="block text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>
@@ -418,7 +418,7 @@ export default function BrandSetupPage() {
                             onClear={() => { setQrCodeFile(null); setQrCodePreview(null); }}
                         />
                         <div className="space-y-2 pt-2">
-                            <label className="block text-sm font-medium" style={{ color: "#a78bfa" }}>
+                            <label className="block text-sm font-medium" style={{ color: "var(--color-accent)" }}>
                                 Text under QR Code (Optional)
                             </label>
                             <input
@@ -432,8 +432,8 @@ export default function BrandSetupPage() {
                     </div>
 
                     {/* Tip */}
-                    <div className="rounded-xl px-4 py-3 flex gap-3" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}>
-                        <span style={{ color: "#a78bfa" }}>💡</span>
+                    <div className="rounded-xl px-4 py-3 flex gap-3" style={{ background: "rgba(198,241,53,0.08)", border: "1px solid rgba(198,241,53,0.2)" }}>
+                        <span style={{ color: "var(--color-accent)" }}>💡</span>
                         <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
                             Use a close-up face photo for your watermark — it creates an emotional connection without distracting from the text.
                         </p>
