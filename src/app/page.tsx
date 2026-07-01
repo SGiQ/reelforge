@@ -54,14 +54,14 @@ function ReelFrame({ tone, label, meta, hero = false }: { tone: string; label: s
             </div>
             {/* top-left mono badge */}
             <div className="absolute top-3 left-3">
-                <span className="mono hair px-2 py-1 text-[10px]" style={{ background: "rgba(10,10,15,0.8)", color: LIME, borderColor: "rgba(198,241,53,0.25)" }}>
+                <span className="mono hair px-2 py-1 text-[11px]" style={{ background: "rgba(10,10,15,0.8)", color: LIME, borderColor: "rgba(198,241,53,0.25)" }}>
                     {hero ? "0:07 · 1080×1920" : meta}
                 </span>
             </div>
             {/* bottom timeline strip */}
             <div className="absolute bottom-0 left-0 w-full p-3" style={{ background: "linear-gradient(to top, #0a0a0f, transparent)" }}>
                 <div className="flex justify-between items-end mb-2">
-                    <span className="mono text-[10px]" style={{ color: "#c5c9ae" }}>{hero ? "SCENE 01 / REELS_GEN_001" : label}</span>
+                    <span className="mono text-[11px]" style={{ color: "#c5c9ae" }}>{hero ? "SCENE 01 / REELS_GEN_001" : label}</span>
                     <AudioLines className="w-3.5 h-3.5" style={{ color: LIME }} />
                 </div>
                 <div className="relative w-full" style={{ height: 2, background: "rgba(255,255,255,0.08)" }}>
@@ -86,7 +86,7 @@ export default function HomePage() {
     .cine .lime-btn{background:#c6f135;color:#0a0a0f;}
     .cine .lime-btn:hover{filter:brightness(1.08);}
     .cine .navlink:hover{color:#c6f135;}
-    .cine .cap{font-family:'Geist Mono','Space Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;}
+    .cine .cap{font-family:'Geist Mono','Space Mono',monospace;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;}
     `;
 
     return (
@@ -119,7 +119,7 @@ export default function HomePage() {
                     <div className="relative z-10 flex flex-col items-start gap-6">
                         <span className="cap pl-4" style={{ color: LIME, borderLeft: `2px solid ${LIME}`, letterSpacing: "0.2em" }}>AI Reel Studio / For Brands</span>
                         <h1 className="disp font-bold max-w-lg" style={{ fontSize: "clamp(2.75rem,6vw,4rem)", lineHeight: 1.03 }}>Reels that hit different.</h1>
-                        <p className="max-w-md" style={{ color: "var(--dim)", fontSize: 18, lineHeight: 1.6 }}>
+                        <p className="max-w-md" style={{ color: "var(--dim)", fontSize: 20, lineHeight: 1.6 }}>
                             Cinematic 9:16 content generated from your brand kit. High fidelity, technical precision, zero fluff.
                         </p>
                         <div className="flex flex-wrap gap-4 mt-2">
@@ -130,12 +130,12 @@ export default function HomePage() {
                         </div>
                         <div className="mt-10 flex gap-8 items-center" style={{ opacity: 0.4 }}>
                             <div className="flex flex-col gap-1">
-                                <span className="mono text-[11px]" style={{ color: "var(--dim)" }}>RENDER_ENGINE</span>
+                                <span className="mono text-[13px]" style={{ color: "var(--dim)" }}>RENDER_ENGINE</span>
                                 <span className="cap">v1.0 · STABLE</span>
                             </div>
                             <div style={{ width: 1, height: 32, background: "var(--line)" }} />
                             <div className="flex flex-col gap-1">
-                                <span className="mono text-[11px]" style={{ color: "var(--dim)" }}>OUTPUT</span>
+                                <span className="mono text-[13px]" style={{ color: "var(--dim)" }}>OUTPUT</span>
                                 <span className="cap">1080×1920 · MP4</span>
                             </div>
                         </div>
@@ -178,7 +178,7 @@ export default function HomePage() {
                                 <div className="flex justify-between items-start mt-3">
                                     <div>
                                         <p className="cap" style={{ color: "var(--tx)" }}>{s.label}</p>
-                                        <p className="mono text-[11px] mt-1" style={{ color: "var(--dim)" }}>{s.meta}</p>
+                                        <p className="mono text-[13px] mt-1" style={{ color: "var(--dim)" }}>{s.meta}</p>
                                     </div>
                                     <ArrowUpRight className="w-4 h-4" style={{ color: LIME }} />
                                 </div>
@@ -195,7 +195,7 @@ export default function HomePage() {
                                 <div key={f.title} className="p-8 lg:p-10 transition-colors" style={{ borderRight: i < 3 ? "1px solid var(--line)" : undefined, borderTop: 0 }}>
                                     <div className="mb-8" style={{ color: LIME }}>{f.icon}</div>
                                     <h3 className="cap mb-3" style={{ color: "var(--tx)" }}>{f.title}</h3>
-                                    <p style={{ color: "var(--dim)", fontSize: 15, lineHeight: 1.5 }}>{f.body}</p>
+                                    <p style={{ color: "var(--dim)", fontSize: 16, lineHeight: 1.55 }}>{f.body}</p>
                                 </div>
                             ))}
                         </div>
@@ -206,19 +206,19 @@ export default function HomePage() {
                 <section id="workflow" className="py-28 px-6 md:px-10 mx-auto" style={{ maxWidth: 1440 }}>
                     <div className="mb-16">
                         <h2 className="disp font-bold mb-2" style={{ fontSize: "clamp(1.75rem,4vw,2rem)" }}>Technical Workflow</h2>
-                        <p className="mono text-[11px]" style={{ color: LIME, letterSpacing: "0.3em" }}>REEL_ASSEMBLY_SEQUENCE_v1.0</p>
+                        <p className="mono text-[13px]" style={{ color: LIME, letterSpacing: "0.3em" }}>REEL_ASSEMBLY_SEQUENCE_v1.0</p>
                     </div>
                     <div className="grid md:grid-cols-4 gap-4">
                         {steps.map((s) => (
                             <div key={s.n} className="flex flex-col gap-5">
                                 <span className="disp font-bold select-none" style={{ fontSize: 64, lineHeight: 1, opacity: 0.1 }}>{s.n}</span>
                                 <div className="hair aspect-square relative overflow-hidden flex items-center justify-center" style={{ background: "var(--s2)" }}>
-                                    <span className="mono text-[10px] absolute top-3 left-3" style={{ color: "var(--dim)" }}>STEP_{s.n}</span>
+                                    <span className="mono text-[11px] absolute top-3 left-3" style={{ color: "var(--dim)" }}>STEP_{s.n}</span>
                                     <span className="disp" style={{ fontSize: 40, color: "rgba(198,241,53,0.25)" }}>{s.k[0]}</span>
                                 </div>
                                 <div>
                                     <h4 className="cap mb-2" style={{ color: "var(--tx)" }}>{s.k}</h4>
-                                    <p className="mono text-[11px] uppercase" style={{ color: "var(--dim)" }}>{s.d}</p>
+                                    <p className="mono text-[13px] uppercase" style={{ color: "var(--dim)" }}>{s.d}</p>
                                 </div>
                             </div>
                         ))}
@@ -234,7 +234,7 @@ export default function HomePage() {
                         <Ticks c={LIME} o={1} size="1rem" off="0" />
                         <h2 className="disp font-bold mb-8 max-w-2xl" style={{ fontSize: "clamp(2rem,5vw,3rem)", lineHeight: 1.05 }}>Make your first reel in minutes.</h2>
                         <Link href="/brand-setup" className="lime-btn cap font-bold px-12 py-5 transition-transform hover:scale-105" style={{ borderRadius: 8 }}>Initialize creation</Link>
-                        <p className="mono text-[11px] uppercase mt-8" style={{ color: "var(--dim)", letterSpacing: "0.15em" }}>No credit card required · Beta access available</p>
+                        <p className="mono text-[13px] uppercase mt-8" style={{ color: "var(--dim)", letterSpacing: "0.15em" }}>No credit card required · Beta access available</p>
                     </div>
                 </section>
             </main>
@@ -244,7 +244,7 @@ export default function HomePage() {
                 <div className="px-6 md:px-10 mx-auto flex flex-col md:flex-row justify-between items-start gap-10" style={{ maxWidth: 1440 }}>
                     <div className="flex flex-col gap-5">
                         <span className="cap font-bold" style={{ color: LIME }}>REELSGIQ</span>
-                        <p className="mono text-[11px]" style={{ color: "var(--dim)", maxWidth: 220 }}>© 2026 SGiQ · AI-DRIVEN CINEMATICS · ALL RIGHTS RESERVED.</p>
+                        <p className="mono text-[13px]" style={{ color: "var(--dim)", maxWidth: 220 }}>© 2026 SGiQ · AI-DRIVEN CINEMATICS · ALL RIGHTS RESERVED.</p>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
                         {[
@@ -255,7 +255,7 @@ export default function HomePage() {
                             <div key={col.h} className="flex flex-col gap-3">
                                 <span className="cap" style={{ color: "var(--tx)" }}>{col.h}</span>
                                 {col.links.map(([label, href]) => (
-                                    <Link key={label} href={href} className="mono text-[11px] transition-colors navlink" style={{ color: "var(--dim)" }}>{label}</Link>
+                                    <Link key={label} href={href} className="mono text-[13px] transition-colors navlink" style={{ color: "var(--dim)" }}>{label}</Link>
                                 ))}
                             </div>
                         ))}
