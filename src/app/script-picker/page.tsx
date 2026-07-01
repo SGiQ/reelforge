@@ -24,7 +24,7 @@ const FONT_OPTIONS = [
 ];
 
 const COLOR_OPTIONS = [
-    "#ffffff", "#a78bfa", "#2dd4bf", "#facc15", "#f87171", "#38bdf8", "#fb923c", "#4ade80", "#e879f9", "var(--color-text-secondary)", "#1e293b"
+    "#ffffff", "var(--color-accent)", "var(--color-accent)", "#facc15", "#f87171", "#38bdf8", "#fb923c", "#4ade80", "#e879f9", "var(--color-text-secondary)", "#1e293b"
 ];
 
 const MAX_SCENES = 15;
@@ -228,7 +228,7 @@ export default function ScriptPickerPage() {
                     value={scene.fontFamily}
                     onChange={(e) => updateScene(index, { fontFamily: e.target.value })}
                     className="bg-transparent text-[11px] border border-white/10 rounded px-1 min-w-[70px] outline-none focus:ring-1 focus:ring-brand-purple"
-                    style={{ color: "#a78bfa" }}
+                    style={{ color: "var(--color-accent)" }}
                 >
                     {FONT_OPTIONS.map((f) => (
                         <option key={f.value} value={f.value} className="bg-[var(--color-surface-card)] text-white">{f.label}</option>
@@ -241,9 +241,9 @@ export default function ScriptPickerPage() {
                     type="range" min="40" max="300"
                     value={scene.fontSize}
                     onChange={(e) => updateScene(index, { fontSize: parseInt(e.target.value) })}
-                    className="w-16 accent-brand-purple" style={{ accentColor: "#7c3aed" }}
+                    className="w-16 accent-brand-purple" style={{ accentColor: "var(--color-accent)" }}
                 />
-                <span className="text-[11px] font-mono" style={{ color: "#a78bfa" }}>{scene.fontSize}</span>
+                <span className="text-[11px] font-mono" style={{ color: "var(--color-accent)" }}>{scene.fontSize}</span>
             </div>
             <div className="flex items-center gap-2">
                 <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Color:</span>
@@ -298,7 +298,7 @@ export default function ScriptPickerPage() {
                 <SparklesIcon className="w-3.5 h-3.5" style={{ color: "var(--color-text-muted)" }} />
                 <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Background</span>
                 <select value={scene.animation || "none"} onChange={(e) => updateScene(index, { animation: e.target.value })}
-                    className={selectCls} style={{ color: "#a78bfa" }}>
+                    className={selectCls} style={{ color: "var(--color-accent)" }}>
                     {ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[var(--color-surface-card)] text-white">{a.label}</option>)}
                 </select>
             </div>
@@ -306,7 +306,7 @@ export default function ScriptPickerPage() {
                 <Type className="w-3.5 h-3.5" style={{ color: "var(--color-text-muted)" }} />
                 <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Text in</span>
                 <select value={scene.textAnimation || "none"} onChange={(e) => updateScene(index, { textAnimation: e.target.value })}
-                    className={selectCls} style={{ color: "#2dd4bf" }}>
+                    className={selectCls} style={{ color: "var(--color-accent)" }}>
                     {TEXT_ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[var(--color-surface-card)] text-white">{a.label}</option>)}
                 </select>
             </div>
@@ -349,7 +349,7 @@ export default function ScriptPickerPage() {
                     <p className="step-indicator mb-3">
                         <span>Step 2 of 5</span>
                         <span className="text-xs mx-1">·</span>
-                        <span style={{ color: "#a78bfa" }}>Scenes</span>
+                        <span style={{ color: "var(--color-accent)" }}>Scenes</span>
                     </p>
                     <h1 className="section-title">Build your scenes</h1>
                     <p className="section-subtitle">
@@ -358,7 +358,7 @@ export default function ScriptPickerPage() {
                 </div>
 
                 <div className="space-y-4 mb-10">
-                    <div className="glass-card rounded-2xl p-6" style={{ border: "2px solid #7c3aed", boxShadow: "0 0 30px rgba(124,58,237,0.15)" }}>
+                    <div className="glass-card rounded-2xl p-6" style={{ border: "2px solid var(--color-accent)", boxShadow: "0 0 30px rgba(198,241,53,0.15)" }}>
                         <div className="flex items-center gap-3 mb-2">
                             <h3 className="text-xl font-bold" style={{ color: "var(--color-text-primary)" }}>Write Your Own (or use AI ✨)</h3>
                         </div>
@@ -368,8 +368,8 @@ export default function ScriptPickerPage() {
 
                         <div className="space-y-6 mt-6 pt-6 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)" }}>
                             {/* AI Generator Box */}
-                            <div className="p-4 rounded-xl border" style={{ background: "rgba(124,58,237,0.05)", borderColor: "rgba(124,58,237,0.2)" }}>
-                                <label className="block text-sm font-medium mb-2 flex items-center gap-2" style={{ color: "#a78bfa" }}>
+                            <div className="p-4 rounded-xl border" style={{ background: "rgba(198,241,53,0.05)", borderColor: "rgba(198,241,53,0.2)" }}>
+                                <label className="block text-sm font-medium mb-2 flex items-center gap-2" style={{ color: "var(--color-accent)" }}>
                                     <span>✨ Generate Script with AI</span>
                                 </label>
                                 <div className="flex gap-3">
@@ -393,7 +393,7 @@ export default function ScriptPickerPage() {
                                         onClick={handleGenerateScript}
                                         disabled={isGenerating || !aiPrompt.trim()}
                                         className="px-4 py-2 rounded-lg font-medium text-white transition-all disabled:opacity-50"
-                                        style={{ background: "#7c3aed" }}
+                                        style={{ background: "var(--color-accent)" }}
                                     >
                                         {isGenerating ? "Generating..." : "Generate"}
                                     </button>
@@ -403,7 +403,7 @@ export default function ScriptPickerPage() {
 
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between pb-2">
-                                    <label className="block text-sm font-medium" style={{ color: "#a78bfa" }}>Scenes</label>
+                                    <label className="block text-sm font-medium" style={{ color: "var(--color-accent)" }}>Scenes</label>
                                     <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>{scenes.length}/{MAX_SCENES}</span>
                                 </div>
 
@@ -411,13 +411,13 @@ export default function ScriptPickerPage() {
                                     {scenes.map((scene, index) => {
                                         const video = isVideoScene(scene);
                                         const image = isImageScene(scene);
-                                        const accent = video ? "#2dd4bf" : image ? "#38bdf8" : "#a78bfa";
+                                        const accent = video ? "var(--color-accent)" : image ? "#38bdf8" : "var(--color-accent)";
                                         const kindLabel = video ? "Video" : image ? "Image" : "Text";
                                         return (
                                             <div
                                                 key={index}
                                                 className="p-4 rounded-xl border transition-all"
-                                                style={{ background: "rgb(var(--rgb-surface) / 0.3)", borderColor: video ? "rgba(45,212,191,0.4)" : image ? "rgba(56,189,248,0.4)" : "rgb(var(--rgb-surface-border) / 0.6)" }}
+                                                style={{ background: "rgb(var(--rgb-surface) / 0.3)", borderColor: video ? "rgba(198,241,53,0.4)" : image ? "rgba(56,189,248,0.4)" : "rgb(var(--rgb-surface-border) / 0.6)" }}
                                             >
                                                 <div className="flex items-center justify-between mb-3">
                                                     <div className="flex items-center gap-2">
@@ -457,10 +457,10 @@ export default function ScriptPickerPage() {
                                                                     onClick={() => fileInputs.current[index]?.click()}
                                                                     disabled={uploading[index]}
                                                                     className="w-full flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed py-8 transition-all hover:bg-white/5 disabled:opacity-60"
-                                                                    style={{ borderColor: "rgba(45,212,191,0.4)" }}
+                                                                    style={{ borderColor: "rgba(198,241,53,0.4)" }}
                                                                 >
-                                                                    <Video className="w-6 h-6" style={{ color: "#2dd4bf" }} />
-                                                                    <span className="text-sm font-medium" style={{ color: "#2dd4bf" }}>
+                                                                    <Video className="w-6 h-6" style={{ color: "var(--color-accent)" }} />
+                                                                    <span className="text-sm font-medium" style={{ color: "var(--color-accent)" }}>
                                                                         {uploading[index] ? "Uploading…" : "Upload a video clip"}
                                                                     </span>
                                                                     <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>MP4, MOV or WebM</span>
@@ -468,7 +468,7 @@ export default function ScriptPickerPage() {
                                                                 <button
                                                                     onClick={() => setShowStock((s) => ({ ...s, [index]: !s[index] }))}
                                                                     className="w-full flex items-center justify-center gap-2 rounded-xl border py-2.5 text-sm font-medium transition-all hover:bg-white/5"
-                                                                    style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)", color: "#2dd4bf" }}
+                                                                    style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)", color: "var(--color-accent)" }}
                                                                 >
                                                                     <Search className="w-4 h-4" /> {showStock[index] ? "Hide stock search" : "Search stock footage"}
                                                                 </button>
@@ -495,7 +495,7 @@ export default function ScriptPickerPage() {
                                                                             />
                                                                             <div className="flex-1 space-y-3">
                                                                                 <div className="flex items-center justify-between">
-                                                                                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider" style={{ color: "#2dd4bf" }}>
+                                                                                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider" style={{ color: "var(--color-accent)" }}>
                                                                                         <Scissors className="w-3.5 h-3.5" /> Trim
                                                                                     </div>
                                                                                     <span className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>
@@ -610,7 +610,7 @@ export default function ScriptPickerPage() {
                                             onClick={addTextScene}
                                             disabled={scenes.length >= MAX_SCENES}
                                             className="flex-1 min-w-[150px] py-3 rounded-xl border border-dashed flex items-center justify-center gap-2 text-sm font-medium transition-all hover:bg-white/5 disabled:opacity-50"
-                                            style={{ borderColor: "rgba(124,58,237,0.3)", color: "#a78bfa" }}
+                                            style={{ borderColor: "rgba(198,241,53,0.3)", color: "var(--color-accent)" }}
                                         >
                                             <Plus className="w-4 h-4" /> Add Text Scene
                                         </button>
@@ -626,7 +626,7 @@ export default function ScriptPickerPage() {
                                             onClick={addVideoScene}
                                             disabled={scenes.length >= MAX_SCENES}
                                             className="flex-1 min-w-[150px] py-3 rounded-xl border border-dashed flex items-center justify-center gap-2 text-sm font-medium transition-all hover:bg-white/5 disabled:opacity-50"
-                                            style={{ borderColor: "rgba(45,212,191,0.4)", color: "#2dd4bf" }}
+                                            style={{ borderColor: "rgba(198,241,53,0.4)", color: "var(--color-accent)" }}
                                         >
                                             <Video className="w-4 h-4" /> Add Video Scene
                                         </button>
@@ -637,13 +637,13 @@ export default function ScriptPickerPage() {
                             {/* Final Logo Slide Outro Input */}
                             <div className="mt-8 pt-6 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)" }}>
                                 <div className="space-y-2">
-                                    <label className="block text-sm font-medium flex items-center gap-2" style={{ color: "#a78bfa" }}>
+                                    <label className="block text-sm font-medium flex items-center gap-2" style={{ color: "var(--color-accent)" }}>
                                         <span>🎙️ Final Logo Slide (Voiceover Only)</span>
                                     </label>
                                     <p className="text-xs mb-3" style={{ color: "var(--color-text-secondary)" }}>
                                         This text will not appear on screen. It will only be spoken by the AI voiceover during the final logo slide (e.g., &quot;Visit our website today.&quot;)
                                     </p>
-                                    <div className="p-4 rounded-xl border transition-all" style={{ background: "rgb(var(--rgb-surface) / 0.5)", border: "1px dashed rgba(124,58,237,0.4)" }}>
+                                    <div className="p-4 rounded-xl border transition-all" style={{ background: "rgb(var(--rgb-surface) / 0.5)", border: "1px dashed rgba(198,241,53,0.4)" }}>
                                         <textarea
                                             value={outroVoiceover}
                                             onChange={(e) => setOutroVoiceover(e.target.value)}
@@ -658,10 +658,10 @@ export default function ScriptPickerPage() {
                 </div>
 
                 {hasContent && (
-                    <div className="rounded-xl px-4 py-3 flex gap-3 mb-8" style={{ background: "rgba(13,148,136,0.08)", border: "1px solid rgba(13,148,136,0.2)" }}>
+                    <div className="rounded-xl px-4 py-3 flex gap-3 mb-8" style={{ background: "rgba(198,241,53,0.08)", border: "1px solid rgba(198,241,53,0.2)" }}>
                         <span>✨</span>
                         <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
-                            <strong style={{ color: "#2dd4bf" }}>&quot;{customTitle || "Custom Script"}&quot;</strong>{" "}
+                            <strong style={{ color: "var(--color-accent)" }}>&quot;{customTitle || "Custom Script"}&quot;</strong>{" "}
                             — {scenes.filter(isRenderableScene).length} scenes will be rendered.
                         </p>
                     </div>

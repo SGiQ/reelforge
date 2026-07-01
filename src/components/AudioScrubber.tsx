@@ -24,7 +24,7 @@ export default function AudioScrubber({ src, onTimeChange, initialTime = 0 }: Au
         const ws = WaveSurfer.create({
             container: containerRef.current,
             waveColor: "rgba(167, 139, 250, 0.4)", // Muted purple
-            progressColor: "#a78bfa", // Active purple
+            progressColor: "var(--color-accent)", // Active purple
             cursorColor: "#fff",
             barWidth: 3,
             barGap: 3,

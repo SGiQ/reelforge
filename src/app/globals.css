@@ -12,21 +12,27 @@
    intentionally NOT tokenized — it must reflect the video the user is building,
    not the app chrome. ────────────────────────────────────────────────────── */
 :root, html.dark {
-  --color-brand-purple: #7c3aed;
-  --color-brand-teal: #0d9488;
-  --color-surface: #0f0f1a;
-  --color-surface-card: #1a1a2e;
-  --color-surface-elevated: #242438;
-  --color-surface-border: #2d2d4a;
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #64748b;
+  /* Cinematic Studio — near-black canvas, single lime accent. */
+  --color-accent: #c6f135;          /* lime — the sole action/active/success color */
+  --color-accent-ink: #0a0a0f;      /* text/icon on top of lime */
+  --color-accent-dim: #acd60e;
+  /* Legacy brand aliases now point at the accent so any stray refs stay on-brand. */
+  --color-brand-purple: #c6f135;
+  --color-brand-teal: #c6f135;
+  --color-surface: #0a0a0f;
+  --color-surface-card: #101018;
+  --color-surface-elevated: #16161f;
+  --color-surface-border: #26262e;
+  --color-text-primary: #f2f2f5;
+  --color-text-secondary: #a1a1ac;
+  --color-text-muted: #6b6b76;
 
   /* RGB triplets for translucent surfaces: rgb(var(--rgb-surface-border) / .6) */
-  --rgb-surface: 15 15 26;
-  --rgb-surface-card: 26 26 46;
-  --rgb-surface-elevated: 36 36 56;
-  --rgb-surface-border: 45 45 74;
+  --rgb-surface: 10 10 15;
+  --rgb-surface-card: 16 16 24;
+  --rgb-surface-elevated: 22 22 31;
+  --rgb-surface-border: 62 62 72;
+  --rgb-accent: 198 241 53;
 }
 
 html.light {
@@ -37,6 +43,13 @@ html.light {
   --color-text-primary: #0f172a;
   --color-text-secondary: #475569;
   --color-text-muted: #64748b;
+  /* Interim light accent — a darker olive-lime so accent text/buttons stay
+     readable on light surfaces (bright lime text on white is illegible).
+     The dedicated cinematic-light pass will refine this. */
+  --color-accent: #5c7a00;
+  --color-accent-ink: #ffffff;
+  --color-accent-dim: #46610a;
+  --rgb-accent: 92 122 0;
 
   --rgb-surface: 246 247 251;
   --rgb-surface-card: 255 255 255;
@@ -66,48 +79,44 @@ html, body {
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--color-surface); }
 ::-webkit-scrollbar-thumb { background: var(--color-surface-border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-brand-purple); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
 
 /* Selection */
-::selection { background: rgba(124, 58, 237, 0.3); color: var(--color-text-primary); }
+::selection { background: var(--color-accent); color: var(--color-accent-ink); }
 
 /* Utility classes */
 @layer utilities {
   .text-gradient-brand {
-    @apply bg-gradient-to-r from-brand-purple-light to-brand-teal-light bg-clip-text text-transparent;
+    color: var(--color-accent);
   }
+  /* Cinematic cards: flat tonal surface + hairline, no glass blur, no shadow. */
   .glass-card {
-    background: rgb(var(--rgb-surface-card) / 0.8);
-    border: 1px solid rgb(var(--rgb-surface-border) / 0.6);
-    backdrop-filter: blur(12px);
+    background: var(--color-surface-card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
   .glass-card-hover {
     @apply glass-card transition-all duration-300;
   }
   .glass-card-hover:hover {
-    border-color: rgba(124, 58, 237, 0.5);
-    box-shadow: 0 0 30px rgba(124, 58, 237, 0.1);
+    border-color: rgba(198, 241, 53, 0.4);
+    box-shadow: none;
   }
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200;
-    background: linear-gradient(135deg, #7c3aed 0%, #0d9488 100%);
-    color: white;
-    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200;
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
   }
-  .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.4);
-  }
-  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-primary:active { transform: translateY(0.5px); }
   .btn-secondary {
-    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200;
-    background: rgb(var(--rgb-surface-border) / 0.6);
-    border: 1px solid rgb(var(--rgb-surface-border) / 0.8);
-    color: #a78bfa;
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--color-text-primary);
   }
   .btn-secondary:hover {
-    background: rgba(124, 58, 237, 0.15);
-    border-color: rgba(124, 58, 237, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(198, 241, 53, 0.4);
   }
   .step-indicator {
     @apply flex items-center gap-2 text-xs font-medium uppercase tracking-widest;
@@ -124,8 +133,8 @@ html, body {
     outline: none;
   }
   .input-field:focus {
-    border-color: rgba(124, 58, 237, 0.6);
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    border-color: rgba(198, 241, 53, 0.6);
+    box-shadow: 0 0 0 3px rgba(198, 241, 53, 0.12);
   }
   .input-field::placeholder { color: var(--color-text-muted); }
   .page-container {
@@ -135,6 +144,8 @@ html, body {
   .section-title {
     @apply text-3xl font-bold tracking-tight;
     color: var(--color-text-primary);
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.03em;
   }
   .section-subtitle {
     @apply text-base mt-2;
@@ -144,10 +155,10 @@ html, body {
 
 /* Glow effects */
 .glow-purple {
-  box-shadow: 0 0 40px rgba(124, 58, 237, 0.15);
+  box-shadow: 0 0 40px rgba(198, 241, 53, 0.12);
 }
 .glow-teal {
-  box-shadow: 0 0 40px rgba(13, 148, 136, 0.15);
+  box-shadow: 0 0 40px rgba(198, 241, 53, 0.12);
 }
 
 /* Animated gradient border */
@@ -157,7 +168,7 @@ html, body {
   100% { background-position: 0% 50%; }
 }
 .animated-border {
-  background: linear-gradient(135deg, #7c3aed, #0d9488, #7c3aed);
+  background: linear-gradient(135deg, #c6f135, #566b00, #c6f135);
   background-size: 200% 200%;
   animation: borderRotate 4s ease infinite;
   padding: 1px;

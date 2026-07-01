@@ -43,11 +43,11 @@ export default function LoginPage() {
             <ThemeToggle floating />
             <div className="w-full max-w-md">
                 <div className="flex items-center justify-center gap-2 mb-8">
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #7c3aed, #0d9488)" }}>
-                        <Zap className="w-5 h-5 text-white" />
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "var(--color-accent)" }}>
+                        <Zap className="w-5 h-5" style={{ color: "var(--color-accent-ink)" }} />
                     </div>
                     <span className="font-bold text-xl tracking-tight" style={{ color: "var(--color-text-primary)" }}>
-                        Reel<span style={{ color: "#a78bfa" }}>SGiQ</span>
+                        Reel<span style={{ color: "var(--color-accent)" }}>SGiQ</span>
                     </span>
                 </div>
 
@@ -93,7 +93,7 @@ export default function LoginPage() {
                     <p className="text-sm text-center mt-6" style={{ color: "var(--color-text-secondary)" }}>
                         {mode === "login" ? "New here?" : "Already have an account?"}{" "}
                         <button onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(null); }}
-                            className="font-semibold" style={{ color: "#a78bfa" }}>
+                            className="font-semibold" style={{ color: "var(--color-accent)" }}>
                             {mode === "login" ? "Create an account" : "Sign in"}
                         </button>
                     </p>

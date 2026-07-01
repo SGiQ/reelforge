@@ -138,7 +138,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                         </div>
                     </>
                 ) : (
-                    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg, rgba(124,58,237,0.25), rgba(13,148,136,0.25))" }}>
+                    <div className="absolute inset-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg, rgba(198,241,53,0.25), rgba(198,241,53,0.25))" }}>
                         <Video className="w-10 h-10" style={{ color: "rgba(255,255,255,0.35)" }} />
                     </div>
                 )}
@@ -147,8 +147,8 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                 <div
                     className="absolute top-3 left-3 px-2 py-1 rounded text-xs font-bold uppercase tracking-wider"
                     style={{
-                        background: job.status === "done" ? "rgba(52,211,153,0.25)" : job.status === "failed" ? "rgba(248,113,113,0.25)" : "rgba(124,58,237,0.25)",
-                        color: job.status === "done" ? "#34d399" : job.status === "failed" ? "#f87171" : "#a78bfa",
+                        background: job.status === "done" ? "rgba(52,211,153,0.25)" : job.status === "failed" ? "rgba(248,113,113,0.25)" : "rgba(198,241,53,0.25)",
+                        color: job.status === "done" ? "#34d399" : job.status === "failed" ? "#f87171" : "var(--color-accent)",
                         backdropFilter: "blur(4px)",
                     }}
                 >
@@ -284,7 +284,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                                         : <><Share2 className="w-4 h-4" /> {sharing ? "Sharing…" : "Share to Community"}</>}
                                 </button>
                                 {shared && (
-                                    <Link href="/community" className="text-xs text-center transition-colors" style={{ color: "#a78bfa" }}>
+                                    <Link href="/community" className="text-xs text-center transition-colors" style={{ color: "var(--color-accent)" }}>
                                         View in community →
                                     </Link>
                                 )}
@@ -314,8 +314,8 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
             {shareOpen && createPortal(
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.7)" }} onClick={() => setShareOpen(false)}>
                     <div className="glass-card rounded-2xl p-6 max-w-sm w-full text-center" onClick={(e) => e.stopPropagation()}>
-                        <div className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ background: "rgba(124,58,237,0.2)" }}>
-                            <Share2 className="w-6 h-6" style={{ color: "#a78bfa" }} />
+                        <div className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ background: "rgba(198,241,53,0.2)" }}>
+                            <Share2 className="w-6 h-6" style={{ color: "var(--color-accent)" }} />
                         </div>
                         <h3 className="text-lg font-bold mb-1" style={{ color: "var(--color-text-primary)" }}>Share to the community?</h3>
                         <p className="text-sm mb-5" style={{ color: "var(--color-text-secondary)" }}>
@@ -466,8 +466,8 @@ export default function Dashboard() {
                     </div>
                 ) : jobs.length === 0 ? (
                     <div className="text-center py-24 rounded-3xl border border-dashed" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)", background: "rgb(var(--rgb-surface-card) / 0.5)" }}>
-                        <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ background: "rgba(124,58,237,0.1)" }}>
-                            <Video className="w-8 h-8" style={{ color: "#a78bfa" }} />
+                        <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ background: "rgba(198,241,53,0.1)" }}>
+                            <Video className="w-8 h-8" style={{ color: "var(--color-accent)" }} />
                         </div>
                         <h3 className="text-lg font-bold mb-2">No reels yet</h3>
                         <p className="text-sm mb-6 max-w-sm mx-auto" style={{ color: "var(--color-text-secondary)" }}>

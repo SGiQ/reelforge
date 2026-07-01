@@ -30,11 +30,11 @@ export default function Navbar({ currentStep }: NavbarProps) {
             <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #7c3aed, #0d9488)" }}>
-                        <Zap className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "var(--color-accent)" }}>
+                        <Zap className="w-4 h-4" style={{ color: "var(--color-accent-ink)" }} />
                     </div>
                     <span className="font-bold text-lg tracking-tight" style={{ color: "var(--color-text-primary)" }}>
-                        Reel<span style={{ color: "#a78bfa" }}>SGiQ</span>
+                        Reel<span style={{ color: "var(--color-accent)" }}>SGiQ</span>
                     </span>
                 </Link>
 
@@ -50,19 +50,19 @@ export default function Navbar({ currentStep }: NavbarProps) {
                                         href={step.href}
                                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200"
                                         style={{
-                                            background: isActive ? "rgba(124,58,237,0.2)" : "transparent",
-                                            color: isActive ? "#a78bfa" : isDone ? "#2dd4bf" : "var(--color-text-muted)",
+                                            background: isActive ? "rgba(198,241,53,0.2)" : "transparent",
+                                            color: isActive ? "var(--color-accent)" : isDone ? "var(--color-accent)" : "var(--color-text-muted)",
                                         }}
                                     >
                                         <span
                                             className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold"
                                             style={{
                                                 background: isActive
-                                                    ? "rgba(124,58,237,0.4)"
+                                                    ? "rgba(198,241,53,0.4)"
                                                     : isDone
-                                                        ? "rgba(13,148,136,0.3)"
+                                                        ? "rgba(198,241,53,0.3)"
                                                         : "rgb(var(--rgb-surface-border) / 0.6)",
-                                                color: isActive ? "#a78bfa" : isDone ? "#2dd4bf" : "var(--color-text-muted)",
+                                                color: isActive ? "var(--color-accent)" : isDone ? "var(--color-accent)" : "var(--color-text-muted)",
                                             }}
                                         >
                                             {isDone ? "✓" : i + 1}
@@ -70,7 +70,7 @@ export default function Navbar({ currentStep }: NavbarProps) {
                                         {step.label}
                                     </Link>
                                     {i < steps.length - 1 && (
-                                        <div className="w-4 h-px" style={{ background: isDone ? "rgba(13,148,136,0.4)" : "rgb(var(--rgb-surface-border) / 0.6)" }} />
+                                        <div className="w-4 h-px" style={{ background: isDone ? "rgba(198,241,53,0.4)" : "rgb(var(--rgb-surface-border) / 0.6)" }} />
                                     )}
                                 </div>
                             );
@@ -81,11 +81,11 @@ export default function Navbar({ currentStep }: NavbarProps) {
                 {/* User button */}
                 <div className="flex items-center gap-4">
                     {admin && (
-                        <Link href="/admin" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "#a78bfa" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "#a78bfa"}>
+                        <Link href="/admin" className="hidden sm:flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-accent)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-accent)"}>
                             <Shield className="w-4 h-4" /> Admin
                         </Link>
                     )}
-                    <Link href="/auto" className="hidden sm:flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer" style={{ color: "#a78bfa" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "#a78bfa"}>
+                    <Link href="/auto" className="hidden sm:flex items-center gap-1 text-sm font-semibold transition-colors cursor-pointer" style={{ color: "var(--color-accent)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-accent)"}>
                         <Wand2 className="w-4 h-4" /> AI Director
                     </Link>
                     <Link href="/community" className="hidden sm:flex text-sm font-medium transition-colors cursor-pointer" style={{ color: "var(--color-text-secondary)" }} onMouseOver={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseOut={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>

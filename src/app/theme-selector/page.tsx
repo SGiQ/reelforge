@@ -101,7 +101,7 @@ export default function ThemeSelectorPage() {
                     <p className="step-indicator mb-3">
                         <span>Step 3 of 5</span>
                         <span className="text-xs mx-1">·</span>
-                        <span style={{ color: "#a78bfa" }}>Theme Selector</span>
+                        <span style={{ color: "var(--color-accent)" }}>Theme Selector</span>
                     </p>
                     <h1 className="section-title">Choose your color theme</h1>
                     <p className="section-subtitle">
@@ -130,7 +130,7 @@ export default function ThemeSelectorPage() {
                         {/* Music library */}
                         {library.length > 0 && (
                             <div className="glass-card rounded-2xl p-6">
-                                <label className="block text-sm font-medium mb-1.5" style={{ color: "#a78bfa" }}>Music Library</label>
+                                <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-accent)" }}>Music Library</label>
                                 <p className="text-sm mb-4" style={{ color: "var(--color-text-secondary)" }}>Pick a royalty-free track — or upload your own below.</p>
                                 <div className="grid sm:grid-cols-2 gap-2">
                                     {library.map((t) => {
@@ -139,9 +139,9 @@ export default function ThemeSelectorPage() {
                                             <button key={t.id} type="button"
                                                 onClick={() => { setMusicFile(null); setMusicPreview(active ? null : t.url); }}
                                                 className="flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-left transition-colors"
-                                                style={{ background: active ? "rgba(124,58,237,0.16)" : "rgb(var(--rgb-surface-card) / 0.6)", border: `1px solid ${active ? "rgba(124,58,237,0.5)" : "rgb(var(--rgb-surface-border) / 0.6)"}` }}>
+                                                style={{ background: active ? "rgba(198,241,53,0.16)" : "rgb(var(--rgb-surface-card) / 0.6)", border: `1px solid ${active ? "rgba(198,241,53,0.5)" : "rgb(var(--rgb-surface-border) / 0.6)"}` }}>
                                                 <span className="text-sm font-medium truncate" style={{ color: "#e2e8f0" }}>{t.title}</span>
-                                                <span className="text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded" style={{ background: "rgba(45,212,191,0.15)", color: "#2dd4bf" }}>{t.mood}</span>
+                                                <span className="text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded" style={{ background: "rgba(198,241,53,0.15)", color: "var(--color-accent)" }}>{t.mood}</span>
                                             </button>
                                         );
                                     })}
@@ -165,7 +165,7 @@ export default function ThemeSelectorPage() {
                                     {/* Volume Slider */}
                                     <div className="space-y-2">
                                         <div className="flex justify-between items-center text-sm font-medium">
-                                            <span style={{ color: "#a78bfa" }}>Music Volume</span>
+                                            <span style={{ color: "var(--color-accent)" }}>Music Volume</span>
                                             <span style={{ color: "var(--color-text-secondary)" }}>{musicVolume}%</span>
                                         </div>
                                         <input
@@ -175,7 +175,7 @@ export default function ThemeSelectorPage() {
                                             value={musicVolume}
                                             onChange={(e) => setMusicVolume(Number(e.target.value))}
                                             className="w-full accent-brand-purple"
-                                            style={{ accentColor: "#7c3aed" }}
+                                            style={{ accentColor: "var(--color-accent)" }}
                                         />
                                     </div>
 
@@ -192,7 +192,7 @@ export default function ThemeSelectorPage() {
                         </div>
 
                         <div className="glass-card rounded-2xl p-6">
-                            <label className="block text-sm font-medium mb-1.5" style={{ color: "#a78bfa" }}>AI Voiceover</label>
+                            <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-accent)" }}>AI Voiceover</label>
                             <p className="text-sm mb-4" style={{ color: "var(--color-text-secondary)" }}>
                                 Select a professional AI voice to narrate your script. Each slide will be perfectly synced to the audio length.
                             </p>

@@ -37,7 +37,7 @@ function CommunityCard({ reel }: { reel: any }) {
             <div className="p-4">
                 <h3 className="font-bold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>{reel.brand_name || "Untitled Reel"}</h3>
                 <p className="text-xs mt-0.5" style={{ color: "var(--color-text-secondary)" }}>
-                    Shared by <span style={{ color: "#a78bfa" }}>{reel.shared_by || "Someone"}</span>
+                    Shared by <span style={{ color: "var(--color-accent)" }}>{reel.shared_by || "Someone"}</span>
                 </p>
             </div>
 
@@ -88,7 +88,7 @@ export default function CommunityPage() {
                 <div className="flex items-end justify-between mb-10 gap-6">
                     <div>
                         <h1 className="section-title text-3xl mb-2 flex items-center gap-2">
-                            <Users className="w-7 h-7" style={{ color: "#a78bfa" }} /> Community
+                            <Users className="w-7 h-7" style={{ color: "var(--color-accent)" }} /> Community
                         </h1>
                         <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Reels shared by members. Download yours and share to add it here.</p>
                     </div>
@@ -106,8 +106,8 @@ export default function CommunityPage() {
                     </div>
                 ) : reels.length === 0 ? (
                     <div className="text-center py-24 rounded-3xl border border-dashed" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)", background: "rgb(var(--rgb-surface-card) / 0.5)" }}>
-                        <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ background: "rgba(124,58,237,0.1)" }}>
-                            <Users className="w-8 h-8" style={{ color: "#a78bfa" }} />
+                        <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ background: "rgba(198,241,53,0.1)" }}>
+                            <Users className="w-8 h-8" style={{ color: "var(--color-accent)" }} />
                         </div>
                         <h3 className="text-lg font-bold mb-2">No shared reels yet</h3>
                         <p className="text-sm max-w-sm mx-auto" style={{ color: "var(--color-text-secondary)" }}>

@@ -136,8 +136,8 @@ export default function ExportPage() {
 
     const statusConfig: Record<JobStatus, { icon: React.ReactNode; label: string; color: string }> = {
         idle: { icon: <Clock className="w-5 h-5" />, label: "Ready to render", color: "var(--color-text-muted)" },
-        pending: { icon: <Loader2 className="w-5 h-5 animate-spin" />, label: "Queued — waiting for worker...", color: "#a78bfa" },
-        processing: { icon: <Loader2 className="w-5 h-5 animate-spin" />, label: "Rendering your MP4...", color: "#2dd4bf" },
+        pending: { icon: <Loader2 className="w-5 h-5 animate-spin" />, label: "Queued — waiting for worker...", color: "var(--color-accent)" },
+        processing: { icon: <Loader2 className="w-5 h-5 animate-spin" />, label: "Rendering your MP4...", color: "var(--color-accent)" },
         done: { icon: <CheckCircle className="w-5 h-5" />, label: "Render complete! Your MP4 is ready.", color: "#34d399" },
         failed: { icon: <XCircle className="w-5 h-5" />, label: "Render failed. Please try again.", color: "#f87171" },
     };
@@ -152,7 +152,7 @@ export default function ExportPage() {
                     <p className="step-indicator mb-3">
                         <span>Step 5 of 5</span>
                         <span className="text-xs mx-1">·</span>
-                        <span style={{ color: "#a78bfa" }}>Export & Download</span>
+                        <span style={{ color: "var(--color-accent)" }}>Export & Download</span>
                     </p>
                     <h1 className="section-title">Export your reel</h1>
                     <p className="section-subtitle">
@@ -201,7 +201,7 @@ export default function ExportPage() {
                         <div
                             className="h-full rounded-full"
                             style={{
-                                background: "linear-gradient(90deg, #7c3aed, #0d9488)",
+                                background: "linear-gradient(90deg, var(--color-accent), var(--color-accent))",
                                 animation: "indeterminate 2s ease-in-out infinite",
                                 width: "60%",
                             }}
