@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Video, Download, RefreshCw, ExternalLink, Play, X, Share2, Check, Trash2 } from "lucide-react";
@@ -27,7 +28,7 @@ function getReelTitle(job: any): string {
 
 function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => void; onDeleted: (id: string) => void }) {
     const videoRef = useRef<HTMLVideoElement>(null);
-    const [playerOpen, setPlayerOpen] = useState(false);
+    const [detailsOpen, setDetailsOpen] = useState(false);
     const [deleting, setDeleting] = useState(false);
     const [shareOpen, setShareOpen] = useState(false);
     const [shared, setShared] = useState(!!job.shared);
@@ -65,14 +66,25 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
 
     const [downloading, setDownloading] = useState(false);
 
+    // Play from the already-decoded poster frame instead of seeking to 0 on
+    // every hover — seeking forces a keyframe re-decode that makes the preview
+    // stutter. Looping handles the wrap-around smoothly.
     const handleEnter = () => {
         const v = videoRef.current;
-        if (v) { v.currentTime = 0; v.play().catch(() => { }); }
+        if (v) v.play().catch(() => { });
     };
     const handleLeave = () => {
         const v = videoRef.current;
         if (v) { v.pause(); try { v.currentTime = 0.5; } catch { } }
     };
+
+    // Esc closes the details modal; standard, expected exit affordance.
+    useEffect(() => {
+        if (!detailsOpen) return;
+        const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setDetailsOpen(false); };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [detailsOpen]);
 
     // Download instantly. Vercel Blob's ?download=1 sets Content-Disposition:
     // attachment server-side, so the browser saves the file instead of opening
@@ -91,8 +103,9 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
             a.remove();
         } finally {
             setDownloading(false);
-            // After downloading, offer to share to the community (once).
-            if (!shared) setShareOpen(true);
+            // After downloading from a card, nudge to share (once). Skipped when
+            // the details modal is open — it already has a Share button.
+            if (!shared && !detailsOpen) setShareOpen(true);
         }
     };
 
@@ -104,7 +117,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                 style={{ aspectRatio: "4 / 5", background: "#0d0d18" }}
                 onMouseEnter={handleEnter}
                 onMouseLeave={handleLeave}
-                onClick={() => { if (isDone) setPlayerOpen(true); }}
+                onClick={() => { if (isDone) setDetailsOpen(true); }}
             >
                 {isDone ? (
                     <>
@@ -199,37 +212,106 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                 </div>
             </div>
 
-            {/* Full-screen player */}
-            {playerOpen && isDone && (
+            {/* Details modal: centered card with the playing reel + metadata + actions.
+                Portaled to <body> so the fixed overlay isn't trapped inside the
+                card's backdrop-filter containing block (which broke centering). */}
+            {detailsOpen && isDone && createPortal(
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center p-4"
-                    style={{ background: "rgba(0,0,0,0.85)" }}
-                    onClick={() => setPlayerOpen(false)}
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+                    style={{ background: "rgba(0,0,0,0.8)", backdropFilter: "blur(4px)" }}
+                    onClick={() => setDetailsOpen(false)}
                 >
-                    <div className="relative" onClick={(e) => e.stopPropagation()}>
-                        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                        <video
-                            src={videoUrl!}
-                            controls
-                            autoPlay
-                            playsInline
-                            className="rounded-xl"
-                            style={{ maxHeight: "88vh", maxWidth: "92vw", background: "#000" }}
-                        />
+                    <div
+                        className="glass-card rounded-2xl w-full max-w-3xl max-h-[92vh] overflow-hidden flex flex-col md:flex-row relative"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <button
-                            onClick={() => setPlayerOpen(false)}
-                            className="absolute -top-3 -right-3 w-9 h-9 rounded-full flex items-center justify-center"
-                            style={{ background: "var(--color-surface-card)", border: "1px solid rgba(255,255,255,0.25)" }}
+                            onClick={() => setDetailsOpen(false)}
+                            className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-colors"
+                            style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.25)" }}
                             aria-label="Close"
                         >
                             <X className="w-5 h-5 text-white" />
                         </button>
+
+                        {/* Video */}
+                        <div className="flex items-center justify-center p-4 md:w-1/2" style={{ background: "#000" }}>
+                            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                            <video
+                                src={videoUrl!}
+                                controls
+                                autoPlay
+                                playsInline
+                                className="rounded-lg w-auto max-h-[45vh] md:max-h-[84vh]"
+                                style={{ maxWidth: "100%" }}
+                            />
+                        </div>
+
+                        {/* Details + actions */}
+                        <div className="md:w-1/2 p-6 flex flex-col overflow-y-auto">
+                            <span
+                                className="self-start px-2 py-1 rounded text-xs font-bold uppercase tracking-wider mb-3"
+                                style={{ background: "rgba(52,211,153,0.2)", color: "#34d399" }}
+                            >
+                                {job.status}
+                            </span>
+                            <h3 className="font-bold text-lg mb-2 pr-8" style={{ color: "var(--color-text-primary)" }}>{title}</h3>
+                            <div className="flex flex-wrap items-center gap-2 text-xs mb-6" style={{ color: "var(--color-text-secondary)" }}>
+                                <span>{job.brand_name || "Brand Video"}</span>
+                                <span>•</span>
+                                <span className="capitalize">{job.theme.replace("-", " ")}</span>
+                                <span>•</span>
+                                <span>{new Date(job.created_at).toLocaleDateString()}</span>
+                            </div>
+
+                            <div className="mt-auto flex flex-col gap-2">
+                                <a
+                                    href={videoUrl!}
+                                    onClick={handleDownload}
+                                    className="btn-primary w-full justify-center group"
+                                    style={{ opacity: downloading ? 0.6 : 1 }}
+                                >
+                                    <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                                    <span>{downloading ? "Downloading…" : "Download MP4"}</span>
+                                </a>
+                                <button
+                                    onClick={shareToCommunity}
+                                    disabled={sharing || shared}
+                                    className="btn-secondary w-full justify-center"
+                                    style={{ opacity: sharing ? 0.6 : 1 }}
+                                >
+                                    {shared ? <><Check className="w-4 h-4" /> Shared to Community</>
+                                        : <><Share2 className="w-4 h-4" /> {sharing ? "Sharing…" : "Share to Community"}</>}
+                                </button>
+                                {shared && (
+                                    <Link href="/community" className="text-xs text-center transition-colors" style={{ color: "#a78bfa" }}>
+                                        View in community →
+                                    </Link>
+                                )}
+                                <div className="flex gap-2">
+                                    <button onClick={() => onEdit(job)} className="btn-secondary flex-1 justify-center group">
+                                        <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                        <span>Re-edit</span>
+                                    </button>
+                                    <button
+                                        onClick={handleDelete}
+                                        disabled={deleting}
+                                        title="Delete reel"
+                                        className="btn-secondary px-3 justify-center text-red-400 hover:bg-red-500/10"
+                                        style={{ opacity: deleting ? 0.6 : 1 }}
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
 
-            {/* Share-to-community prompt (after download) */}
-            {shareOpen && (
+            {/* Share-to-community prompt (after download) — also portaled */}
+            {shareOpen && createPortal(
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.7)" }} onClick={() => setShareOpen(false)}>
                     <div className="glass-card rounded-2xl p-6 max-w-sm w-full text-center" onClick={(e) => e.stopPropagation()}>
                         <div className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ background: "rgba(124,58,237,0.2)" }}>
@@ -246,7 +328,8 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </div>
     );
