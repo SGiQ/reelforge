@@ -18,9 +18,12 @@ export async function POST(request: Request): Promise<NextResponse> {
                     }),
                 };
             },
-            onUploadCompleted: async ({ blob, tokenPayload }) => {
-                console.log('Upload completed:', blob.url);
-            },
+            // NOTE: no onUploadCompleted. Defining it makes the SDK embed a
+            // server-to-server completion callback in the client token, and the
+            // browser's upload() promise won't resolve until that callback
+            // returns 200 — a delayed/failed callback leaves the UI stuck on
+            // "Saving…" forever. We don't need the hook (it only logged), so
+            // omit it and let uploads finalize on the PUT alone.
         });
 
         return NextResponse.json(jsonResponse);
