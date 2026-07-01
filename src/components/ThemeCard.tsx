@@ -98,7 +98,7 @@ export default function ThemeCard({ theme, selected, onSelect }: ThemeCardProps)
             onClick={() => onSelect(theme.id)}
             className="group relative rounded-2xl overflow-hidden transition-all duration-300"
             style={{
-                border: `2px solid ${selected ? theme.accentColor : "rgba(45,45,74,0.6)"}`,
+                border: `2px solid ${selected ? theme.accentColor : "rgb(var(--rgb-surface-border) / 0.6)"}`,
                 boxShadow: selected ? `0 0 30px ${theme.accentColor}40` : "none",
                 transform: selected ? "scale(1.02)" : "scale(1)",
             }}
@@ -142,11 +142,11 @@ export default function ThemeCard({ theme, selected, onSelect }: ThemeCardProps)
             {/* Info area */}
             <div
                 className="px-4 py-3 flex items-center justify-between"
-                style={{ background: selected ? "rgba(124,58,237,0.1)" : "rgba(26,26,46,0.95)" }}
+                style={{ background: selected ? "rgba(124,58,237,0.1)" : "rgb(var(--rgb-surface-card) / 0.95)" }}
             >
                 <div>
-                    <p className="text-sm font-semibold" style={{ color: "#f8fafc" }}>{theme.label}</p>
-                    <p className="text-xs mt-0.5" style={{ color: "#64748b" }}>{theme.description}</p>
+                    <p className="text-sm font-semibold" style={{ color: "var(--color-text-primary)" }}>{theme.label}</p>
+                    <p className="text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>{theme.description}</p>
                 </div>
                 {selected && (
                     <div

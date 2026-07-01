@@ -135,7 +135,7 @@ export default function ExportPage() {
     };
 
     const statusConfig: Record<JobStatus, { icon: React.ReactNode; label: string; color: string }> = {
-        idle: { icon: <Clock className="w-5 h-5" />, label: "Ready to render", color: "#64748b" },
+        idle: { icon: <Clock className="w-5 h-5" />, label: "Ready to render", color: "var(--color-text-muted)" },
         pending: { icon: <Loader2 className="w-5 h-5 animate-spin" />, label: "Queued — waiting for worker...", color: "#a78bfa" },
         processing: { icon: <Loader2 className="w-5 h-5 animate-spin" />, label: "Rendering your MP4...", color: "#2dd4bf" },
         done: { icon: <CheckCircle className="w-5 h-5" />, label: "Render complete! Your MP4 is ready.", color: "#34d399" },
@@ -163,7 +163,7 @@ export default function ExportPage() {
                 {/* Summary card */}
                 {brand && script && (
                     <div className="glass-card rounded-2xl p-5 mb-8 space-y-2">
-                        <p className="text-sm font-semibold mb-3" style={{ color: "#94a3b8" }}>RENDER SPEC</p>
+                        <p className="text-sm font-semibold mb-3" style={{ color: "var(--color-text-secondary)" }}>RENDER SPEC</p>
                         {[
                             ["Brand", brand.brandName],
                             ["Script", script.title],
@@ -173,7 +173,7 @@ export default function ExportPage() {
                             ["Audio", `${audio.musicPreview ? "Music " : ""}${audio.aiVoice ? "AI-Voice" : ""}` || "None"],
                         ].map(([k, v]) => (
                             <div key={k} className="flex justify-between text-sm">
-                                <span style={{ color: "#64748b" }}>{k}</span>
+                                <span style={{ color: "var(--color-text-muted)" }}>{k}</span>
                                 <span className="font-medium capitalize">{v}</span>
                             </div>
                         ))}
@@ -184,8 +184,8 @@ export default function ExportPage() {
                 <div
                     className="rounded-2xl p-5 mb-6 flex items-center gap-4"
                     style={{
-                        background: "rgba(26,26,46,0.6)",
-                        border: `1px solid ${job.status === "done" ? "rgba(52,211,153,0.3)" : job.status === "failed" ? "rgba(248,113,113,0.3)" : "rgba(45,45,74,0.6)"}`,
+                        background: "rgb(var(--rgb-surface-card) / 0.6)",
+                        border: `1px solid ${job.status === "done" ? "rgba(52,211,153,0.3)" : job.status === "failed" ? "rgba(248,113,113,0.3)" : "rgb(var(--rgb-surface-border) / 0.6)"}`,
                     }}
                 >
                     <div style={{ color: currentStatus.color }}>{currentStatus.icon}</div>
@@ -197,7 +197,7 @@ export default function ExportPage() {
 
                 {/* Progress bar for processing */}
                 {(job.status === "pending" || job.status === "processing") && (
-                    <div className="rounded-full overflow-hidden mb-6" style={{ height: 4, background: "rgba(45,45,74,0.6)" }}>
+                    <div className="rounded-full overflow-hidden mb-6" style={{ height: 4, background: "rgb(var(--rgb-surface-border) / 0.6)" }}>
                         <div
                             className="h-full rounded-full"
                             style={{
@@ -240,7 +240,7 @@ export default function ExportPage() {
                 ) : (
                     <div
                         className="w-full py-4 text-center rounded-xl text-sm font-medium mb-4"
-                        style={{ background: "rgba(36,36,56,0.6)", color: "#64748b" }}
+                        style={{ background: "rgb(var(--rgb-surface-elevated) / 0.6)", color: "var(--color-text-muted)" }}
                     >
                         Rendering in progress...
                     </div>
@@ -258,7 +258,7 @@ export default function ExportPage() {
                 <button
                     onClick={() => router.push("/preview")}
                     className="flex items-center gap-2 text-sm mx-auto"
-                    style={{ color: "#64748b" }}
+                    style={{ color: "var(--color-text-muted)" }}
                 >
                     <ArrowLeft className="w-4 h-4" /> Back to Preview
                 </button>

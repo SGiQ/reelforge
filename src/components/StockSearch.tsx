@@ -74,9 +74,9 @@ export default function StockSearch({ onSelect }: { onSelect: (clip: StockClip) 
             )}
 
             {searched && !loading && clips.length === 0 && !error && (
-                <p className="text-xs" style={{ color: "#64748b" }}>No results — try a different search.</p>
+                <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>No results — try a different search.</p>
             )}
-            <p className="text-[10px]" style={{ color: "#64748b" }}>Stock clips provided by Pexels.</p>
+            <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>Stock clips provided by Pexels.</p>
         </div>
     );
 }

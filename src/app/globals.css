@@ -4,7 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ── Theme tokens ───────────────────────────────────────────────────────────
+   Colors are referenced everywhere as var(--color-*) or, for translucent
+   surfaces, rgb(var(--rgb-*) / <alpha>). Dark is the default (:root); light
+   overrides under html.light. Brand colors are theme-independent.
+   NOTE: reel/video content (ReelPreview, rendered slides, theme swatches) is
+   intentionally NOT tokenized — it must reflect the video the user is building,
+   not the app chrome. ────────────────────────────────────────────────────── */
+:root, html.dark {
   --color-brand-purple: #7c3aed;
   --color-brand-teal: #0d9488;
   --color-surface: #0f0f1a;
@@ -14,6 +21,27 @@
   --color-text-primary: #f8fafc;
   --color-text-secondary: #94a3b8;
   --color-text-muted: #64748b;
+
+  /* RGB triplets for translucent surfaces: rgb(var(--rgb-surface-border) / .6) */
+  --rgb-surface: 15 15 26;
+  --rgb-surface-card: 26 26 46;
+  --rgb-surface-elevated: 36 36 56;
+  --rgb-surface-border: 45 45 74;
+}
+
+html.light {
+  --color-surface: #f6f7fb;
+  --color-surface-card: #ffffff;
+  --color-surface-elevated: #eef1f6;
+  --color-surface-border: #d8dee9;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+
+  --rgb-surface: 246 247 251;
+  --rgb-surface-card: 255 255 255;
+  --rgb-surface-elevated: 238 241 246;
+  --rgb-surface-border: 216 222 233;
 }
 
 * {
@@ -41,7 +69,7 @@ html, body {
 ::-webkit-scrollbar-thumb:hover { background: var(--color-brand-purple); }
 
 /* Selection */
-::selection { background: rgba(124, 58, 237, 0.3); color: #f8fafc; }
+::selection { background: rgba(124, 58, 237, 0.3); color: var(--color-text-primary); }
 
 /* Utility classes */
 @layer utilities {
@@ -49,8 +77,8 @@ html, body {
     @apply bg-gradient-to-r from-brand-purple-light to-brand-teal-light bg-clip-text text-transparent;
   }
   .glass-card {
-    background: rgba(26, 26, 46, 0.8);
-    border: 1px solid rgba(45, 45, 74, 0.6);
+    background: rgb(var(--rgb-surface-card) / 0.8);
+    border: 1px solid rgb(var(--rgb-surface-border) / 0.6);
     backdrop-filter: blur(12px);
   }
   .glass-card-hover {
@@ -73,8 +101,8 @@ html, body {
   .btn-primary:active { transform: translateY(0); }
   .btn-secondary {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200;
-    background: rgba(45, 45, 74, 0.6);
-    border: 1px solid rgba(45, 45, 74, 0.8);
+    background: rgb(var(--rgb-surface-border) / 0.6);
+    border: 1px solid rgb(var(--rgb-surface-border) / 0.8);
     color: #a78bfa;
   }
   .btn-secondary:hover {
@@ -90,23 +118,23 @@ html, body {
   }
   .input-field {
     @apply w-full px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200;
-    background: rgba(36, 36, 56, 0.8);
-    border: 1px solid rgba(45, 45, 74, 0.8);
-    color: #f8fafc;
+    background: rgb(var(--rgb-surface-elevated) / 0.8);
+    border: 1px solid rgb(var(--rgb-surface-border) / 0.8);
+    color: var(--color-text-primary);
     outline: none;
   }
   .input-field:focus {
     border-color: rgba(124, 58, 237, 0.6);
     box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
   }
-  .input-field::placeholder { color: #64748b; }
+  .input-field::placeholder { color: var(--color-text-muted); }
   .page-container {
     @apply min-h-screen;
     background: var(--color-surface);
   }
   .section-title {
     @apply text-3xl font-bold tracking-tight;
-    color: #f8fafc;
+    color: var(--color-text-primary);
   }
   .section-subtitle {
     @apply text-base mt-2;

@@ -142,10 +142,10 @@ export default function AdminPage() {
                         <h1 className="section-title text-3xl mb-2 flex items-center gap-2">
                             <Shield className="w-7 h-7" style={{ color: "#a78bfa" }} /> Admin
                         </h1>
-                        <p className="text-sm" style={{ color: "#94a3b8" }}>Moderate the community and manage reels & users.</p>
+                        <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Moderate the community and manage reels & users.</p>
                     </div>
                     <button onClick={load} className="flex items-center justify-center w-12 h-12 rounded-xl border hover:bg-white/5"
-                        style={{ borderColor: "rgba(45,45,74,0.6)", color: "#94a3b8" }}>
+                        style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)", color: "var(--color-text-secondary)" }}>
                         <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
                     </button>
                 </div>
@@ -154,7 +154,7 @@ export default function AdminPage() {
                     {(["reels", "users", "music"] as const).map((t) => (
                         <button key={t} onClick={() => setTab(t)}
                             className="px-4 py-2 rounded-full text-sm font-medium capitalize transition-colors"
-                            style={tab === t ? { background: "#7c3aed", color: "#fff" } : { background: "rgba(36,36,56,0.8)", color: "#94a3b8" }}>
+                            style={tab === t ? { background: "#7c3aed", color: "#fff" } : { background: "rgb(var(--rgb-surface-elevated) / 0.8)", color: "var(--color-text-secondary)" }}>
                             {t === "reels" ? <Film className="w-4 h-4 inline mr-1" /> : t === "users" ? <Users className="w-4 h-4 inline mr-1" /> : <Music className="w-4 h-4 inline mr-1" />}
                             {t} ({t === "reels" ? reels.length : t === "users" ? users.length : tracks.length})
                         </button>
@@ -177,8 +177,8 @@ export default function AdminPage() {
                 {tab === "music" ? (
                     <div className="space-y-4">
                         <div className="glass-card rounded-xl p-4">
-                            <p className="text-sm font-semibold mb-1" style={{ color: "#f8fafc" }}>Add a track</p>
-                            <p className="text-xs mb-3" style={{ color: "#64748b" }}>
+                            <p className="text-sm font-semibold mb-1" style={{ color: "var(--color-text-primary)" }}>Add a track</p>
+                            <p className="text-xs mb-3" style={{ color: "var(--color-text-muted)" }}>
                                 Upload a royalty-free MP3/WAV you have the rights to (e.g. from the YouTube Audio Library or Pixabay).
                                 It's stored on Blob and becomes available to everyone — and to the AI Director.
                             </p>
@@ -199,8 +199,8 @@ export default function AdminPage() {
 
                         {/* Import from Jamendo (free CC music API) */}
                         <div className="glass-card rounded-xl p-4">
-                            <p className="text-sm font-semibold mb-1" style={{ color: "#f8fafc" }}>Import from Jamendo</p>
-                            <p className="text-xs mb-3" style={{ color: "#64748b" }}>
+                            <p className="text-sm font-semibold mb-1" style={{ color: "var(--color-text-primary)" }}>Import from Jamendo</p>
+                            <p className="text-xs mb-3" style={{ color: "var(--color-text-muted)" }}>
                                 Free Creative-Commons catalog. Non-commercial tracks are filtered out; imports are re-hosted to Blob and the artist/license is saved.
                             </p>
                             <div className="flex flex-wrap items-center gap-2">
@@ -217,10 +217,10 @@ export default function AdminPage() {
                             {jresults.length > 0 && (
                                 <div className="mt-3 grid sm:grid-cols-2 gap-2">
                                     {jresults.map((c) => (
-                                        <div key={c.jamendo_id} className="rounded-xl p-3 flex items-center gap-3" style={{ background: "rgba(15,15,26,0.6)" }}>
+                                        <div key={c.jamendo_id} className="rounded-xl p-3 flex items-center gap-3" style={{ background: "rgb(var(--rgb-surface) / 0.6)" }}>
                                             <div className="flex-1 min-w-0">
                                                 <p className="text-sm font-medium truncate" style={{ color: "#e2e8f0" }}>{c.title}</p>
-                                                <p className="text-xs truncate" style={{ color: "#94a3b8" }}>{c.artist}{c.duration ? ` · ${Math.round(c.duration)}s` : ""}</p>
+                                                <p className="text-xs truncate" style={{ color: "var(--color-text-secondary)" }}>{c.artist}{c.duration ? ` · ${Math.round(c.duration)}s` : ""}</p>
                                                 <audio src={c.audio} controls preload="none" className="mt-1.5" style={{ height: 28, width: "100%" }} />
                                             </div>
                                             <button onClick={() => importTrack(c)} disabled={importingId === c.jamendo_id} title="Add to library"
@@ -238,8 +238,8 @@ export default function AdminPage() {
                                 <div key={t.id} className="glass-card rounded-xl p-4 flex items-center gap-4">
                                     <Music className="w-4 h-4 flex-shrink-0" style={{ color: "#a78bfa" }} />
                                     <div className="flex-1 min-w-0">
-                                        <p className="font-semibold text-sm truncate" style={{ color: "#f8fafc" }}>{t.title}</p>
-                                        <p className="text-xs" style={{ color: "#94a3b8" }}>
+                                        <p className="font-semibold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>{t.title}</p>
+                                        <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
                                             <span className="capitalize">{t.mood}</span>{t.duration ? ` · ${Math.round(t.duration)}s` : ""}
                                             {t.artist ? ` · ${t.artist}` : ""}
                                             {t.source === "jamendo" && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(45,212,191,0.15)", color: "#2dd4bf" }}>JAMENDO</span>}
@@ -250,7 +250,7 @@ export default function AdminPage() {
                                         className="p-2 rounded-lg hover:bg-red-500/10 text-red-400"><Trash2 className="w-4 h-4" /></button>
                                 </div>
                             ))}
-                            {!loading && tracks.length === 0 && <p className="text-sm" style={{ color: "#64748b" }}>No tracks yet — upload one above.</p>}
+                            {!loading && tracks.length === 0 && <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>No tracks yet — upload one above.</p>}
                         </div>
                     </div>
                 ) : tab === "reels" ? (
@@ -258,8 +258,8 @@ export default function AdminPage() {
                         {reels.map((r) => (
                             <div key={r.id} className="glass-card rounded-xl p-4 flex items-center gap-4">
                                 <div className="flex-1 min-w-0">
-                                    <p className="font-semibold text-sm truncate" style={{ color: "#f8fafc" }}>{r.brand_name || "Untitled"}</p>
-                                    <p className="text-xs" style={{ color: "#94a3b8" }}>
+                                    <p className="font-semibold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>{r.brand_name || "Untitled"}</p>
+                                    <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
                                         {r.owner_email || "unknown"} · {r.status} · {r.theme}
                                         {r.shared && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(52,211,153,0.2)", color: "#34d399" }}>SHARED</span>}
                                     </p>
@@ -273,18 +273,18 @@ export default function AdminPage() {
                                     className="p-2 rounded-lg hover:bg-red-500/10 text-red-400"><Trash2 className="w-4 h-4" /></button>
                             </div>
                         ))}
-                        {!loading && reels.length === 0 && <p className="text-sm" style={{ color: "#64748b" }}>No reels.</p>}
+                        {!loading && reels.length === 0 && <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>No reels.</p>}
                     </div>
                 ) : (
                     <div className="space-y-2">
                         {users.map((u) => (
                             <div key={u.id} className="glass-card rounded-xl p-4 flex items-center gap-4">
                                 <div className="flex-1 min-w-0">
-                                    <p className="font-semibold text-sm truncate" style={{ color: "#f8fafc" }}>
+                                    <p className="font-semibold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>
                                         {u.display_name || u.email}
                                         {u.is_admin && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(124,58,237,0.25)", color: "#a78bfa" }}>ADMIN</span>}
                                     </p>
-                                    <p className="text-xs" style={{ color: "#94a3b8" }}>{u.email} · {u.reel_count} reel(s)</p>
+                                    <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>{u.email} · {u.reel_count} reel(s)</p>
                                 </div>
                                 <button onClick={() => resetLink(u)} title="Generate password reset link"
                                     className="p-2 rounded-lg hover:bg-white/5" style={{ color: "#a78bfa" }}><KeyRound className="w-4 h-4" /></button>
@@ -294,7 +294,7 @@ export default function AdminPage() {
                                 )}
                             </div>
                         ))}
-                        {!loading && users.length === 0 && <p className="text-sm" style={{ color: "#64748b" }}>No users.</p>}
+                        {!loading && users.length === 0 && <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>No users.</p>}
                     </div>
                 )}
             </main>

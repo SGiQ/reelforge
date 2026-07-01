@@ -44,7 +44,7 @@ export default function AccountPage() {
                 {user?.email && <p className="section-subtitle">Signed in as {user.email}</p>}
 
                 <div className="glass-card rounded-2xl p-6 mt-6">
-                    <h2 className="text-base font-bold mb-4" style={{ color: "#f8fafc" }}>Change password</h2>
+                    <h2 className="text-base font-bold mb-4" style={{ color: "var(--color-text-primary)" }}>Change password</h2>
                     <form onSubmit={submit} className="space-y-3">
                         <input type="password" value={cur} onChange={(e) => setCur(e.target.value)}
                             placeholder="Current password" autoComplete="current-password"

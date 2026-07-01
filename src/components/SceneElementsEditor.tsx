@@ -114,7 +114,7 @@ export default function SceneElementsEditor({
     const sizeToPx = (size: number) => (size / 1080) * CANVAS_W;
 
     return (
-        <div className="pt-3 mt-1 border-t" style={{ borderColor: "rgba(45,45,74,0.4)" }}>
+        <div className="pt-3 mt-1 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
             <div className="flex items-start gap-4 flex-wrap">
                 {/* Drag canvas */}
                 <div
@@ -181,7 +181,7 @@ export default function SceneElementsEditor({
 
                     {/* Picker panels */}
                     {tab === "icon" && (
-                        <div className="rounded-lg p-2" style={{ background: "rgba(15,15,26,0.6)" }}>
+                        <div className="rounded-lg p-2" style={{ background: "rgb(var(--rgb-surface-elevated) / 0.9)" }}>
                             <input value={iconQuery} onChange={(e) => setIconQuery(e.target.value)}
                                 placeholder="Search icons…"
                                 className="input-field w-full text-xs py-1 mb-2" />
@@ -191,7 +191,7 @@ export default function SceneElementsEditor({
                                     return Cmp ? (
                                         <button key={name} type="button" title={name} onClick={() => addElement("icon", name)}
                                             className="flex items-center justify-center p-1.5 rounded hover:bg-white/10">
-                                            <Cmp className="w-4 h-4" color="#e2e8f0" />
+                                            <Cmp className="w-4 h-4" color="var(--color-text-secondary)" />
                                         </button>
                                     ) : null;
                                 })}
@@ -199,7 +199,7 @@ export default function SceneElementsEditor({
                         </div>
                     )}
                     {tab === "emoji" && (
-                        <div className="rounded-lg p-2" style={{ background: "rgba(15,15,26,0.6)" }}>
+                        <div className="rounded-lg p-2" style={{ background: "rgb(var(--rgb-surface-elevated) / 0.9)" }}>
                             <div className="grid grid-cols-8 gap-1 max-h-28 overflow-y-auto">
                                 {EMOJIS.map((em) => (
                                     <button key={em} type="button" onClick={() => addElement("emoji", em)}
@@ -211,9 +211,9 @@ export default function SceneElementsEditor({
 
                     {/* Selected element controls */}
                     {selected ? (
-                        <div className="rounded-lg p-3 space-y-2.5" style={{ background: "rgba(15,15,26,0.6)" }}>
+                        <div className="rounded-lg p-3 space-y-2.5" style={{ background: "rgb(var(--rgb-surface-elevated) / 0.9)" }}>
                             <div className="flex items-center justify-between">
-                                <span className="text-[11px] font-semibold" style={{ color: "#94a3b8" }}>
+                                <span className="text-[11px] font-semibold" style={{ color: "var(--color-text-secondary)" }}>
                                     Selected: {selected.type === "emoji" ? selected.value : selected.type === "image" ? "Image" : selected.value}
                                 </span>
                                 <button type="button" onClick={() => removeEl(selected.id)} title="Remove"
@@ -222,13 +222,13 @@ export default function SceneElementsEditor({
                                 </button>
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="text-[11px] w-12" style={{ color: "#64748b" }}>Size</span>
+                                <span className="text-[11px] w-12" style={{ color: "var(--color-text-muted)" }}>Size</span>
                                 <input type="range" min={50} max={420} step={10} value={selected.size}
                                     onChange={(e) => updateEl(selected.id, { size: parseInt(e.target.value, 10) })}
                                     className="flex-1 accent-brand-purple" />
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="text-[11px] w-12" style={{ color: "#64748b" }}>Motion</span>
+                                <span className="text-[11px] w-12" style={{ color: "var(--color-text-muted)" }}>Motion</span>
                                 <select value={selected.animation} onChange={(e) => updateEl(selected.id, { animation: e.target.value as any })}
                                     className="bg-transparent text-[11px] border border-white/10 rounded px-1 py-0.5 outline-none flex-1" style={{ color: "#2dd4bf" }}>
                                     {ELEMENT_ANIMS.map((a) => <option key={a.value} value={a.value} className="bg-[#1a1a2e] text-white">{a.label}</option>)}
@@ -236,7 +236,7 @@ export default function SceneElementsEditor({
                             </div>
                             {selected.type === "icon" && (
                                 <div className="flex items-center gap-2">
-                                    <span className="text-[11px] w-12" style={{ color: "#64748b" }}>Color</span>
+                                    <span className="text-[11px] w-12" style={{ color: "var(--color-text-muted)" }}>Color</span>
                                     <input type="color" value={selected.color || "#ffffff"}
                                         onChange={(e) => updateEl(selected.id, { color: e.target.value })}
                                         className="w-7 h-7 rounded bg-transparent border border-white/10 cursor-pointer" />
@@ -244,7 +244,7 @@ export default function SceneElementsEditor({
                             )}
                         </div>
                     ) : elements.length > 0 ? (
-                        <p className="text-[11px]" style={{ color: "#64748b" }}>Tap an element on the canvas to edit it.</p>
+                        <p className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>Tap an element on the canvas to edit it.</p>
                     ) : null}
                 </div>
             </div>

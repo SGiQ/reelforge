@@ -207,9 +207,9 @@ export default function BrandSetupPage() {
                 <div className="space-y-8">
                     {/* Brand name */}
                     <div className="space-y-2">
-                        <label className="block text-sm font-medium" style={{ color: "#94a3b8" }}>
+                        <label className="block text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
                             Brand Name {!hasLogo && <span style={{ color: "#7c3aed" }}>*</span>}
-                            {hasLogo && <span className="text-xs ml-1" style={{ color: "#64748b" }}>(optional — your logo is used instead)</span>}
+                            {hasLogo && <span className="text-xs ml-1" style={{ color: "var(--color-text-muted)" }}>(optional — your logo is used instead)</span>}
                         </label>
                         <input
                             type="text"
@@ -223,8 +223,8 @@ export default function BrandSetupPage() {
 
                     {/* Website URL */}
                     <div className="space-y-2">
-                        <label className="block text-sm font-medium" style={{ color: "#94a3b8" }}>
-                            Website URL <span className="text-xs" style={{ color: "#64748b" }}>(for QR code)</span>
+                        <label className="block text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
+                            Website URL <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>(for QR code)</span>
                         </label>
                         <input
                             type="url"
@@ -238,8 +238,8 @@ export default function BrandSetupPage() {
 
                     {/* Phone number */}
                     <div className="space-y-2">
-                        <label className="block text-sm font-medium" style={{ color: "#94a3b8" }}>
-                            Business Phone <span className="text-xs" style={{ color: "#64748b" }}>(optional — shown on the final slide)</span>
+                        <label className="block text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
+                            Business Phone <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>(optional — shown on the final slide)</span>
                         </label>
                         <input
                             type="tel"
@@ -285,7 +285,7 @@ export default function BrandSetupPage() {
                             <div className="space-y-2">
                                 <div className="flex justify-between items-center text-sm font-medium">
                                     <span style={{ color: "#a78bfa" }}>Logo Size</span>
-                                    <span style={{ color: "#94a3b8" }}>{logoSize}px</span>
+                                    <span style={{ color: "var(--color-text-secondary)" }}>{logoSize}px</span>
                                 </div>
                                 <input
                                     type="range"
@@ -317,14 +317,14 @@ export default function BrandSetupPage() {
                                     <option value="bottom_center">Bottom Center</option>
                                     <option value="bottom_right">Bottom Right</option>
                                 </select>
-                                <p className="text-xs" style={{ color: "#64748b" }}>
+                                <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
                                     Shows a small logo on every text slide so viewers recognize your brand even while scrubbing.
                                 </p>
                                 {slideLogoPosition !== "none" && (
                                     <div className="space-y-2 pt-1">
                                         <div className="flex justify-between items-center text-sm font-medium">
                                             <span style={{ color: "#a78bfa" }}>Logo Size on Slides</span>
-                                            <span style={{ color: "#94a3b8" }}>{slideLogoSize}px</span>
+                                            <span style={{ color: "var(--color-text-secondary)" }}>{slideLogoSize}px</span>
                                         </div>
                                         <input
                                             type="range" min="24" max="150" step="2"
@@ -353,7 +353,7 @@ export default function BrandSetupPage() {
                         <div className="space-y-2 pt-2">
                             <div className="flex justify-between items-center text-sm font-medium">
                                 <span style={{ color: "#a78bfa" }}>Watermark Opacity</span>
-                                <span style={{ color: "#94a3b8" }}>{watermarkOpacity}%</span>
+                                <span style={{ color: "var(--color-text-secondary)" }}>{watermarkOpacity}%</span>
                             </div>
                             <input
                                 type="range"
@@ -369,7 +369,7 @@ export default function BrandSetupPage() {
                                 <div className="mt-4 flex gap-4 items-center">
                                     <div
                                         className="rounded-lg overflow-hidden relative shadow-lg"
-                                        style={{ width: "90px", height: "160px", backgroundColor: "#1a1a2e" }}
+                                        style={{ width: "90px", height: "160px", backgroundColor: "var(--color-surface-card)" }}
                                     >
                                         <img
                                             src={watermarkPreview}
@@ -378,7 +378,7 @@ export default function BrandSetupPage() {
                                             style={{ opacity: watermarkOpacity / 100 }}
                                         />
                                     </div>
-                                    <div className="text-sm" style={{ color: "#64748b" }}>
+                                    <div className="text-sm" style={{ color: "var(--color-text-muted)" }}>
                                         Previewing opacity over a dark theme base.
                                     </div>
                                 </div>
@@ -400,7 +400,7 @@ export default function BrandSetupPage() {
                                 <span className="block text-sm font-medium" style={{ color: "#a78bfa" }}>
                                     Tint video scenes with theme color
                                 </span>
-                                <span className="block text-xs mt-0.5" style={{ color: "#64748b" }}>
+                                <span className="block text-xs mt-0.5" style={{ color: "var(--color-text-muted)" }}>
                                     Off (default) shows your video clips clean, with no color overlay. Turn on to wash them in the theme color (helps caption readability).
                                 </span>
                             </span>
@@ -434,7 +434,7 @@ export default function BrandSetupPage() {
                     {/* Tip */}
                     <div className="rounded-xl px-4 py-3 flex gap-3" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}>
                         <span style={{ color: "#a78bfa" }}>💡</span>
-                        <p className="text-sm" style={{ color: "#94a3b8" }}>
+                        <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
                             Use a close-up face photo for your watermark — it creates an emotional connection without distracting from the text.
                         </p>
                     </div>

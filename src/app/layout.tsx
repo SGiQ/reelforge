@@ -15,8 +15,15 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" className="dark">
+        <html lang="en" className="dark" suppressHydrationWarning>
             <head>
+                {/* Apply the saved UI theme before first paint to avoid a flash.
+                    Dark is the default; only switches to light if the user chose it. */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `(function(){try{var t=localStorage.getItem('reelforge_ui_theme')==='light'?'light':'dark';var d=document.documentElement;d.classList.remove('light','dark');d.classList.add(t);d.style.colorScheme=t;}catch(e){}})();`,
+                    }}
+                />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
                 <link
@@ -24,7 +31,7 @@ export default function RootLayout({
                     rel="stylesheet"
                 />
             </head>
-            <body className="antialiased" style={{ background: "#0f0f1a", color: "#f8fafc" }}>
+            <body className="antialiased" style={{ background: "var(--color-surface)", color: "var(--color-text-primary)" }}>
                 {children}
             </body>
         </html>
