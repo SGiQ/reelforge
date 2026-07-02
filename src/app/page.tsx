@@ -1,278 +1,270 @@
+"use client";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowUpRight, SquareTerminal, Palette, Eye, Download, AudioLines, Play } from "lucide-react";
-import ThemeToggle from "@/components/ThemeToggle";
+import { ArrowRight, Play, Wand2, Palette, Eye, Download, Sparkles } from "lucide-react";
+import ParticleField from "@/components/ParticleField";
 import HeroReel from "@/components/HeroReel";
 
-/* ── Cinematic Studio landing ─────────────────────────────────────────────────
-   Chrome is driven by the app theme tokens (flips light/dark). The reel FRAMES
-   are video content — they keep their own dark/themed colors in both modes,
-   the same way a dark reel stays dark inside the light app. ─────────────────── */
-
-// Sample reels shown as film-framed "slides" (video content — fixed colors).
-const HERO = { cap: "Someone should be checking on her.", brand: "CheckWellCall", bg: "linear-gradient(160deg,#161b2e,#0a0a0f)", text: "#e9edff", accent: "#8ab4ff" };
-const showcase = [
-    { cap: "Your morning call, every morning.", brand: "CheckWellCall", meta: "WELLNESS / 15s", bg: "linear-gradient(160deg,#101a2e,#0a0a0f)", text: "#e6efff", accent: "#7cc4ff" },
-    { cap: "New drop. Limited run.", brand: "Nomad Goods", meta: "PRODUCT / 12s", bg: "linear-gradient(160deg,#2a1c08,#0a0a0f)", text: "#ffe9c4", accent: "#f5b642" },
-    { cap: "Book a demo in thirty seconds.", brand: "FlowOps", meta: "SAAS / 08s", bg: "linear-gradient(160deg,#07202a,#0a0a0f)", text: "#d8f3ff", accent: "#4fc3f7" },
-    { cap: "We show up. Every single day.", brand: "Meridian Care", meta: "BRAND / 20s", bg: "linear-gradient(160deg,#2a0f18,#0a0a0f)", text: "#ffd9e1", accent: "#ff6b8a" },
-];
+const HERO = { cap: "Someone should be checking on her.", brand: "CheckWellCall" };
 
 const features = [
-    { icon: <SquareTerminal className="w-7 h-7" />, title: "WRITE OR GENERATE", body: "Draft your script line by line, or let AI write it from a one-line prompt." },
-    { icon: <Palette className="w-7 h-7" />, title: "DISTINCT THEMES", body: "Eight cinematic color themes so every reel stays unmistakably on-brand." },
-    { icon: <Eye className="w-7 h-7" />, title: "LIVE PREVIEW", body: "Watch your reel animate in the browser before you spend a second rendering." },
-    { icon: <Download className="w-7 h-7" />, title: "1080×1920 MP4", body: "Export a clean vertical MP4, ready for Reels, TikTok, and YouTube Shorts." },
+    { Icon: Wand2, title: "Write or generate", body: "Draft your script line by line, or let AI compose it from a single prompt.", c: "#a78bfa" },
+    { Icon: Palette, title: "Distinct themes", body: "Eight cinematic looks so every reel stays unmistakably on-brand.", c: "#4fc3f7" },
+    { Icon: Eye, title: "Live preview", body: "Watch it animate in the browser before you spend a second rendering.", c: "#c6f135" },
+    { Icon: Download, title: "1080×1920 MP4", body: "Export a clean vertical file, ready for Reels, TikTok and Shorts.", c: "#7cc4ff" },
 ];
 
 const steps = [
-    { n: "01", k: "BRAND", d: "Add your logo, watermark, and details", img: "/workflow/brand.png" },
-    { n: "02", k: "SCRIPT", d: "Write it or generate it with AI", img: "/workflow/script.png" },
-    { n: "03", k: "THEME", d: "Pick a cinematic visual style", img: "/workflow/theme.png" },
-    { n: "04", k: "EXPORT", d: "Render a 1080×1920 MP4", img: "/workflow/export.png" },
+    { n: "01", k: "BRAND", d: "Logo, watermark, details" },
+    { n: "02", k: "SCRIPT", d: "Write it or generate it" },
+    { n: "03", k: "THEME", d: "Pick a cinematic look" },
+    { n: "04", k: "EXPORT", d: "Render a 1080×1920 MP4" },
 ];
 
-function Ticks({ c = "var(--acc)", o = 0.5, size = "1.5rem", off = "-0.75rem" }: { c?: string; o?: number; size?: string; off?: string }) {
-    const s = { width: size, height: size, opacity: o } as const;
-    return (
-        <>
-            <span className="absolute pointer-events-none" style={{ ...s, top: off, left: off, borderTop: `1px solid ${c}`, borderLeft: `1px solid ${c}` }} />
-            <span className="absolute pointer-events-none" style={{ ...s, top: off, right: off, borderTop: `1px solid ${c}`, borderRight: `1px solid ${c}` }} />
-            <span className="absolute pointer-events-none" style={{ ...s, bottom: off, left: off, borderBottom: `1px solid ${c}`, borderLeft: `1px solid ${c}` }} />
-            <span className="absolute pointer-events-none" style={{ ...s, bottom: off, right: off, borderBottom: `1px solid ${c}`, borderRight: `1px solid ${c}` }} />
-        </>
-    );
-}
-
-/* A film-framed sample reel "slide". Interior is video content (fixed dark
-   colors) regardless of the app theme. */
-function ReelFrame({ reel, meta, hero = false }: { reel: { cap: string; brand: string; bg: string; text: string; accent: string }; meta?: string; hero?: boolean }) {
-    return (
-        <div className="relative w-full aspect-[9/16] overflow-hidden" style={{ background: reel.bg, border: "1px solid rgba(255,255,255,0.1)" }}>
-            {hero && <span className="scan" />}
-            {/* caption slide */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-                <p className="disp font-bold" style={{ color: reel.text, fontSize: hero ? 24 : 19, lineHeight: 1.15, textShadow: "0 2px 14px rgba(0,0,0,0.45)" }}>{reel.cap}</p>
-                <p className="mono mt-3 text-[11px]" style={{ color: reel.accent, letterSpacing: "0.12em" }}>{reel.brand.toUpperCase()}</p>
-            </div>
-            {/* mono badge */}
-            <div className="absolute top-3 left-3">
-                <span className="mono px-2 py-1 text-[11px]" style={{ background: "rgba(10,10,15,0.8)", color: "#c6f135", border: "1px solid rgba(198,241,53,0.25)" }}>
-                    {hero ? "0:07 · 1080×1920" : meta}
-                </span>
-            </div>
-            {/* timeline strip */}
-            <div className="absolute bottom-0 left-0 w-full p-3" style={{ background: "linear-gradient(to top,#0a0a0f,transparent)" }}>
-                <div className="flex justify-between items-end mb-2">
-                    <span className="mono text-[11px]" style={{ color: "#c5c9ae" }}>{hero ? "SCENE 01 / 03" : "REEL"}</span>
-                    <AudioLines className="w-3.5 h-3.5" style={{ color: "#c6f135" }} />
-                </div>
-                <div className="relative w-full" style={{ height: 2, background: "rgba(255,255,255,0.14)" }}>
-                    <div className="absolute top-0 left-0 h-full" style={{ width: hero ? "40%" : "62%", background: "#c6f135" }} />
-                    <div className="absolute" style={{ top: -3, left: hero ? "40%" : "62%", width: 8, height: 8, background: "#c6f135", boxShadow: "0 0 10px #c6f135" }} />
-                </div>
-            </div>
-        </div>
-    );
-}
-
 export default function HomePage() {
-    const cineCSS = `
-    .cine{
-      --bg:var(--color-surface);--s1:var(--color-surface-card);--s2:var(--color-surface-elevated);
-      --tx:var(--color-text-primary);--dim:var(--color-text-secondary);--muted:var(--color-text-muted);
-      --line:var(--hairline);--acc:var(--color-accent);--accs:var(--color-accent-surface);--ink:var(--color-accent-ink);
-      background:var(--bg);color:var(--tx);font-family:'Inter',system-ui,sans-serif;
-    }
-    .cine .disp{font-family:'Space Grotesk',system-ui,sans-serif;letter-spacing:-0.03em;}
-    .cine .mono{font-family:'Geist Mono','Space Mono',ui-monospace,monospace;}
-    .cine .hair{border:1px solid var(--line);}
-    .cine ::selection{background:var(--accs);color:var(--ink);}
-    .cine .scan{position:absolute;left:0;width:100%;height:1px;background:#c6f135;opacity:0.3;z-index:10;animation:cine-scan 7s linear infinite;}
-    @keyframes cine-scan{0%{top:-10%}100%{top:110%}}
-    .cine .lime-btn{background:var(--accs);color:var(--ink);}
-    .cine .lime-btn:hover{filter:brightness(1.08);}
-    .cine .navlink:hover{color:var(--acc);}
-    .cine .cap{font-family:'Geist Mono','Space Mono',monospace;font-size:17px;letter-spacing:0.1em;text-transform:uppercase;}
-    `;
+    const rootRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const root = rootRef.current;
+        if (!root) return;
+        let frame = 0;
+        const onMove = (e: MouseEvent) => {
+            if (frame) return;
+            frame = requestAnimationFrame(() => {
+                frame = 0;
+                root.style.setProperty("--px", ((e.clientX / window.innerWidth - 0.5) * 2).toFixed(3));
+                root.style.setProperty("--py", ((e.clientY / window.innerHeight - 0.5) * 2).toFixed(3));
+            });
+        };
+        window.addEventListener("mousemove", onMove);
+
+        const reveals = root.querySelectorAll(".reveal");
+        // Safety net: never leave content permanently hidden if the observer
+        // doesn't fire (unsupported / edge cases) — reveal after a short beat.
+        const safety = window.setTimeout(() => reveals.forEach((el) => el.classList.add("in")), 2500);
+        const io = "IntersectionObserver" in window
+            ? new IntersectionObserver(
+                (entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io!.unobserve(en.target); } }),
+                { threshold: 0.12 }
+            )
+            : null;
+        if (io) reveals.forEach((el) => io.observe(el));
+        else reveals.forEach((el) => el.classList.add("in"));
+
+        return () => { window.removeEventListener("mousemove", onMove); io?.disconnect(); window.clearTimeout(safety); if (frame) cancelAnimationFrame(frame); };
+    }, []);
 
     return (
-        <div className="cine min-h-screen">
-            <style dangerouslySetInnerHTML={{ __html: cineCSS }} />
+        <div ref={rootRef} className="nx relative min-h-screen overflow-hidden">
+            <style dangerouslySetInnerHTML={{ __html: CSS }} />
 
-            {/* Nav */}
-            <nav className="fixed top-0 w-full z-50 hair" style={{ background: "rgb(var(--rgb-surface) / 0.8)", backdropFilter: "blur(12px)", borderLeft: 0, borderRight: 0, borderTop: 0 }}>
-                <div className="flex justify-between items-center px-6 md:px-10 py-4 mx-auto" style={{ maxWidth: 1440 }}>
-                    <div className="flex items-center gap-8">
-                        <Link href="/" className="disp text-lg font-bold" style={{ color: "var(--acc)" }}>ReelSGiQ</Link>
-                        <div className="hidden md:flex gap-6">
-                            <a href="#features" className="cap navlink transition-colors" style={{ color: "var(--dim)" }}>Features</a>
-                            <a href="#workflow" className="cap navlink transition-colors" style={{ color: "var(--dim)" }}>How it works</a>
-                            <Link href="/community" className="cap navlink transition-colors" style={{ color: "var(--dim)" }}>Community</Link>
+            {/* Background layers */}
+            <div className="nx-base" />
+            <ParticleField />
+            <div className="nx-orb nx-orb1" />
+            <div className="nx-orb nx-orb2" />
+            <div className="nx-orb nx-orb3" />
+            <div className="nx-grid" />
+            <div className="nx-vignette" />
+
+            <div className="relative" style={{ zIndex: 10 }}>
+                {/* Nav */}
+                <nav className="fixed top-0 w-full z-50 nx-navbar">
+                    <div className="mx-auto flex items-center justify-between px-6 md:px-10 py-4" style={{ maxWidth: 1320 }}>
+                        <Link href="/" className="flex items-center gap-2">
+                            <span className="nx-mark" />
+                            <span className="disp font-bold text-lg tracking-tight">Reel<span style={{ color: "#c6f135" }}>SGiQ</span></span>
+                        </Link>
+                        <div className="hidden md:flex items-center gap-8">
+                            <a href="#features" className="nx-link">Features</a>
+                            <a href="#flow" className="nx-link">How it works</a>
+                            <Link href="/community" className="nx-link">Community</Link>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Link href="/login" className="nx-link hidden sm:block">Sign in</Link>
+                            <Link href="/brand-setup" className="nx-cta">Start free</Link>
                         </div>
                     </div>
-                    <div className="flex items-center gap-2 sm:gap-4">
-                        <Link href="/login" className="cap px-3 sm:px-4 py-2 transition-colors navlink whitespace-nowrap" style={{ color: "var(--dim)" }}>Sign in</Link>
-                        <Link href="/brand-setup" className="lime-btn cap font-bold px-4 sm:px-5 py-2.5 transition-all whitespace-nowrap" style={{ borderRadius: 8 }}>Start free</Link>
-                        <ThemeToggle />
-                    </div>
-                </div>
-            </nav>
+                </nav>
 
-            <main className="pt-24">
-                {/* Hero */}
-                <section className="relative px-6 md:px-10 mx-auto py-16 lg:py-28 grid lg:grid-cols-2 gap-16 items-center overflow-hidden" style={{ maxWidth: 1440 }}>
-                    <div className="absolute -top-40 -left-40 w-80 h-80" style={{ background: "rgba(198,241,53,0.06)", filter: "blur(120px)" }} />
-                    <div className="relative z-10 flex flex-col items-start gap-6">
-                        <span className="cap pl-4" style={{ color: "var(--acc)", borderLeft: "2px solid var(--acc)", letterSpacing: "0.2em" }}>AI Reel Studio / For Brands</span>
-                        <h1 className="disp font-bold max-w-2xl" style={{ fontSize: "clamp(3.5rem,8vw,5.5rem)", lineHeight: 1.02 }}>Reels that hit different.</h1>
-                        <p className="max-w-xl" style={{ color: "var(--dim)", fontSize: 26, lineHeight: 1.55 }}>
-                            Turn your logo, script, and clips into branded 9:16 reels. Pick a theme, preview it live in the browser, and export a 1080×1920 MP4 — in minutes.
-                        </p>
-                        <div className="flex flex-wrap gap-4 mt-2">
-                            <Link href="/brand-setup" className="lime-btn cap font-bold px-8 py-4 transition-all" style={{ borderRadius: 8 }}>Start building free</Link>
-                            <a href="#showcase" className="cap hair px-8 py-4 transition-colors flex items-center gap-2" style={{ color: "var(--tx)", borderRadius: 8 }}>
-                                <Play className="w-4 h-4" /> See examples
-                            </a>
-                        </div>
-                        <div className="mt-10 flex gap-8 items-center" style={{ opacity: 0.55 }}>
-                            <div className="flex flex-col gap-1">
-                                <span className="mono text-[17px]" style={{ color: "var(--muted)" }}>NO CREDIT CARD</span>
-                                <span className="cap">FREE TO START</span>
+                <main className="pt-28 md:pt-24">
+                    {/* Hero */}
+                    <section className="relative mx-auto px-6 md:px-10 grid lg:grid-cols-2 gap-14 items-center" style={{ maxWidth: 1320, paddingTop: "3rem", paddingBottom: "5rem" }}>
+                        <div className="reveal">
+                            <span className="nx-kicker"><Sparkles className="w-4 h-4" /> Next-gen reel studio</span>
+                            <h1 className="disp font-bold mt-6" style={{ fontSize: "clamp(3rem,7vw,5.25rem)", lineHeight: 1.02, letterSpacing: "-0.03em" }}>
+                                Reels from<br /><span className="nx-grad">another dimension.</span>
+                            </h1>
+                            <p className="mt-6 max-w-xl" style={{ color: "#aeb9d6", fontSize: 22, lineHeight: 1.55 }}>
+                                Turn your brand kit into cinematic 9:16 reels — scripted, themed, previewed live, and rendered to a 1080×1920 MP4 in minutes.
+                            </p>
+                            <div className="flex flex-wrap gap-4 mt-9">
+                                <Link href="/brand-setup" className="nx-cta nx-cta-lg">Start building free <ArrowRight className="w-5 h-5" /></Link>
+                                <a href="#showcase" className="nx-ghost nx-cta-lg"><Play className="w-4 h-4" /> See examples</a>
                             </div>
-                            <div style={{ width: 1, height: 32, background: "var(--line)" }} />
-                            <div className="flex flex-col gap-1">
-                                <span className="mono text-[17px]" style={{ color: "var(--muted)" }}>OUTPUT</span>
-                                <span className="cap">1080×1920 · MP4</span>
+                            <div className="flex items-center gap-6 mt-10" style={{ color: "#7f8bab" }}>
+                                <span className="mono text-[13px]">NO CREDIT CARD</span>
+                                <span style={{ width: 1, height: 22, background: "rgba(255,255,255,0.12)" }} />
+                                <span className="mono text-[13px]">1080×1920 · MP4</span>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Hero mockup — ticks hug the frame */}
-                    <div className="flex justify-center">
-                        <div className="relative w-full max-w-[300px]" style={{ boxShadow: "0 0 100px rgba(198,241,53,0.05)" }}>
-                            <Ticks />
-                            <HeroReel fallbackCap={HERO.cap} fallbackBrand={HERO.brand} />
-                        </div>
-                    </div>
-                </section>
-
-                {/* Trust strip */}
-                <section className="hair py-10" style={{ borderLeft: 0, borderRight: 0 }}>
-                    <div className="px-6 md:px-10 mx-auto flex flex-col md:flex-row items-center justify-between gap-6" style={{ maxWidth: 1440 }}>
-                        <span className="cap" style={{ color: "var(--muted)" }}>Built for brand marketers</span>
-                        <div className="flex flex-wrap gap-x-6 gap-y-3 items-center justify-center" style={{ color: "var(--muted)" }}>
-                            {["STUDIO_X", "KINETIC", "FRAMED", "PXL.CO"].map((n, i) => (
-                                <div key={n} className="flex items-center gap-8">
-                                    {i > 0 && <span style={{ width: 1, height: 16, background: "var(--line)" }} />}
-                                    <span className="disp italic" style={{ opacity: 0.6 }}>{n}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Showcase */}
-                <section id="showcase" className="py-20">
-                    <div className="px-6 md:px-10 mx-auto mb-10" style={{ maxWidth: 1440 }}>
-                        <h2 className="cap mb-4" style={{ color: "var(--acc)" }}>Showcase / Made with ReelSGiQ</h2>
-                        <div style={{ height: 1, background: "var(--line)" }} />
-                    </div>
-                    {/* Mobile: 2-col grid (vertical scroll only). Desktop: horizontal
-                        contact-sheet scroller. Avoids side-to-side drift on phones. */}
-                    <div className="px-6 md:px-10 grid grid-cols-2 gap-4 lg:flex lg:overflow-x-auto lg:pb-6" style={{ scrollbarWidth: "none" }}>
-                        {showcase.map((s) => (
-                            <div key={s.brand} className="lg:shrink-0 lg:w-[300px]">
-                                <ReelFrame reel={s} meta={s.meta} />
-                                <div className="flex justify-between items-start mt-3">
-                                    <div>
-                                        <p className="cap" style={{ color: "var(--tx)" }}>{s.brand}</p>
-                                        <p className="mono text-[17px] mt-1" style={{ color: "var(--dim)" }}>{s.meta}</p>
+                        {/* Floating holographic reel */}
+                        <div className="reveal flex justify-center" id="showcase">
+                            <div className="nx-parallax" style={{ ["--depth" as any]: 1.4 }}>
+                                <div className="nx-hero-panel nx-float">
+                                    <span className="nx-corner nx-corner-tl" /><span className="nx-corner nx-corner-tr" />
+                                    <span className="nx-corner nx-corner-bl" /><span className="nx-corner nx-corner-br" />
+                                    <div className="nx-hero-inner">
+                                        <HeroReel fallbackCap={HERO.cap} fallbackBrand={HERO.brand} />
                                     </div>
-                                    <ArrowUpRight className="w-4 h-4" style={{ color: "var(--acc)" }} />
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                </section>
+                        </div>
+                    </section>
 
-                {/* Features */}
-                <section id="features" className="py-20" style={{ background: "var(--s1)", borderTop: "1px solid var(--line)", borderBottom: "1px solid var(--line)" }}>
-                    <div className="px-6 md:px-10 mx-auto" style={{ maxWidth: 1440 }}>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4">
+                    {/* Features */}
+                    <section id="features" className="relative mx-auto px-6 md:px-10 py-20" style={{ maxWidth: 1320 }}>
+                        <div className="reveal mb-12">
+                            <span className="mono text-[13px]" style={{ color: "#4fc3f7", letterSpacing: "0.25em" }}>SYSTEM // CAPABILITIES</span>
+                            <h2 className="disp font-bold mt-3" style={{ fontSize: "clamp(2rem,4vw,2.75rem)" }}>Everything you need to go viral</h2>
+                        </div>
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
                             {features.map((f, i) => (
-                                <div key={f.title} className="p-8 lg:p-10" style={{ borderRight: i < 3 ? "1px solid var(--line)" : undefined }}>
-                                    <div className="mb-8" style={{ color: "var(--acc)" }}>{f.icon}</div>
-                                    <h3 className="cap mb-3" style={{ color: "var(--tx)" }}>{f.title}</h3>
-                                    <p style={{ color: "var(--dim)", fontSize: 21, lineHeight: 1.5 }}>{f.body}</p>
+                                <div key={f.title} className="reveal nx-glass nx-card" style={{ transitionDelay: `${i * 80}ms` }}>
+                                    <span className="nx-ico" style={{ ["--g" as any]: f.c }}><f.Icon className="w-6 h-6" /></span>
+                                    <h3 className="disp font-semibold text-lg mt-5">{f.title}</h3>
+                                    <p className="mt-2" style={{ color: "#9aa6c6", fontSize: 16, lineHeight: 1.5 }}>{f.body}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Flow */}
+                    <section id="flow" className="relative mx-auto px-6 md:px-10 py-20" style={{ maxWidth: 1320 }}>
+                        <div className="reveal mb-12">
+                            <span className="mono text-[13px]" style={{ color: "#a78bfa", letterSpacing: "0.25em" }}>SEQUENCE // FOUR STEPS</span>
+                            <h2 className="disp font-bold mt-3" style={{ fontSize: "clamp(2rem,4vw,2.75rem)" }}>From brand kit to finished reel</h2>
+                        </div>
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                            {steps.map((s, i) => (
+                                <div key={s.n} className="reveal nx-glass nx-node" style={{ transitionDelay: `${i * 80}ms` }}>
+                                    <span className="disp nx-node-num">{s.n}</span>
+                                    <h4 className="mono mt-6" style={{ letterSpacing: "0.15em", color: "#c6f135" }}>{s.k}</h4>
+                                    <p className="mono text-[13px] mt-2 uppercase" style={{ color: "#8592b3" }}>{s.d}</p>
+                                    {i < steps.length - 1 && <span className="nx-node-link" />}
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* CTA */}
+                    <section className="relative mx-auto px-6 md:px-10 py-24" style={{ maxWidth: 1320 }}>
+                        <div className="reveal nx-glass nx-cta-band">
+                            <div className="nx-orb nx-orb-cta" />
+                            <h2 className="disp font-bold relative" style={{ fontSize: "clamp(2.25rem,5vw,3.5rem)", lineHeight: 1.05 }}>Enter the studio.</h2>
+                            <p className="mt-4 relative" style={{ color: "#aeb9d6", fontSize: 20 }}>Make your first reel in minutes — no credit card required.</p>
+                            <Link href="/brand-setup" className="nx-cta nx-cta-lg mt-8 relative">Start building free <ArrowRight className="w-5 h-5" /></Link>
+                        </div>
+                    </section>
+                </main>
+
+                {/* Footer */}
+                <footer className="relative mx-auto px-6 md:px-10 py-14" style={{ maxWidth: 1320, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div className="flex flex-col md:flex-row justify-between gap-8">
+                        <div>
+                            <div className="flex items-center gap-2"><span className="nx-mark" /><span className="disp font-bold">ReelSGiQ</span></div>
+                            <p className="mono text-[13px] mt-3" style={{ color: "#6b779a", maxWidth: 240 }}>© 2026 SGiQ · AI-DRIVEN CINEMATICS</p>
+                        </div>
+                        <div className="flex gap-12">
+                            {[
+                                { h: "PRODUCT", l: [["Dashboard", "/dashboard"], ["AI Director", "/auto"], ["Community", "/community"]] },
+                                { h: "ACCOUNT", l: [["Sign in", "/login"], ["Create reel", "/brand-setup"], ["Help", "/help"]] },
+                            ].map((col) => (
+                                <div key={col.h} className="flex flex-col gap-3">
+                                    <span className="mono text-[13px]" style={{ color: "#aeb9d6" }}>{col.h}</span>
+                                    {col.l.map(([label, href]) => <Link key={label} href={href} className="nx-link mono text-[13px]">{label}</Link>)}
                                 </div>
                             ))}
                         </div>
                     </div>
-                </section>
-
-                {/* Workflow */}
-                <section id="workflow" className="py-28 px-6 md:px-10 mx-auto" style={{ maxWidth: 1440 }}>
-                    <div className="mb-16">
-                        <h2 className="disp font-bold mb-2" style={{ fontSize: "clamp(2.25rem,5vw,2.75rem)" }}>Four steps to a finished reel</h2>
-                        <p className="mono text-[17px]" style={{ color: "var(--acc)", letterSpacing: "0.3em" }}>BRAND · SCRIPT · THEME · EXPORT</p>
-                    </div>
-                    <div className="grid md:grid-cols-4 gap-4">
-                        {steps.map((s) => (
-                            <div key={s.n} className="flex flex-col gap-5">
-                                <span className="disp font-bold select-none" style={{ fontSize: 64, lineHeight: 1, opacity: 0.12, color: "var(--tx)" }}>{s.n}</span>
-                                <div className="hair aspect-square relative overflow-hidden group" style={{ background: "var(--s2)" }}>
-                                    {/* Real screenshot of the actual step screen (video/UI content). */}
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img src={s.img} alt={`${s.k} step`} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: "top" }} />
-                                    <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,15,0.55), transparent 55%)" }} />
-                                    <span className="mono text-[11px] absolute top-3 left-3" style={{ color: "rgba(255,255,255,0.82)", background: "rgba(10,10,15,0.65)", padding: "2px 7px", borderRadius: 3, border: "1px solid rgba(255,255,255,0.12)" }}>STEP_{s.n}</span>
-                                </div>
-                                <div>
-                                    <h4 className="cap mb-2" style={{ color: "var(--tx)" }}>{s.k}</h4>
-                                    <p className="mono text-[17px] uppercase" style={{ color: "var(--dim)" }}>{s.d}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* CTA band */}
-                <section className="relative py-28 overflow-hidden" style={{ borderTop: "1px solid var(--line)" }}>
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ opacity: 0.03 }}>
-                        <span className="disp font-bold whitespace-nowrap" style={{ fontSize: "22vw", color: "var(--tx)" }}>REELS</span>
-                    </div>
-                    <div className="relative px-6 md:px-10 mx-auto text-center flex flex-col items-center" style={{ maxWidth: 1440 }}>
-                        <Ticks o={1} size="1rem" off="0" />
-                        <h2 className="disp font-bold mb-8 max-w-2xl" style={{ fontSize: "clamp(2.5rem,6vw,3.75rem)", lineHeight: 1.05 }}>Make your first reel in minutes.</h2>
-                        <Link href="/brand-setup" className="lime-btn cap font-bold px-12 py-5 transition-transform hover:scale-105" style={{ borderRadius: 8 }}>Start building free</Link>
-                        <p className="mono text-[17px] uppercase mt-8" style={{ color: "var(--dim)", letterSpacing: "0.15em" }}>No credit card required · Free to start</p>
-                    </div>
-                </section>
-            </main>
-
-            {/* Footer */}
-            <footer className="py-16" style={{ background: "var(--bg)", borderTop: "1px solid var(--line)" }}>
-                <div className="px-6 md:px-10 mx-auto flex flex-col md:flex-row justify-between items-start gap-10" style={{ maxWidth: 1440 }}>
-                    <div className="flex flex-col gap-5">
-                        <span className="cap font-bold" style={{ color: "var(--acc)" }}>REELSGIQ</span>
-                        <p className="mono text-[17px]" style={{ color: "var(--dim)", maxWidth: 220 }}>© 2026 SGiQ · AI-DRIVEN CINEMATICS · ALL RIGHTS RESERVED.</p>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
-                        {[
-                            { h: "PRODUCT", links: [["Dashboard", "/dashboard"], ["AI Director", "/auto"], ["Community", "/community"]] },
-                            { h: "ACCOUNT", links: [["Sign in", "/login"], ["Create reel", "/brand-setup"], ["Help", "/help"]] },
-                            { h: "CONNECT", links: [["Twitter / X", "#"], ["Discord", "#"], ["Status", "#"]] },
-                        ].map((col) => (
-                            <div key={col.h} className="flex flex-col gap-3">
-                                <span className="cap" style={{ color: "var(--tx)" }}>{col.h}</span>
-                                {col.links.map(([label, href]) => (
-                                    <Link key={label} href={href} className="mono text-[17px] transition-colors navlink" style={{ color: "var(--dim)" }}>{label}</Link>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </footer>
+                </footer>
+            </div>
         </div>
     );
 }
+
+const CSS = `
+.nx{ background:#05060a; color:#eaf0ff; font-family:'Inter',system-ui,sans-serif; }
+.nx .disp{ font-family:'Space Grotesk','Inter',sans-serif; }
+.nx .mono{ font-family:'Geist Mono','Space Mono',ui-monospace,monospace; }
+.nx ::selection{ background:#c6f135; color:#05060a; }
+
+.nx-base{ position:fixed; inset:0; z-index:0; background:
+  radial-gradient(1200px 600px at 50% -15%, rgba(79,195,247,0.10), transparent 60%),
+  radial-gradient(900px 500px at 100% 10%, rgba(167,139,250,0.08), transparent 60%),
+  #05060a; }
+.nx-grid{ position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.035) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(circle at 50% 28%, #000 0%, transparent 72%);
+  mask-image:radial-gradient(circle at 50% 28%, #000 0%, transparent 72%); }
+.nx-vignette{ position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(120% 120% at 50% 40%, transparent 55%, rgba(0,0,0,0.55) 100%); }
+
+.nx-orb{ position:fixed; border-radius:50%; z-index:0; pointer-events:none; filter:blur(64px); opacity:0.42;
+  transform:translate3d(calc(var(--px,0)*-24px), calc(var(--py,0)*-24px), 0); will-change:transform; }
+.nx-orb1{ width:440px; height:440px; top:-80px; left:-60px; background:radial-gradient(circle,#4fc3f7,transparent 70%); animation:nx-drift 16s ease-in-out infinite; }
+.nx-orb2{ width:520px; height:520px; top:20%; right:-120px; background:radial-gradient(circle,#a78bfa,transparent 70%); animation:nx-drift 20s ease-in-out infinite reverse; }
+.nx-orb3{ width:360px; height:360px; bottom:-60px; left:30%; background:radial-gradient(circle,#c6f135,transparent 70%); opacity:0.22; animation:nx-drift 24s ease-in-out infinite; }
+@keyframes nx-drift{ 0%,100%{ margin-top:0; margin-left:0 } 50%{ margin-top:26px; margin-left:20px } }
+
+.nx-navbar{ background:rgba(5,6,10,0.55); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,0.07); }
+.nx-mark{ width:26px; height:26px; border-radius:8px; background:linear-gradient(135deg,#c6f135,#4fc3f7); box-shadow:0 0 18px rgba(198,241,53,0.5); display:inline-block; }
+.nx-link{ font-family:'Geist Mono',monospace; font-size:13px; letter-spacing:0.06em; color:#9aa6c6; text-transform:uppercase; transition:color .2s; }
+.nx-link:hover{ color:#c6f135; }
+
+.nx-kicker{ display:inline-flex; align-items:center; gap:8px; font-family:'Geist Mono',monospace; font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:#4fc3f7; padding:7px 14px; border:1px solid rgba(79,195,247,0.3); border-radius:999px; background:rgba(79,195,247,0.06); }
+.nx-grad{ background:linear-gradient(100deg,#4fc3f7,#a78bfa 45%,#c6f135); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+.nx-cta{ display:inline-flex; align-items:center; gap:8px; font-family:'Geist Mono',monospace; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#05060a; background:linear-gradient(135deg,#c6f135,#8fe36b); padding:10px 18px; border-radius:10px; box-shadow:0 0 24px rgba(198,241,53,0.35); transition:transform .2s, box-shadow .2s; }
+.nx-cta:hover{ transform:translateY(-2px); box-shadow:0 0 40px rgba(198,241,53,0.55); }
+.nx-cta-lg{ font-size:14px; padding:15px 30px; border-radius:12px; }
+.nx-ghost{ display:inline-flex; align-items:center; gap:8px; font-family:'Geist Mono',monospace; font-size:14px; letter-spacing:0.06em; text-transform:uppercase; color:#eaf0ff; padding:15px 26px; border-radius:12px; border:1px solid rgba(255,255,255,0.16); background:rgba(255,255,255,0.03); transition:border-color .2s, background .2s; }
+.nx-ghost:hover{ border-color:rgba(198,241,53,0.5); background:rgba(198,241,53,0.06); }
+
+.nx-glass{ background:rgba(255,255,255,0.045); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.1); box-shadow:0 10px 46px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08); border-radius:18px; }
+.nx-card{ padding:26px 24px; transition:transform .3s, border-color .3s, box-shadow .3s, opacity .8s; }
+.nx-card:hover{ transform:translateY(-6px); border-color:rgba(255,255,255,0.2); box-shadow:0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(79,195,247,0.12); }
+.nx-ico{ display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; color:var(--g);
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); box-shadow:0 0 24px rgba(255,255,255,0.06);
+  background:color-mix(in srgb, var(--g) 14%, transparent); border:1px solid color-mix(in srgb, var(--g) 35%, transparent); box-shadow:0 0 24px color-mix(in srgb, var(--g) 25%, transparent); }
+
+.nx-node{ position:relative; padding:24px; }
+.nx-node-num{ font-size:42px; font-weight:700; line-height:1; background:linear-gradient(135deg,#4fc3f7,#a78bfa); -webkit-background-clip:text; background-clip:text; color:transparent; opacity:0.9; }
+.nx-node-link{ position:absolute; top:44px; right:-13px; width:26px; height:1px; background:linear-gradient(90deg,rgba(198,241,53,0.5),transparent); display:none; }
+@media(min-width:1024px){ .nx-node-link{ display:block; } }
+
+.nx-parallax{ transform:translate3d(calc(var(--px,0)*18px*var(--depth,1)), calc(var(--py,0)*18px*var(--depth,1)), 0); transition:transform .18s ease-out; will-change:transform; }
+.nx-hero-panel{ position:relative; width:min(330px,80vw); padding:10px; border-radius:24px; background:rgba(255,255,255,0.04); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.12); box-shadow:0 30px 80px rgba(0,0,0,0.55), 0 0 60px rgba(79,195,247,0.15); }
+.nx-hero-inner{ border-radius:16px; overflow:hidden; }
+.nx-float{ animation:nx-floaty 7s ease-in-out infinite; }
+@keyframes nx-floaty{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-16px) } }
+.nx-corner{ position:absolute; width:16px; height:16px; z-index:2; }
+.nx-corner-tl{ top:-1px; left:-1px; border-top:2px solid #c6f135; border-left:2px solid #c6f135; }
+.nx-corner-tr{ top:-1px; right:-1px; border-top:2px solid #4fc3f7; border-right:2px solid #4fc3f7; }
+.nx-corner-bl{ bottom:-1px; left:-1px; border-bottom:2px solid #4fc3f7; border-left:2px solid #4fc3f7; }
+.nx-corner-br{ bottom:-1px; right:-1px; border-bottom:2px solid #c6f135; border-right:2px solid #c6f135; }
+
+.nx-cta-band{ position:relative; overflow:hidden; text-align:center; padding:64px 24px; }
+.nx-orb-cta{ position:absolute; width:420px; height:420px; top:50%; left:50%; transform:translate(-50%,-50%); background:radial-gradient(circle,rgba(198,241,53,0.18),transparent 70%); filter:blur(50px); }
+
+.reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s ease; }
+.reveal.in{ opacity:1; transform:none; }
+
+@media (prefers-reduced-motion: reduce){
+  .nx-float,.nx-orb1,.nx-orb2,.nx-orb3{ animation:none; }
+  .nx-parallax,.nx-orb{ transform:none; }
+  .reveal{ opacity:1; transform:none; transition:none; }
+}
+`;
