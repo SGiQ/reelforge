@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, Play, Wand2, Palette, Eye, Download, Sparkles } from "lucide-react";
-import ParticleField from "@/components/ParticleField";
+import ThreeField from "@/components/ThreeField";
 import HeroReel from "@/components/HeroReel";
 
 const HERO = { cap: "Someone should be checking on her.", brand: "CheckWellCall" };
@@ -60,7 +60,7 @@ export default function HomePage() {
 
             {/* Background layers */}
             <div className="nx-base" />
-            <ParticleField />
+            <ThreeField />
             <div className="nx-orb nx-orb1" />
             <div className="nx-orb nx-orb2" />
             <div className="nx-orb nx-orb3" />
