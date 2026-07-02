@@ -22,6 +22,28 @@ class CommunityReel(BaseModel):
     shared_by: str | None  # display name of the user who shared it
 
 
+class FeaturedReel(BaseModel):
+    output_url: str | None = None
+    brand_name: str | None = None
+    theme: str | None = None
+
+
+@router.get("/featured", response_model=FeaturedReel)
+async def featured_reel(db: AsyncSession = Depends(get_db)):
+    """Most recently shared reel — PUBLIC (no auth) so the marketing landing can
+    feature a real community reel as its hero. Returns nulls if none shared yet."""
+    result = await db.execute(
+        select(RenderJob)
+        .where(RenderJob.shared == True, RenderJob.status == "done", RenderJob.output_url.isnot(None))  # noqa: E712
+        .order_by(RenderJob.shared_at.desc())
+        .limit(1)
+    )
+    job = result.scalar_one_or_none()
+    if not job:
+        return FeaturedReel()
+    return FeaturedReel(output_url=job.output_url, brand_name=job.brand_name, theme=job.theme)
+
+
 @router.get("", response_model=list[CommunityReel])
 async def community_feed(db: AsyncSession = Depends(get_db), _: str = Depends(get_current_user_id)):
     """All shared, completed reels — visible to any signed-in user, with attribution."""
