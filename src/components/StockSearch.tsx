@@ -67,7 +67,7 @@ export default function StockSearch({ onSelect }: { onSelect: (clip: StockClip) 
                         >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={c.thumbnail} alt="" className="absolute inset-0 w-full h-full object-cover transition-opacity group-hover:opacity-75" />
-                            <span className="absolute bottom-1 right-1 text-[10px] px-1 rounded text-white" style={{ background: "rgba(0,0,0,0.7)" }}>{c.duration}s</span>
+                            <span className="absolute bottom-1 right-1 text-[12px] px-1 rounded text-white" style={{ background: "rgba(0,0,0,0.7)" }}>{c.duration}s</span>
                         </button>
                     ))}
                 </div>
@@ -76,7 +76,7 @@ export default function StockSearch({ onSelect }: { onSelect: (clip: StockClip) 
             {searched && !loading && clips.length === 0 && !error && (
                 <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>No results — try a different search.</p>
             )}
-            <p className="text-[10px]" style={{ color: "var(--color-text-muted)" }}>Stock clips provided by Pexels.</p>
+            <p className="text-[12px]" style={{ color: "var(--color-text-muted)" }}>Stock clips provided by Pexels.</p>
         </div>
     );
 }

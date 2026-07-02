@@ -242,7 +242,7 @@ export default function AdminPage() {
                                         <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
                                             <span className="capitalize">{t.mood}</span>{t.duration ? ` · ${Math.round(t.duration)}s` : ""}
                                             {t.artist ? ` · ${t.artist}` : ""}
-                                            {t.source === "jamendo" && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(198,241,53,0.15)", color: "var(--color-accent)" }}>JAMENDO</span>}
+                                            {t.source === "jamendo" && <span className="ml-2 px-1.5 py-0.5 rounded text-[12px]" style={{ background: "rgba(198,241,53,0.15)", color: "var(--color-accent)" }}>JAMENDO</span>}
                                         </p>
                                     </div>
                                     <audio src={t.url} controls preload="none" style={{ height: 32 }} />
@@ -261,7 +261,7 @@ export default function AdminPage() {
                                     <p className="font-semibold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>{r.brand_name || "Untitled"}</p>
                                     <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
                                         {r.owner_email || "unknown"} · {r.status} · {r.theme}
-                                        {r.shared && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(52,211,153,0.2)", color: "#34d399" }}>SHARED</span>}
+                                        {r.shared && <span className="ml-2 px-1.5 py-0.5 rounded text-[12px]" style={{ background: "rgba(52,211,153,0.2)", color: "#34d399" }}>SHARED</span>}
                                     </p>
                                 </div>
                                 {r.output_url && <a href={r.output_url} target="_blank" rel="noreferrer" className="text-xs" style={{ color: "var(--color-accent)" }}>view</a>}
@@ -282,7 +282,7 @@ export default function AdminPage() {
                                 <div className="flex-1 min-w-0">
                                     <p className="font-semibold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>
                                         {u.display_name || u.email}
-                                        {u.is_admin && <span className="ml-2 px-1.5 py-0.5 rounded text-[10px]" style={{ background: "rgba(198,241,53,0.25)", color: "var(--color-accent)" }}>ADMIN</span>}
+                                        {u.is_admin && <span className="ml-2 px-1.5 py-0.5 rounded text-[12px]" style={{ background: "rgba(198,241,53,0.25)", color: "var(--color-accent)" }}>ADMIN</span>}
                                     </p>
                                     <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>{u.email} · {u.reel_count} reel(s)</p>
                                 </div>

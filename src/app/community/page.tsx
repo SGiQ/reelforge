@@ -31,11 +31,11 @@ function CommunityCard({ reel }: { reel: any }) {
                         <Play className="w-5 h-5 ml-0.5" style={{ color: "var(--color-accent-surface)" }} />
                     </div>
                 </div>
-                <div className="absolute top-3 right-3 meta text-[10px] px-2 py-1 rounded" style={{ background: "rgba(10,10,15,0.82)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.72)" }}>9:16</div>
+                <div className="absolute top-3 right-3 meta text-[12px] px-2 py-1 rounded" style={{ background: "rgba(10,10,15,0.82)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.72)" }}>9:16</div>
             </div>
             <div className="p-4">
                 <h3 className="font-bold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>{reel.brand_name || "Untitled Reel"}</h3>
-                <p className="meta text-[11px] mt-1">
+                <p className="meta text-[13px] mt-1">
                     SHARED BY <span style={{ color: "var(--color-text-secondary)" }}>{reel.shared_by || "Someone"}</span>
                 </p>
             </div>

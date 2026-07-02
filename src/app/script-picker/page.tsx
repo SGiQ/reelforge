@@ -221,14 +221,14 @@ export default function ScriptPickerPage() {
         <div className="flex flex-wrap items-center gap-4 pt-3 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
             <div className="flex items-center gap-2">
                 <Settings2 className="w-3.5 h-3.5" style={{ color: "var(--color-text-muted)" }} />
-                <span className="text-[10px] uppercase tracking-wider font-bold" style={{ color: "var(--color-text-muted)" }}>Styles</span>
+                <span className="text-[12px] uppercase tracking-wider font-bold" style={{ color: "var(--color-text-muted)" }}>Styles</span>
             </div>
             <div className="flex items-center gap-2">
-                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Font:</span>
+                <span className="text-[13px]" style={{ color: "var(--color-text-secondary)" }}>Font:</span>
                 <select
                     value={scene.fontFamily}
                     onChange={(e) => updateScene(index, { fontFamily: e.target.value })}
-                    className="bg-transparent text-[11px] border border-white/10 rounded px-1 min-w-[70px] outline-none focus:ring-1 focus:ring-brand-purple"
+                    className="bg-transparent text-[13px] border border-white/10 rounded px-1 min-w-[70px] outline-none focus:ring-1 focus:ring-brand-purple"
                     style={{ color: "var(--color-accent)" }}
                 >
                     {FONT_OPTIONS.map((f) => (
@@ -237,17 +237,17 @@ export default function ScriptPickerPage() {
                 </select>
             </div>
             <div className="flex items-center gap-2">
-                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Size:</span>
+                <span className="text-[13px]" style={{ color: "var(--color-text-secondary)" }}>Size:</span>
                 <input
                     type="range" min="40" max="300"
                     value={scene.fontSize}
                     onChange={(e) => updateScene(index, { fontSize: parseInt(e.target.value) })}
                     className="w-16 accent-brand-purple" style={{ accentColor: "var(--color-accent)" }}
                 />
-                <span className="text-[11px] font-mono" style={{ color: "var(--color-accent)" }}>{scene.fontSize}</span>
+                <span className="text-[13px] font-mono" style={{ color: "var(--color-accent)" }}>{scene.fontSize}</span>
             </div>
             <div className="flex items-center gap-2">
-                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Color:</span>
+                <span className="text-[13px]" style={{ color: "var(--color-text-secondary)" }}>Color:</span>
                 <div className="flex flex-wrap gap-1.5 max-w-[150px]">
                     {COLOR_OPTIONS.map((color) => (
                         <button
@@ -282,22 +282,22 @@ export default function ScriptPickerPage() {
         { value: "slide_left", label: "Slide ←" },
         { value: "slide_right", label: "Slide →" },
     ];
-    const selectCls = "bg-transparent text-[11px] border border-white/10 rounded px-1 outline-none focus:ring-1 focus:ring-brand-purple";
+    const selectCls = "bg-transparent text-[13px] border border-white/10 rounded px-1 outline-none focus:ring-1 focus:ring-brand-purple";
     const motionControls = (index: number, scene: any) => (
         <div className="flex flex-wrap items-center gap-4 pt-3 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
             <div className="flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5" style={{ color: "var(--color-text-muted)" }} />
-                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Hold</span>
+                <span className="text-[13px]" style={{ color: "var(--color-text-secondary)" }}>Hold</span>
                 <input type="number" min={1} max={30} step={0.5}
                     value={scene.duration ?? ""}
                     placeholder="auto"
                     onChange={(e) => updateScene(index, { duration: e.target.value ? Math.max(0, parseFloat(e.target.value)) : undefined })}
                     className="input-field w-16 py-1 text-sm" />
-                <span className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>sec</span>
+                <span className="text-[13px]" style={{ color: "var(--color-text-muted)" }}>sec</span>
             </div>
             <div className="flex items-center gap-2">
                 <SparklesIcon className="w-3.5 h-3.5" style={{ color: "var(--color-text-muted)" }} />
-                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Background</span>
+                <span className="text-[13px]" style={{ color: "var(--color-text-secondary)" }}>Background</span>
                 <select value={scene.animation || "none"} onChange={(e) => updateScene(index, { animation: e.target.value })}
                     className={selectCls} style={{ color: "var(--color-accent)" }}>
                     {ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[var(--color-surface-card)] text-white">{a.label}</option>)}
@@ -305,7 +305,7 @@ export default function ScriptPickerPage() {
             </div>
             <div className="flex items-center gap-2">
                 <Type className="w-3.5 h-3.5" style={{ color: "var(--color-text-muted)" }} />
-                <span className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Text in</span>
+                <span className="text-[13px]" style={{ color: "var(--color-text-secondary)" }}>Text in</span>
                 <select value={scene.textAnimation || "none"} onChange={(e) => updateScene(index, { textAnimation: e.target.value })}
                     className={selectCls} style={{ color: "var(--color-accent)" }}>
                     {TEXT_ANIMATIONS.map((a) => <option key={a.value} value={a.value} className="bg-[var(--color-surface-card)] text-white">{a.label}</option>)}
@@ -429,7 +429,7 @@ export default function ScriptPickerPage() {
                                                             {video ? <Film className="w-3 h-3" /> : image ? <ImageIcon className="w-3 h-3" /> : <Type className="w-3 h-3" />}
                                                             Scene {index + 1}
                                                         </span>
-                                                        <span className="text-[10px] uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>{kindLabel}</span>
+                                                        <span className="text-[12px] uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>{kindLabel}</span>
                                                     </div>
                                                     <div className="flex items-center gap-1">
                                                         <button onClick={() => moveScene(index, -1)} disabled={index === 0}
@@ -501,13 +501,13 @@ export default function ScriptPickerPage() {
                                                                                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider" style={{ color: "var(--color-accent)" }}>
                                                                                         <Scissors className="w-3.5 h-3.5" /> Trim
                                                                                     </div>
-                                                                                    <span className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>
+                                                                                    <span className="text-[13px]" style={{ color: "var(--color-text-muted)" }}>
                                                                                         {trimLen > 0 ? `${trimLen.toFixed(1)}s used` : "set a range"}{dur ? ` · clip ${dur.toFixed(1)}s` : ""}
                                                                                     </span>
                                                                                 </div>
-                                                                                <p className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>Preview shows only the trimmed section, looping.</p>
+                                                                                <p className="text-[13px]" style={{ color: "var(--color-text-muted)" }}>Preview shows only the trimmed section, looping.</p>
                                                                                 <div className="flex items-center gap-3">
-                                                                                    <label className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>Start (s)</label>
+                                                                                    <label className="text-[13px]" style={{ color: "var(--color-text-secondary)" }}>Start (s)</label>
                                                                                     <input type="number" min={0} max={dur || undefined} step={0.1}
                                                                                         value={vs.trimStart}
                                                                                         onChange={(e) => {
@@ -516,7 +516,7 @@ export default function ScriptPickerPage() {
                                                                                             updateScene(index, { trimStart: s } as Partial<VideoScene>);
                                                                                         }}
                                                                                         className="input-field w-20 py-1 text-sm" />
-                                                                                    <label className="text-[11px]" style={{ color: "var(--color-text-secondary)" }}>End (s)</label>
+                                                                                    <label className="text-[13px]" style={{ color: "var(--color-text-secondary)" }}>End (s)</label>
                                                                                     <input type="number" min={0} max={dur || undefined} step={0.1}
                                                                                         value={vs.trimEnd}
                                                                                         onChange={(e) => {
@@ -568,7 +568,7 @@ export default function ScriptPickerPage() {
                                                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                                                     <img src={(scene as ImageScene).imageUrl} alt="" className="rounded-lg flex-shrink-0 bg-black object-cover" style={{ width: 120, height: 213 }} />
                                                                     <div className="flex-1 space-y-2">
-                                                                        <p className="text-[11px]" style={{ color: "var(--color-text-muted)" }}>This image fills the scene background. Add an optional caption below.</p>
+                                                                        <p className="text-[13px]" style={{ color: "var(--color-text-muted)" }}>This image fills the scene background. Add an optional caption below.</p>
                                                                         <button onClick={() => updateScene(index, { imageUrl: "" } as Partial<ImageScene>)} className="text-xs text-red-400 hover:underline">Replace image</button>
                                                                     </div>
                                                                 </div>
@@ -689,7 +689,7 @@ export default function ScriptPickerPage() {
                         <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgb(var(--rgb-surface-border) / 0.6)" }}>
                             {previewNode}
                         </div>
-                        <p className="text-[11px] mt-2 leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+                        <p className="text-[13px] mt-2 leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
                             Plays silently as you edit. Full preview with voiceover is the next step.
                         </p>
                     </div>
@@ -716,7 +716,7 @@ export default function ScriptPickerPage() {
                     <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgb(var(--rgb-surface-border) / 0.6)" }} onClick={(e) => e.stopPropagation()}>
                         {previewNode}
                     </div>
-                    <p className="text-[11px] mt-3 text-center" style={{ color: "var(--color-text-muted)" }}>Tap outside to close · plays silently</p>
+                    <p className="text-[13px] mt-3 text-center" style={{ color: "var(--color-text-muted)" }}>Tap outside to close · plays silently</p>
                 </div>
             )}
         </div>
