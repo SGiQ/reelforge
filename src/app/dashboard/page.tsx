@@ -110,7 +110,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
     };
 
     return (
-        <div className="glass-card-hover rounded-lg overflow-hidden flex flex-col">
+        <div className="glass-card-hover rounded-lg overflow-hidden flex flex-col min-w-0">
             {/* Thumbnail (9:16 reel, first frame as poster, plays on hover, click to open player) */}
             <div
                 className={`group relative w-full film-ticks ${isDone ? "cursor-pointer" : ""}`}
@@ -164,8 +164,8 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
             </div>
 
             {/* Body */}
-            <div className="p-5 flex flex-col flex-1">
-                <h3 className="font-bold text-base mb-1 line-clamp-2" style={{ color: "var(--color-text-primary)" }}>
+            <div className="p-5 flex flex-col flex-1 min-w-0">
+                <h3 className="font-bold text-base mb-1 line-clamp-2 break-words" style={{ color: "var(--color-text-primary)" }}>
                     {title}
                 </h3>
                 <div className="meta flex items-center gap-2 text-[11px] mb-4">
@@ -483,7 +483,7 @@ export default function Dashboard() {
                         <Link href="/brand-setup" className="btn-primary">Get Started</Link>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-w-0">
                         {jobs.map((job) => (
                             <ReelCard key={job.id} job={job} onEdit={handleEdit} onDeleted={(id) => setJobs((prev) => prev.filter((j) => j.id !== id))} />
                         ))}
