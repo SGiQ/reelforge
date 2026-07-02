@@ -147,7 +147,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
 
                 {/* Status chip (mono) */}
                 <div
-                    className="absolute top-3 left-3 meta-caps text-[10px] px-2 py-1 rounded"
+                    className="absolute top-3 left-3 meta-caps text-[12px] px-2 py-1 rounded"
                     style={{
                         background: "rgba(10,10,15,0.82)",
                         border: "1px solid rgba(255,255,255,0.1)",
@@ -158,7 +158,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                 </div>
                 {/* Aspect/format badge (mono) */}
                 <div
-                    className="absolute top-3 right-3 meta text-[10px] px-2 py-1 rounded"
+                    className="absolute top-3 right-3 meta text-[12px] px-2 py-1 rounded"
                     style={{ background: "rgba(10,10,15,0.82)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.72)" }}
                 >
                     9:16
@@ -170,7 +170,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                 <h3 className="font-bold text-base mb-1 line-clamp-2 break-words" style={{ color: "var(--color-text-primary)" }}>
                     {title}
                 </h3>
-                <div className="meta flex items-center gap-2 text-[11px] mb-4">
+                <div className="meta flex items-center gap-2 text-[13px] mb-4">
                     <span className="truncate max-w-[55%]">{job.brand_name || "Brand Video"}</span>
                     <span>·</span>
                     <span className="uppercase">{job.theme.replace("-", " ")}</span>
@@ -259,13 +259,13 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                         {/* Details + actions */}
                         <div className="md:w-1/2 p-6 flex flex-col overflow-y-auto">
                             <span
-                                className="self-start meta-caps text-[10px] px-2 py-1 rounded mb-3"
+                                className="self-start meta-caps text-[12px] px-2 py-1 rounded mb-3"
                                 style={{ background: "rgba(10,10,15,0.82)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--color-accent)" }}
                             >
                                 {job.status}
                             </span>
                             <h3 className="font-bold text-lg mb-2 pr-8" style={{ color: "var(--color-text-primary)", fontFamily: "'Space Grotesk', 'Inter', sans-serif", letterSpacing: "-0.02em" }}>{title}</h3>
-                            <div className="meta flex flex-wrap items-center gap-2 text-[11px] mb-6">
+                            <div className="meta flex flex-wrap items-center gap-2 text-[13px] mb-6">
                                 <span>{job.brand_name || "Brand Video"}</span>
                                 <span>·</span>
                                 <span className="uppercase">{job.theme.replace("-", " ")}</span>

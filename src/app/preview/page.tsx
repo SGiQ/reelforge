@@ -148,27 +148,27 @@ export default function PreviewPage() {
                             <h2 className="text-lg font-bold" style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif", letterSpacing: "-0.02em" }}>Reel Summary</h2>
                             <div className="space-y-3">
                                 <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
-                                    <span className="meta-caps text-[11px]">Brand</span>
+                                    <span className="meta-caps text-[13px]">Brand</span>
                                     <span className="text-sm font-semibold">{brand.brandName}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
-                                    <span className="meta-caps text-[11px]">Script</span>
+                                    <span className="meta-caps text-[13px]">Script</span>
                                     <span className="text-sm font-semibold">{script.title}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
-                                    <span className="meta-caps text-[11px]">Slides</span>
+                                    <span className="meta-caps text-[13px]">Slides</span>
                                     <span className="text-sm font-semibold">{script.slides.length + 1} (incl. logo)</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
-                                    <span className="meta-caps text-[11px]">Theme</span>
+                                    <span className="meta-caps text-[13px]">Theme</span>
                                     <span className="text-sm font-semibold capitalize">{theme.replace("-", " ")}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
-                                    <span className="meta-caps text-[11px]">Format</span>
+                                    <span className="meta-caps text-[13px]">Format</span>
                                     <span className="text-sm font-semibold">1080 × 1920 · MP4</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2">
-                                    <span className="meta-caps text-[11px]">Watermark</span>
+                                    <span className="meta-caps text-[13px]">Watermark</span>
                                     <span className="text-sm font-semibold">{brand.watermarkPreview ? "✓ Uploaded" : "None"}</span>
                                 </div>
                             </div>
@@ -215,7 +215,7 @@ export default function PreviewPage() {
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 pt-3 border-t border-white/5 animate-in fade-in slide-in-from-top-1 duration-200">
                                                     <div className="space-y-3">
                                                         <div className="flex items-center justify-between">
-                                                            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>Font Style</span>
+                                                            <span className="text-[13px] font-bold uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>Font Style</span>
                                                             <div className="flex flex-wrap gap-1 max-w-[120px]">
                                                                 {COLOR_OPTIONS.map(c => (
                                                                     <button
@@ -245,8 +245,8 @@ export default function PreviewPage() {
                                                     </div>
                                                     <div className="space-y-3">
                                                         <div className="flex justify-between items-center">
-                                                            <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>Size</span>
-                                                            <span className="text-[11px] font-mono text-brand-purple">{slideObj.fontSize}px</span>
+                                                            <span className="text-[13px] font-bold uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>Size</span>
+                                                            <span className="text-[13px] font-mono text-brand-purple">{slideObj.fontSize}px</span>
                                                         </div>
                                                         <input
                                                             type="range"

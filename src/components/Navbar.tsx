@@ -94,20 +94,20 @@ export default function Navbar({ currentStep }: NavbarProps) {
                     for actions/active state, not resting labels). */}
                 <div className="flex items-center gap-5">
                     {admin && (
-                        <Link href="/admin" className="hidden sm:flex items-center gap-1.5 meta-caps text-[11px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
+                        <Link href="/admin" className="hidden sm:flex items-center gap-1.5 meta-caps text-[13px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
                             <Shield className="w-3.5 h-3.5" /> Admin
                         </Link>
                     )}
-                    <Link href="/auto" className="hidden sm:flex items-center gap-1.5 meta-caps text-[11px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
+                    <Link href="/auto" className="hidden sm:flex items-center gap-1.5 meta-caps text-[13px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
                         <Wand2 className="w-3.5 h-3.5" /> AI Director
                     </Link>
-                    <Link href="/community" className="hidden sm:flex meta-caps text-[11px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
+                    <Link href="/community" className="hidden sm:flex meta-caps text-[13px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
                         Community
                     </Link>
-                    <Link href="/help" className="hidden sm:flex meta-caps text-[11px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
+                    <Link href="/help" className="hidden sm:flex meta-caps text-[13px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
                         Help
                     </Link>
-                    <Link href="/dashboard" className="hidden sm:flex meta-caps text-[11px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
+                    <Link href="/dashboard" className="hidden sm:flex meta-caps text-[13px] transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>
                         Dashboard
                     </Link>
                     <Link href="/account" title="Account" className="hidden sm:flex items-center meta-caps transition-colors cursor-pointer" onMouseOver={(e) => e.currentTarget.style.color = "var(--color-accent)"} onMouseOut={(e) => e.currentTarget.style.color = ""}>

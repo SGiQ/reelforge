@@ -35,6 +35,20 @@ module.exports = {
                 display: ["Space Grotesk", "Inter", "system-ui", "sans-serif"],
                 mono: ["Geist Mono", "Space Mono", "ui-monospace", "monospace"],
             },
+            // Larger type scale app-wide (~1.2–1.25× the Tailwind defaults). Bumps
+            // every text-xs/sm/base/lg/... without touching spacing, so layouts
+            // stay put. [size, lineHeight] tuples keep sensible leading.
+            fontSize: {
+                xs: ["0.875rem", { lineHeight: "1.25rem" }],   // 14 (was 12)
+                sm: ["1rem", { lineHeight: "1.5rem" }],        // 16 (was 14)
+                base: ["1.125rem", { lineHeight: "1.7rem" }],  // 18 (was 16)
+                lg: ["1.3125rem", { lineHeight: "1.8rem" }],   // 21 (was 18)
+                xl: ["1.5rem", { lineHeight: "1.9rem" }],      // 24 (was 20)
+                "2xl": ["1.75rem", { lineHeight: "2.1rem" }],  // 28 (was 24)
+                "3xl": ["2.25rem", { lineHeight: "2.5rem" }],  // 36 (was 30)
+                "4xl": ["2.75rem", { lineHeight: "1.1" }],     // 44 (was 36)
+                "5xl": ["3.5rem", { lineHeight: "1" }],        // 56 (was 48)
+            },
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
                 "gradient-brand": "linear-gradient(135deg, #c6f135 0%, #acd60e 100%)",

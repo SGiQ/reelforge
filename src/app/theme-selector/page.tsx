@@ -141,7 +141,7 @@ export default function ThemeSelectorPage() {
                                                 className="flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-left transition-colors"
                                                 style={{ background: active ? "rgba(198,241,53,0.16)" : "rgb(var(--rgb-surface-card) / 0.6)", border: `1px solid ${active ? "rgba(198,241,53,0.5)" : "rgb(var(--rgb-surface-border) / 0.6)"}` }}>
                                                 <span className="text-sm font-medium truncate" style={{ color: "#e2e8f0" }}>{t.title}</span>
-                                                <span className="text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded" style={{ background: "rgba(198,241,53,0.15)", color: "var(--color-accent)" }}>{t.mood}</span>
+                                                <span className="text-[12px] uppercase tracking-wide px-1.5 py-0.5 rounded" style={{ background: "rgba(198,241,53,0.15)", color: "var(--color-accent)" }}>{t.mood}</span>
                                             </button>
                                         );
                                     })}
