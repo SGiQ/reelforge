@@ -23,8 +23,9 @@ const FONT_OPTIONS = [
     { label: "Mono", value: "DejaVuSansMono.ttf" },
 ];
 
+// Reel slide-text colors — video content, fixed literals (not UI-theme tokens).
 const COLOR_OPTIONS = [
-    "#ffffff", "var(--color-accent)", "var(--color-accent)", "#facc15", "#f87171", "#38bdf8", "#fb923c", "#4ade80", "#e879f9", "var(--color-text-secondary)", "#1e293b"
+    "#ffffff", "#7c3aed", "#0d9488", "#facc15", "#f87171", "#38bdf8", "#fb923c", "#4ade80", "#e879f9", "#94a3b8", "#1e293b"
 ];
 
 const MAX_SCENES = 15;
@@ -369,7 +370,7 @@ export default function ScriptPickerPage() {
                         <div className="space-y-6 mt-6 pt-6 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)" }}>
                             {/* AI Generator Box */}
                             <div className="p-4 rounded-xl border" style={{ background: "rgba(198,241,53,0.05)", borderColor: "rgba(198,241,53,0.2)" }}>
-                                <label className="block text-sm font-medium mb-2 flex items-center gap-2" style={{ color: "var(--color-accent)" }}>
+                                <label className="block text-sm font-medium mb-2 flex items-center gap-2" style={{ color: "var(--color-text-secondary)" }}>
                                     <span>✨ Generate Script with AI</span>
                                 </label>
                                 <div className="flex gap-3">
@@ -403,7 +404,7 @@ export default function ScriptPickerPage() {
 
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between pb-2">
-                                    <label className="block text-sm font-medium" style={{ color: "var(--color-accent)" }}>Scenes</label>
+                                    <label className="block text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>Scenes</label>
                                     <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>{scenes.length}/{MAX_SCENES}</span>
                                 </div>
 
@@ -637,7 +638,7 @@ export default function ScriptPickerPage() {
                             {/* Final Logo Slide Outro Input */}
                             <div className="mt-8 pt-6 border-t" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.6)" }}>
                                 <div className="space-y-2">
-                                    <label className="block text-sm font-medium flex items-center gap-2" style={{ color: "var(--color-accent)" }}>
+                                    <label className="block text-sm font-medium flex items-center gap-2" style={{ color: "var(--color-text-secondary)" }}>
                                         <span>🎙️ Final Logo Slide (Voiceover Only)</span>
                                     </label>
                                     <p className="text-xs mb-3" style={{ color: "var(--color-text-secondary)" }}>
