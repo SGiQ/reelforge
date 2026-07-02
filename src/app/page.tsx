@@ -24,10 +24,10 @@ const features = [
 ];
 
 const steps = [
-    { n: "01", k: "BRAND", d: "Add your logo, watermark, and details" },
-    { n: "02", k: "SCRIPT", d: "Write it or generate it with AI" },
-    { n: "03", k: "THEME", d: "Pick a cinematic visual style" },
-    { n: "04", k: "EXPORT", d: "Render a 1080×1920 MP4" },
+    { n: "01", k: "BRAND", d: "Add your logo, watermark, and details", img: "/workflow/brand.png" },
+    { n: "02", k: "SCRIPT", d: "Write it or generate it with AI", img: "/workflow/script.png" },
+    { n: "03", k: "THEME", d: "Pick a cinematic visual style", img: "/workflow/theme.png" },
+    { n: "04", k: "EXPORT", d: "Render a 1080×1920 MP4", img: "/workflow/export.png" },
 ];
 
 function Ticks({ c = "var(--acc)", o = 0.5, size = "1.5rem", off = "-0.75rem" }: { c?: string; o?: number; size?: string; off?: string }) {
@@ -219,9 +219,12 @@ export default function HomePage() {
                         {steps.map((s) => (
                             <div key={s.n} className="flex flex-col gap-5">
                                 <span className="disp font-bold select-none" style={{ fontSize: 64, lineHeight: 1, opacity: 0.12, color: "var(--tx)" }}>{s.n}</span>
-                                <div className="hair aspect-square relative overflow-hidden flex items-center justify-center" style={{ background: "var(--s2)" }}>
-                                    <span className="mono text-[11px] absolute top-3 left-3" style={{ color: "var(--muted)" }}>STEP_{s.n}</span>
-                                    <span className="disp" style={{ fontSize: 40, color: "var(--acc)", opacity: 0.4 }}>{s.k[0]}</span>
+                                <div className="hair aspect-square relative overflow-hidden group" style={{ background: "var(--s2)" }}>
+                                    {/* Real screenshot of the actual step screen (video/UI content). */}
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img src={s.img} alt={`${s.k} step`} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" style={{ objectPosition: "top" }} />
+                                    <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(10,10,15,0.55), transparent 55%)" }} />
+                                    <span className="mono text-[11px] absolute top-3 left-3" style={{ color: "rgba(255,255,255,0.82)", background: "rgba(10,10,15,0.65)", padding: "2px 7px", borderRadius: 3, border: "1px solid rgba(255,255,255,0.12)" }}>STEP_{s.n}</span>
                                 </div>
                                 <div>
                                     <h4 className="cap mb-2" style={{ color: "var(--tx)" }}>{s.k}</h4>
