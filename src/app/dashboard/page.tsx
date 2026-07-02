@@ -176,24 +176,24 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                     <span>{new Date(job.created_at).toLocaleDateString()}</span>
                 </div>
 
-                <div className="mt-auto flex gap-2 items-stretch">
-                    <div className="flex-1">
+                <div className="mt-auto flex gap-2 items-stretch min-w-0">
+                    <div className="flex-1 min-w-0">
                         {isDone ? (
-                            <div className="flex gap-2 w-full">
+                            <div className="flex gap-2 w-full min-w-0">
                                 <a
                                     href={videoUrl!}
                                     onClick={handleDownload}
-                                    className="btn-secondary flex-1 justify-center group"
+                                    className="btn-secondary flex-1 min-w-0 justify-center group px-3"
                                     style={{ opacity: downloading ? 0.6 : 1 }}
                                 >
-                                    <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+                                    <Download className="w-4 h-4 shrink-0 group-hover:-translate-y-0.5 transition-transform" />
                                     <span>{downloading ? "Downloading…" : "Download"}</span>
                                 </a>
                                 <button
                                     onClick={() => onEdit(job)}
-                                    className="btn-secondary flex-1 justify-center group"
+                                    className="btn-secondary flex-1 min-w-0 justify-center group px-3"
                                 >
-                                    <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                                    <ExternalLink className="w-4 h-4 shrink-0 group-hover:scale-110 transition-transform" />
                                     <span>Re-edit</span>
                                 </button>
                             </div>
