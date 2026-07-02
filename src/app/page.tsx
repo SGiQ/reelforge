@@ -161,7 +161,7 @@ export default function HomePage() {
                 <section className="hair py-10" style={{ borderLeft: 0, borderRight: 0 }}>
                     <div className="px-6 md:px-10 mx-auto flex flex-col md:flex-row items-center justify-between gap-6" style={{ maxWidth: 1440 }}>
                         <span className="cap" style={{ color: "var(--muted)" }}>Built for brand marketers</span>
-                        <div className="flex gap-8 items-center" style={{ color: "var(--muted)" }}>
+                        <div className="flex flex-wrap gap-x-6 gap-y-3 items-center justify-center" style={{ color: "var(--muted)" }}>
                             {["STUDIO_X", "KINETIC", "FRAMED", "PXL.CO"].map((n, i) => (
                                 <div key={n} className="flex items-center gap-8">
                                     {i > 0 && <span style={{ width: 1, height: 16, background: "var(--line)" }} />}
@@ -178,9 +178,11 @@ export default function HomePage() {
                         <h2 className="cap mb-4" style={{ color: "var(--acc)" }}>Showcase / Made with ReelSGiQ</h2>
                         <div style={{ height: 1, background: "var(--line)" }} />
                     </div>
-                    <div className="flex gap-4 px-6 md:px-10 overflow-x-auto pb-6" style={{ scrollbarWidth: "none" }}>
+                    {/* Mobile: 2-col grid (vertical scroll only). Desktop: horizontal
+                        contact-sheet scroller. Avoids side-to-side drift on phones. */}
+                    <div className="px-6 md:px-10 grid grid-cols-2 gap-4 lg:flex lg:overflow-x-auto lg:pb-6" style={{ scrollbarWidth: "none" }}>
                         {showcase.map((s) => (
-                            <div key={s.brand} className="shrink-0" style={{ width: 300 }}>
+                            <div key={s.brand} className="lg:shrink-0 lg:w-[300px]">
                                 <ReelFrame reel={s} meta={s.meta} />
                                 <div className="flex justify-between items-start mt-3">
                                     <div>
