@@ -111,25 +111,27 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
 
     return (
         <div className="glass-card-hover rounded-lg overflow-hidden flex flex-col min-w-0">
-            {/* Thumbnail (9:16 reel, first frame as poster, plays on hover, click to open player) */}
+            {/* Thumbnail: 9:16 reel. Autoplays muted inline so it shows a frame on
+                mobile too (iOS won't render a poster-less video without playback),
+                and overflow-hidden here (not just on the card) so iOS Safari can't
+                let the <video> render past the box and push the page sideways. */}
             <div
-                className={`group relative w-full film-ticks ${isDone ? "cursor-pointer" : ""}`}
+                className={`group relative w-full film-ticks overflow-hidden ${isDone ? "cursor-pointer" : ""}`}
                 style={{ aspectRatio: "4 / 5", background: "var(--color-surface)" }}
-                onMouseEnter={handleEnter}
-                onMouseLeave={handleLeave}
                 onClick={() => { if (isDone) setDetailsOpen(true); }}
             >
                 {isDone ? (
                     <>
                         <video
                             ref={videoRef}
-                            src={`${videoUrl}#t=0.5`}
+                            src={videoUrl!}
+                            autoPlay
                             muted
                             loop
                             playsInline
                             preload="metadata"
-                            onLoadedMetadata={(e) => { try { e.currentTarget.currentTime = 0.5; } catch { } }}
                             className="absolute inset-0 w-full h-full object-cover"
+                            style={{ maxWidth: "100%", maxHeight: "100%" }}
                         />
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 opacity-100 group-hover:opacity-0">
                             <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgba(10,10,15,0.55)", border: "1px solid rgba(198,241,53,0.5)" }}>
