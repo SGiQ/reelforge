@@ -49,7 +49,7 @@ export default function ResetPage() {
             <ThemeToggle floating />
             <div className="w-full max-w-sm">
                 <div className="flex items-center gap-2 justify-center mb-8">
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "var(--color-accent)" }}>
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "var(--color-accent-surface)" }}>
                         <Zap className="w-5 h-5" style={{ color: "var(--color-accent-ink)" }} />
                     </div>
                     <span className="font-bold text-xl tracking-tight" style={{ color: "var(--color-text-primary)" }}>

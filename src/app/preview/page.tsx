@@ -26,17 +26,19 @@ const FONT_OPTIONS = [
     { label: "Mono", value: "DejaVuSansMono.ttf", css: "monospace" },
 ];
 
+// Text colors the user can apply to their REEL slides — video content, not app
+// chrome, so these are fixed literal colors (independent of the UI theme).
 const COLOR_OPTIONS = [
     "#ffffff", // White
-    "var(--color-accent)", // Purple
-    "var(--color-accent)", // Teal
+    "#7c3aed", // Purple
+    "#0d9488", // Teal
     "#facc15", // Yellow
     "#f87171", // Red
     "#38bdf8", // Sky Blue
     "#fb923c", // Orange
     "#4ade80", // Green
     "#e879f9", // Fuchsia
-    "var(--color-text-secondary)", // Slate
+    "#94a3b8", // Slate
     "#1e293b", // Navy
 ];
 
@@ -142,39 +144,39 @@ export default function PreviewPage() {
 
                     {/* Reel summary */}
                     <div className="flex-1 space-y-5">
-                        <div className="glass-card rounded-2xl p-6 space-y-4">
-                            <h2 className="text-lg font-bold">Reel Summary</h2>
+                        <div className="glass-card rounded-lg p-6 space-y-4">
+                            <h2 className="text-lg font-bold" style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif", letterSpacing: "-0.02em" }}>Reel Summary</h2>
                             <div className="space-y-3">
                                 <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
-                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Brand</span>
+                                    <span className="meta-caps text-[11px]">Brand</span>
                                     <span className="text-sm font-semibold">{brand.brandName}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
-                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Script</span>
+                                    <span className="meta-caps text-[11px]">Script</span>
                                     <span className="text-sm font-semibold">{script.title}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
-                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Slides</span>
+                                    <span className="meta-caps text-[11px]">Slides</span>
                                     <span className="text-sm font-semibold">{script.slides.length + 1} (incl. logo)</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
-                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Theme</span>
+                                    <span className="meta-caps text-[11px]">Theme</span>
                                     <span className="text-sm font-semibold capitalize">{theme.replace("-", " ")}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b" style={{ borderColor: "rgb(var(--rgb-surface-border) / 0.4)" }}>
-                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Format</span>
+                                    <span className="meta-caps text-[11px]">Format</span>
                                     <span className="text-sm font-semibold">1080 × 1920 · MP4</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2">
-                                    <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Watermark</span>
+                                    <span className="meta-caps text-[11px]">Watermark</span>
                                     <span className="text-sm font-semibold">{brand.watermarkPreview ? "✓ Uploaded" : "None"}</span>
                                 </div>
                             </div>
                         </div>
 
                         {/* Slides list */}
-                        <div className="glass-card rounded-2xl p-6">
-                            <h2 className="text-lg font-bold mb-4">Slide Sequence</h2>
+                        <div className="glass-card rounded-lg p-6">
+                            <h2 className="text-lg font-bold mb-4" style={{ fontFamily: "'Space Grotesk', 'Inter', sans-serif", letterSpacing: "-0.02em" }}>Slide Sequence</h2>
                             <div className="space-y-3">
                                 {script.slides.map((slide, i) => {
                                     const isEditing = editIndex === i;

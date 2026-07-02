@@ -264,7 +264,7 @@ export default function BrandSetupPage() {
                         {/* Logo Position */}
                         <div className="space-y-4 pt-2">
                             <div className="space-y-2">
-                                <label className="block text-sm font-medium" style={{ color: "var(--color-accent)" }}>
+                                <label className="block text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
                                     Logo Position on Final Slide
                                 </label>
                                 <select
@@ -301,7 +301,7 @@ export default function BrandSetupPage() {
 
                             {/* Logo on every slide (brand recognition) */}
                             <div className="space-y-2">
-                                <label className="block text-sm font-medium" style={{ color: "var(--color-accent)" }}>
+                                <label className="block text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
                                     Brand Logo on Every Slide
                                 </label>
                                 <select
@@ -418,7 +418,7 @@ export default function BrandSetupPage() {
                             onClear={() => { setQrCodeFile(null); setQrCodePreview(null); }}
                         />
                         <div className="space-y-2 pt-2">
-                            <label className="block text-sm font-medium" style={{ color: "var(--color-accent)" }}>
+                            <label className="block text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
                                 Text under QR Code (Optional)
                             </label>
                             <input

@@ -13,9 +13,13 @@
    not the app chrome. ────────────────────────────────────────────────────── */
 :root, html.dark {
   /* Cinematic Studio — near-black canvas, single lime accent. */
-  --color-accent: #c6f135;          /* lime — the sole action/active/success color */
-  --color-accent-ink: #0a0a0f;      /* text/icon on top of lime */
+  --color-accent: #c6f135;          /* readable accent for text/icons (on dark = lime) */
+  --color-accent-surface: #c6f135;  /* bright lime for buttons/chips/media overlays */
+  --color-accent-ink: #0a0a0f;      /* text/icon on top of accent-surface */
   --color-accent-dim: #acd60e;
+  /* Hairlines flip with the theme: light-on-dark, dark-on-light. */
+  --hairline: rgba(255, 255, 255, 0.08);
+  --hairline-strong: rgba(255, 255, 255, 0.14);
   /* Legacy brand aliases now point at the accent so any stray refs stay on-brand. */
   --color-brand-purple: #c6f135;
   --color-brand-teal: #c6f135;
@@ -35,26 +39,29 @@
   --rgb-accent: 198 241 53;
 }
 
+/* Cinematic Studio — Light: pale lime-tinted paper, same lime for buttons/chips,
+   but a readable dark olive accent for text/icons (bright lime text is illegible
+   on white). Hairlines become dark so cards/borders stay visible. */
 html.light {
-  --color-surface: #f6f7fb;
+  --color-surface: #f9fbe7;
   --color-surface-card: #ffffff;
-  --color-surface-elevated: #eef1f6;
-  --color-surface-border: #d8dee9;
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #475569;
-  --color-text-muted: #64748b;
-  /* Interim light accent — a darker olive-lime so accent text/buttons stay
-     readable on light surfaces (bright lime text on white is illegible).
-     The dedicated cinematic-light pass will refine this. */
-  --color-accent: #5c7a00;
-  --color-accent-ink: #ffffff;
-  --color-accent-dim: #46610a;
-  --rgb-accent: 92 122 0;
+  --color-surface-elevated: #f4f5e2;
+  --color-surface-border: #c5c9ae;
+  --color-text-primary: #1a1d11;
+  --color-text-secondary: #444934;
+  --color-text-muted: #757962;
+  --color-accent: #516600;          /* dark olive-lime — readable text/icon accent */
+  --color-accent-surface: #c6f135;  /* buttons/chips stay bright lime */
+  --color-accent-ink: #0a0a0f;
+  --color-accent-dim: #3c4d00;
+  --hairline: rgba(0, 0, 0, 0.1);
+  --hairline-strong: rgba(0, 0, 0, 0.16);
 
-  --rgb-surface: 246 247 251;
+  --rgb-accent: 198 241 53;
+  --rgb-surface: 249 251 231;
   --rgb-surface-card: 255 255 255;
-  --rgb-surface-elevated: 238 241 246;
-  --rgb-surface-border: 216 222 233;
+  --rgb-surface-elevated: 244 245 226;
+  --rgb-surface-border: 197 201 174;
 }
 
 * {
@@ -82,7 +89,7 @@ html, body {
 ::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
 
 /* Selection */
-::selection { background: var(--color-accent); color: var(--color-accent-ink); }
+::selection { background: var(--color-accent-surface); color: var(--color-accent-ink); }
 
 /* Utility classes */
 @layer utilities {
@@ -92,7 +99,7 @@ html, body {
   /* Cinematic cards: flat tonal surface + hairline, no glass blur, no shadow. */
   .glass-card {
     background: var(--color-surface-card);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--hairline);
   }
   .glass-card-hover {
     @apply glass-card transition-all duration-300;
@@ -103,7 +110,7 @@ html, body {
   }
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200;
-    background: var(--color-accent);
+    background: var(--color-accent-surface);
     color: var(--color-accent-ink);
   }
   .btn-primary:hover { filter: brightness(1.08); }
@@ -111,12 +118,12 @@ html, body {
   .btn-secondary {
     @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--hairline-strong);
     color: var(--color-text-primary);
   }
   .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(198, 241, 53, 0.4);
+    background: rgb(var(--rgb-accent) / 0.08);
+    border-color: rgba(198, 241, 53, 0.5);
   }
   .step-indicator {
     @apply flex items-center gap-2 text-xs font-medium uppercase tracking-widest;

@@ -30,7 +30,7 @@ export default function Navbar({ currentStep }: NavbarProps) {
             <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "var(--color-accent)" }}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "var(--color-accent-surface)" }}>
                         <Zap className="w-4 h-4" style={{ color: "var(--color-accent-ink)" }} />
                     </div>
                     <span className="font-bold text-lg tracking-tight" style={{ color: "var(--color-text-primary)" }}>

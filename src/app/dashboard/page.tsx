@@ -132,8 +132,8 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                             className="absolute inset-0 w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 opacity-100 group-hover:opacity-0">
-                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgba(10,10,15,0.55)", border: "1px solid rgba(198,241,53,0.4)" }}>
-                                <Play className="w-5 h-5 ml-0.5" style={{ color: "var(--color-accent)" }} />
+                            <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgba(10,10,15,0.55)", border: "1px solid rgba(198,241,53,0.5)" }}>
+                                <Play className="w-5 h-5 ml-0.5" style={{ color: "var(--color-accent-surface)" }} />
                             </div>
                         </div>
                     </>
@@ -149,7 +149,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                     style={{
                         background: "rgba(10,10,15,0.82)",
                         border: "1px solid rgba(255,255,255,0.1)",
-                        color: job.status === "done" ? "var(--color-accent)" : job.status === "failed" ? "#ff8a80" : "var(--color-text-secondary)",
+                        color: job.status === "done" ? "var(--color-accent-surface)" : job.status === "failed" ? "#ff8a80" : "rgba(255,255,255,0.72)",
                     }}
                 >
                     {job.status}
@@ -157,7 +157,7 @@ function ReelCard({ job, onEdit, onDeleted }: { job: any; onEdit: (job: any) => 
                 {/* Aspect/format badge (mono) */}
                 <div
                     className="absolute top-3 right-3 meta text-[10px] px-2 py-1 rounded"
-                    style={{ background: "rgba(10,10,15,0.82)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--color-text-secondary)" }}
+                    style={{ background: "rgba(10,10,15,0.82)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.72)" }}
                 >
                     9:16
                 </div>

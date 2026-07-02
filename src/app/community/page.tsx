@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
 import { Users, Play, X, RefreshCw } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { API_BASE, authHeaders, useRequireAuth } from "@/lib/auth";
@@ -16,11 +17,11 @@ function CommunityCard({ reel }: { reel: any }) {
     if (!url) return null;
 
     return (
-        <div className="glass-card-hover rounded-2xl overflow-hidden flex flex-col">
+        <div className="glass-card-hover rounded-lg overflow-hidden flex flex-col">
             <div
-                className="group relative w-full cursor-pointer"
-                style={{ aspectRatio: "4 / 5", background: "#0d0d18" }}
-                onMouseEnter={() => { const v = videoRef.current; if (v) { v.currentTime = 0; v.play().catch(() => { }); } }}
+                className="group relative w-full cursor-pointer film-ticks"
+                style={{ aspectRatio: "4 / 5", background: "var(--color-surface)" }}
+                onMouseEnter={() => { const v = videoRef.current; if (v) v.play().catch(() => { }); }}
                 onMouseLeave={() => { const v = videoRef.current; if (v) { v.pause(); try { v.currentTime = 0.5; } catch { } } }}
                 onClick={() => setOpen(true)}
             >
@@ -29,29 +30,31 @@ function CommunityCard({ reel }: { reel: any }) {
                     onLoadedMetadata={(e) => { try { e.currentTarget.currentTime = 0.5; } catch { } }}
                     className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-200 opacity-100 group-hover:opacity-0">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgb(var(--rgb-surface) / 0.65)", border: "1px solid rgba(255,255,255,0.25)" }}>
-                        <Play className="w-5 h-5 text-white ml-0.5" />
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: "rgba(10,10,15,0.55)", border: "1px solid rgba(198,241,53,0.5)" }}>
+                        <Play className="w-5 h-5 ml-0.5" style={{ color: "var(--color-accent-surface)" }} />
                     </div>
                 </div>
+                <div className="absolute top-3 right-3 meta text-[10px] px-2 py-1 rounded" style={{ background: "rgba(10,10,15,0.82)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.72)" }}>9:16</div>
             </div>
             <div className="p-4">
                 <h3 className="font-bold text-sm truncate" style={{ color: "var(--color-text-primary)" }}>{reel.brand_name || "Untitled Reel"}</h3>
-                <p className="text-xs mt-0.5" style={{ color: "var(--color-text-secondary)" }}>
-                    Shared by <span style={{ color: "var(--color-accent)" }}>{reel.shared_by || "Someone"}</span>
+                <p className="meta text-[11px] mt-1">
+                    SHARED BY <span style={{ color: "var(--color-text-secondary)" }}>{reel.shared_by || "Someone"}</span>
                 </p>
             </div>
 
-            {open && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.85)" }} onClick={() => setOpen(false)}>
+            {open && createPortal(
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(4px)" }} onClick={() => setOpen(false)}>
                     <div className="relative" onClick={(e) => e.stopPropagation()}>
                         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                        <video src={url} controls autoPlay playsInline className="rounded-xl" style={{ maxHeight: "88vh", maxWidth: "92vw", background: "#000" }} />
+                        <video src={url} controls autoPlay playsInline className="rounded-lg" style={{ maxHeight: "88vh", maxWidth: "92vw", background: "#000" }} />
                         <button onClick={() => setOpen(false)} className="absolute -top-3 -right-3 w-9 h-9 rounded-full flex items-center justify-center"
-                            style={{ background: "var(--color-surface-card)", border: "1px solid rgba(255,255,255,0.25)" }} aria-label="Close">
-                            <X className="w-5 h-5 text-white" />
+                            style={{ background: "var(--color-surface-elevated)", border: "1px solid rgba(255,255,255,0.25)" }} aria-label="Close">
+                            <X className="w-5 h-5" style={{ color: "var(--color-text-primary)" }} />
                         </button>
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </div>
     );

@@ -130,7 +130,7 @@ export default function ThemeSelectorPage() {
                         {/* Music library */}
                         {library.length > 0 && (
                             <div className="glass-card rounded-2xl p-6">
-                                <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-accent)" }}>Music Library</label>
+                                <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-text-secondary)" }}>Music Library</label>
                                 <p className="text-sm mb-4" style={{ color: "var(--color-text-secondary)" }}>Pick a royalty-free track — or upload your own below.</p>
                                 <div className="grid sm:grid-cols-2 gap-2">
                                     {library.map((t) => {
@@ -192,7 +192,7 @@ export default function ThemeSelectorPage() {
                         </div>
 
                         <div className="glass-card rounded-2xl p-6">
-                            <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-accent)" }}>AI Voiceover</label>
+                            <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-text-secondary)" }}>AI Voiceover</label>
                             <p className="text-sm mb-4" style={{ color: "var(--color-text-secondary)" }}>
                                 Select a professional AI voice to narrate your script. Each slide will be perfectly synced to the audio length.
                             </p>
