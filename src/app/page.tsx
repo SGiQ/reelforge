@@ -86,7 +86,6 @@ export default function HomePage() {
     .cine .mono{font-family:'Geist Mono','Space Mono',ui-monospace,monospace;}
     .cine .hair{border:1px solid var(--line);}
     .cine ::selection{background:var(--accs);color:var(--ink);}
-    .cine .grain{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:0.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
     .cine .scan{position:absolute;left:0;width:100%;height:1px;background:#c6f135;opacity:0.3;z-index:10;animation:cine-scan 7s linear infinite;}
     @keyframes cine-scan{0%{top:-10%}100%{top:110%}}
     .cine .lime-btn{background:var(--accs);color:var(--ink);}
@@ -98,7 +97,6 @@ export default function HomePage() {
     return (
         <div className="cine min-h-screen">
             <style dangerouslySetInnerHTML={{ __html: cineCSS }} />
-            <div className="grain" />
 
             {/* Nav */}
             <nav className="fixed top-0 w-full z-50 hair" style={{ background: "rgb(var(--rgb-surface) / 0.8)", backdropFilter: "blur(12px)", borderLeft: 0, borderRight: 0, borderTop: 0 }}>
