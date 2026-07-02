@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Zap, User, LogOut, Shield, Wand2 } from "lucide-react";
+import { Zap, User, LogOut, Shield, Wand2, Menu, X } from "lucide-react";
 import { clearAuth, isAdmin } from "@/lib/auth";
 import ThemeToggle from "@/components/ThemeToggle";
 
@@ -23,8 +23,20 @@ interface NavbarProps {
 export default function Navbar({ currentStep }: NavbarProps) {
     const router = useRouter();
     const [admin, setAdmin] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
     useEffect(() => { setAdmin(isAdmin()); }, []);
     const logout = () => { clearAuth(); router.replace("/login"); };
+
+    // Single source of truth for links (used by desktop row + mobile menu).
+    const links = [
+        ...(admin ? [{ href: "/admin", label: "Admin", Icon: Shield }] : []),
+        { href: "/auto", label: "AI Director", Icon: Wand2 },
+        { href: "/community", label: "Community", Icon: undefined },
+        { href: "/help", label: "Help", Icon: undefined },
+        { href: "/dashboard", label: "Dashboard", Icon: undefined },
+        { href: "/account", label: "Account", Icon: User },
+    ];
+
     return (
         <nav className="sticky top-0 z-50 w-full" style={{ borderBottom: "1px solid rgb(var(--rgb-surface-border) / 0.6)", background: "rgb(var(--rgb-surface) / 0.9)", backdropFilter: "blur(12px)" }}>
             <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -106,8 +118,46 @@ export default function Navbar({ currentStep }: NavbarProps) {
                     </button>
 
                     <ThemeToggle />
+
+                    {/* Mobile hamburger — the desktop links are hidden below sm. */}
+                    <button
+                        onClick={() => setMenuOpen((v) => !v)}
+                        className="sm:hidden flex items-center justify-center w-9 h-9 rounded-lg"
+                        style={{ color: "var(--color-text-secondary)" }}
+                        aria-label="Menu"
+                        aria-expanded={menuOpen}
+                    >
+                        {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                    </button>
                 </div>
             </div>
+
+            {/* Mobile menu panel */}
+            {menuOpen && (
+                <div className="sm:hidden" style={{ borderTop: "1px solid rgb(var(--rgb-surface-border) / 0.6)", background: "var(--color-surface)" }}>
+                    <div className="px-6 py-2 flex flex-col">
+                        {links.map(({ href, label, Icon }) => (
+                            <Link
+                                key={href}
+                                href={href}
+                                onClick={() => setMenuOpen(false)}
+                                className="meta-caps text-[13px] py-3.5 flex items-center gap-3"
+                                style={{ color: "var(--color-text-secondary)", borderBottom: "1px solid rgb(var(--rgb-surface-border) / 0.4)" }}
+                            >
+                                {Icon && <Icon className="w-4 h-4" style={{ color: "var(--color-accent)" }} />}
+                                {label}
+                            </Link>
+                        ))}
+                        <button
+                            onClick={() => { setMenuOpen(false); logout(); }}
+                            className="meta-caps text-[13px] py-3.5 flex items-center gap-3 text-left"
+                            style={{ color: "var(--color-text-secondary)" }}
+                        >
+                            <LogOut className="w-4 h-4" style={{ color: "var(--color-accent)" }} /> Log out
+                        </button>
+                    </div>
+                </div>
+            )}
         </nav>
     );
 }

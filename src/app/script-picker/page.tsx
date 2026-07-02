@@ -373,31 +373,33 @@ export default function ScriptPickerPage() {
                                 <label className="block text-sm font-medium mb-2 flex items-center gap-2" style={{ color: "var(--color-text-secondary)" }}>
                                     <span>✨ Generate Script with AI</span>
                                 </label>
-                                <div className="flex gap-3">
+                                <div className="flex flex-col sm:flex-row gap-3">
                                     <input
                                         type="text" value={aiPrompt}
                                         onChange={(e) => setAiPrompt(e.target.value)}
                                         placeholder="E.g., A funny script about drinking too much coffee"
-                                        className="input-field flex-1" disabled={isGenerating}
+                                        className="input-field flex-1 min-w-0" disabled={isGenerating}
                                     />
-                                    <select
-                                        value={aiSlideCount}
-                                        onChange={(e) => setAiSlideCount(parseInt(e.target.value))}
-                                        className="input-field max-w-[120px]" disabled={isGenerating}
-                                    >
-                                        {[...Array(13)].map((_, i) => {
-                                            const count = i + 3;
-                                            return <option key={count} value={count}>{count} Slides</option>;
-                                        })}
-                                    </select>
-                                    <button
-                                        onClick={handleGenerateScript}
-                                        disabled={isGenerating || !aiPrompt.trim()}
-                                        className="px-4 py-2 rounded-lg font-medium text-white transition-all disabled:opacity-50"
-                                        style={{ background: "var(--color-accent)" }}
-                                    >
-                                        {isGenerating ? "Generating..." : "Generate"}
-                                    </button>
+                                    <div className="flex gap-3">
+                                        <select
+                                            value={aiSlideCount}
+                                            onChange={(e) => setAiSlideCount(parseInt(e.target.value))}
+                                            className="input-field flex-1 sm:max-w-[120px]" disabled={isGenerating}
+                                        >
+                                            {[...Array(13)].map((_, i) => {
+                                                const count = i + 3;
+                                                return <option key={count} value={count}>{count} Slides</option>;
+                                            })}
+                                        </select>
+                                        <button
+                                            onClick={handleGenerateScript}
+                                            disabled={isGenerating || !aiPrompt.trim()}
+                                            className="px-4 py-2 rounded-lg font-semibold transition-all disabled:opacity-50 shrink-0"
+                                            style={{ background: "var(--color-accent-surface)", color: "var(--color-accent-ink)" }}
+                                        >
+                                            {isGenerating ? "Generating..." : "Generate"}
+                                        </button>
+                                    </div>
                                 </div>
                                 {aiError && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{aiError}</p>}
                             </div>
